@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-no-undef */
 import type { NextPage } from 'next';
 
+import Occurrences from '@/lib/components/Home/Occurrences';
 import SomeText from '@/lib/components/samples/SomeText';
 import Carousel from '@/lib/components/Swiper';
 
@@ -13,6 +14,7 @@ const Home: NextPage = () => {
       <div className="bg-green-200 p-5 lg:p-32">
         <Carousel />
       </div>
+      <Occurrences />
     </>
   );
 };
