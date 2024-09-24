@@ -252,7 +252,7 @@ const Navbar = () => {
           <div>
             <a
               href={action.link}
-              className="hover:bg-blue-700 rounded-full bg-orange px-4 py-2 font-bold text-black-200"
+              className="hover:bg-blue-700 rounded-full bg-orange px-4 py-2 font-bold text-black-200 shadow-[rgba(0,0,15,0.5)_-3px_5px_4px_0px]"
             >
               <span>{action.name}</span>
             </a>

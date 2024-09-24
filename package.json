@@ -1,8 +1,8 @@
 {
-  "name": "nextarter-tailwind",
+  "name": "liga-colaborativa",
   "version": "0.1.0",
   "private": true,
-  "author": "sozonome",
+  "author": "jvittor",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

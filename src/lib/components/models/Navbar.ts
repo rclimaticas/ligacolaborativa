@@ -1,6 +1,6 @@
 const NavbarData = {
   logo: {
-    name: 'stripe',
+    name: 'Liga Colaborativa',
     link: '/',
   },
   links: [

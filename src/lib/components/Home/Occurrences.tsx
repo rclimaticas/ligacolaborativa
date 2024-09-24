@@ -13,13 +13,24 @@ export default function Occurrences() {
         </div>
         <button
           type="submit"
-          className="text-black w-1/2 rounded-xl bg-orange p-2 shadow-[rgba(0,0,15,0.5)_-3px_10px_4px_0px]"
+          className="text-black w-1/2 rounded-xl bg-orange p-2 text-xl font-bold shadow-[rgba(0,0,15,0.5)_-3px_10px_4px_0px]"
         >
-          Saber Mais
+          Ler Boletim Mensal
         </button>
       </div>
-      <div className="flex w-full justify-center text-right shadow-[rgba(0,0,15,0.5)_-10px_10px_4px_0px] lg:justify-end">
+      <div className="flex w-full flex-col justify-center gap-5 text-right lg:justify-end">
+        <h2 className="text-left">
+          Registre Ocorrências de conflitos em seu território e receba apoio
+          gratuito.
+          <button
+            type="submit"
+            className="text-black ml-2 w-3/5 rounded-xl bg-orange p-2 text-xl shadow-[rgba(0,0,15,0.5)_-3px_10px_4px_0px]"
+          >
+            Acessar aplicativo aqui
+          </button>
+        </h2>
         <Image
+          className="shadow-[rgba(0,0,15,0.5)_-10px_10px_4px_0px]"
           src="https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/dashboard-DAWr450K.png"
           alt="Dashboard"
           width={700}

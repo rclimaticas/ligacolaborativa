@@ -18,7 +18,7 @@ export default {
       },
       orange: '#cfd149',
       white: '#FEFFFE',
-      green: {100: '#4caf50', 200: '#7e926f'},
+      green: { 100: '#4caf50', 200: '#7e926f' },
     },
   },
   plugins: [tailwindTypography],
