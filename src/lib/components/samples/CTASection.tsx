@@ -35,7 +35,7 @@ const CTASection = () => {
 
       <div className="flex items-center gap-2">
         <a
-          className="from-gray-100 text-green-700 hover:from-gray-200 hover:text-green-800 rounded-lg bg-gradient-to-br to-green-200 p-2 font-semibold hover:to-green-200"
+          className="from-gray-100 text-green-700 hover:from-gray-200 hover:text-green-800 bg-gradient-to-br rounded-lg to-green-200 p-2 font-semibold hover:to-green-200"
           href={`https://github.com/${repoName}/generate`}
           target="_blank"
           rel="noopener noreferrer"
