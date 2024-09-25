@@ -40,7 +40,7 @@ const NavModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
   if (!isOpen) return null;
   return (
-    <div className="absolute top-0 z-50 block w-full lg:hidden">
+    <div className="absolute top-0 z-50 block w-full xl:hidden">
       <div className="flex h-auto min-h-[600px] w-full flex-col justify-between rounded-lg bg-white p-3 text-black-200">
         <div className="relative text-xl">
           <div className="flex items-center justify-between pb-5">
@@ -183,7 +183,7 @@ const Navbar = () => {
   return (
     <nav>
       {/* Desktop */}
-      <div className="hidden w-full bg-white text-green-100 lg:block">
+      <div className="hidden w-full bg-white text-green-100 xl:block">
         <div className="flex items-center justify-around p-5">
           <div>
             <a href={logo.link}>
@@ -252,13 +252,13 @@ const Navbar = () => {
           <div>
             <a
               href={action.link}
-              className="hover:bg-blue-700 rounded-full bg-orange px-4 py-2 font-bold text-black-200 shadow-[rgba(0,0,15,0.5)_-3px_5px_4px_0px]"
+              className="hover:bg-blue-700 rounded-full border-2 border-black-300 bg-orange px-4 py-2 font-bold text-black-300 shadow-[rgba(0,0,15,0.5)_-3px_5px_4px_0px]"
             >
               <span>{action.name}</span>
             </a>
             <a
               href={action2.link}
-              className="hover:bg-blue-700 rounded-full bg-white px-4 py-2 font-bold text-black-200"
+              className="hover:bg-blue-700 rounded-full bg-white px-4 py-2 font-bold text-black-300"
             >
               <span>{action2.name}</span>
             </a>
@@ -267,7 +267,7 @@ const Navbar = () => {
       </div>
 
       {/* Mobile */}
-      <div className="block bg-white text-green-100 lg:hidden">
+      <div className="block bg-white text-green-100 xl:hidden">
         <div className="p-7">
           <div className="flex items-center justify-between">
             <a href={logo.link}>

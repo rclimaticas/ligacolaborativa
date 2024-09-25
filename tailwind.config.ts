@@ -15,10 +15,15 @@ export default {
       black: {
         100: '#C4C4C4',
         200: '#515255',
+        300: '#000100',
       },
       orange: '#cfd149',
       white: '#FEFFFE',
       green: { 100: '#4caf50', 200: '#7e926f' },
+    },
+    backgroundImage: {
+      fundo:
+        "url('https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/fundo.png')",
     },
   },
   plugins: [tailwindTypography],
