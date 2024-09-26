@@ -1,7 +1,7 @@
 import Image from 'next/image';
 
 const LoginPage = () => (
-  <div className="h-xl flex flex-col sm:flex-row">
+  <div className="mt-32 flex flex-col sm:flex-row">
     <div className="hidden w-1/2 items-center bg-white lg:flex">
       <Image
         src="https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/JXrpbXn.md.png"

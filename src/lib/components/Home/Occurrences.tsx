@@ -4,7 +4,7 @@ export default function Occurrences() {
   return (
     <div className="flex min-h-full flex-wrap items-center justify-center gap-10 p-5 text-black-200 text-black-300 lg:flex-nowrap lg:p-32">
       <div className="grid w-full gap-5 lg:w-10/12">
-        <h1>No período...</h1>
+        <h1 className="text-4xl">No período...</h1>
         <div className="text-2xl">
           Foram registrados 20 ocorrências, sendo 6 animais selvagens
           encontrados, 4 conflitos com empreendimentos, 2 desmatamentos, 3

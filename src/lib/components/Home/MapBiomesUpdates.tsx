@@ -26,7 +26,7 @@ const MapBiomes: React.FC = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        'https://backend-rclimaticas-2.onrender.com/scrape-news'
+        'https://psychic-parakeet-q5grgjr9vwg39gw9-3333.app.github.dev/scrape-news'
       );
       console.log(response.data);
       if (Array.isArray(response.data)) {
@@ -45,9 +45,9 @@ const MapBiomes: React.FC = () => {
 
     const intervalId = setInterval(() => {
       fetchNoticias();
-    }, 3600000); // Atualiza a cada 1 hora (3600000ms)
+    }, 3600000);
 
-    return () => clearInterval(intervalId); // Limpa o intervalo ao desmontar o componente
+    return () => clearInterval(intervalId);
   }, []);
 
   return (

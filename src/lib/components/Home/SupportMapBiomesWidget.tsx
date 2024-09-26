@@ -1,5 +1,6 @@
 import MapBiomesUpdates from '@/lib/components/Home/MapBiomesUpdates';
 import PartnerEkonavi from '@/lib/components/Home/PartnerEkonavi';
+import RecentPosts from '@/lib/components/Home/RecentPosts';
 
 // Função de pre-renderização estática
 export async function getStaticProps() {
@@ -22,6 +23,7 @@ export default function SupportMapBiomesWidget() {
         <MapBiomesUpdates />
         <PartnerEkonavi />
       </div>
+      <RecentPosts />
     </div>
   );
 }

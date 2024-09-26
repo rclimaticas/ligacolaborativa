@@ -183,7 +183,7 @@ const Navbar = () => {
   return (
     <nav>
       {/* Desktop */}
-      <div className="hidden w-full bg-white text-green-100 xl:block">
+      <div className="fixed z-50 hidden w-full bg-white text-green-100 xl:block">
         <div className="flex items-center justify-around p-5">
           <div>
             <a href={logo.link}>
@@ -267,7 +267,7 @@ const Navbar = () => {
       </div>
 
       {/* Mobile */}
-      <div className="block bg-white text-green-100 xl:hidden">
+      <div className="fixed z-50 block w-full bg-white text-green-100 xl:hidden">
         <div className="p-7">
           <div className="flex items-center justify-between">
             <a href={logo.link}>
