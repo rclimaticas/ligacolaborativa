@@ -26,7 +26,7 @@ const MapBiomes: React.FC = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        'https://psychic-parakeet-q5grgjr9vwg39gw9-3333.app.github.dev/scrape-news'
+        'https://backend-rclimaticas-2.onrender.com/scrape-news'
       );
       console.log(response.data);
       if (Array.isArray(response.data)) {
