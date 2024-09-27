@@ -1,4 +1,5 @@
 import MapBiomesUpdates from '@/lib/components/Home/MapBiomesUpdates';
+import Newsletter from '@/lib/components/Home/Newsletter';
 import PartnerEkonavi from '@/lib/components/Home/PartnerEkonavi';
 import RecentPosts from '@/lib/components/Home/RecentPosts';
 
@@ -24,6 +25,7 @@ export default function SupportMapBiomesWidget() {
         <PartnerEkonavi />
       </div>
       <RecentPosts />
+      <Newsletter />
     </div>
   );
 }
