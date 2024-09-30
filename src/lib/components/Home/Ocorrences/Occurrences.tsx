@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 export default function Occurrences() {
   return (
-    <div className="flex min-h-full flex-wrap items-center justify-center gap-10 p-5 text-black-200 text-black-300 lg:flex-nowrap lg:p-32">
+    <>
       <div className="grid w-full gap-5 lg:w-10/12">
         <h1 className="text-4xl">No período...</h1>
         <div className="text-2xl">
@@ -39,6 +39,6 @@ export default function Occurrences() {
           />
         </div>
       </div>
-    </div>
+    </>
   );
 }

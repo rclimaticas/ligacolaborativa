@@ -3,17 +3,14 @@ import RecentPosts from '@/lib/components/Home/Posts/RecentPosts';
 import MapBiomesUpdates from '@/lib/components/Home/SupportAndMapBiomes/MapBiomesUpdates';
 import PartnerEkonavi from '@/lib/components/Home/SupportAndMapBiomes/PartnerEkonavi';
 
-// Função de pre-renderização estática
 export async function getStaticProps() {
-  // Aqui você pode buscar dados ou fazer qualquer processamento necessário
-  // Esses dados serão passados como props para o componente
-  const data = {}; // Exemplo de dados que podem ser obtidos
+  const data = {};
 
   return {
     props: {
-      data, // Esses dados serão acessíveis no componente como props
+      data,
     },
-    revalidate: 3600, // Revalida a cada 1 hora (3600 segundos)
+    revalidate: 3600,
   };
 }
 

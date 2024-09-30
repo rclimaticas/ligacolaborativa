@@ -1,10 +1,10 @@
 /* eslint-disable react/jsx-no-undef */
 import type { NextPage } from 'next';
 
-import Occurrences from '@/lib/components/Home/Occurrences';
+import Carousel from '@/lib/components/Home/Carousel/index';
+import Occurrences from '@/lib/components/Home/Ocorrences/index';
 import SupportMapBiomesWidget from '@/lib/components/Home/SupportMapBiomesWidget';
 import SomeText from '@/lib/components/samples/SomeText';
-import Carousel from '@/lib/components/Swiper';
 
 const Home: NextPage = () => {
   return (
