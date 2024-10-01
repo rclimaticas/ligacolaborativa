@@ -1,3 +1,4 @@
+import Contribution from '@/lib/components/Home/Contribution/index';
 import NewsletterAndTrustedBy from '@/lib/components/Home/NewsletterAndTrustedBy/index';
 import PostsWidget from '@/lib/components/Home/Posts/index';
 import MapBiomesUpdates from '@/lib/components/Home/SupportAndMapBiomes/MapBiomesUpdates';
@@ -23,6 +24,7 @@ export default function SupportMapBiomesWidget() {
       </div>
       <PostsWidget />
       <NewsletterAndTrustedBy />
+      <Contribution />
     </div>
   );
 }

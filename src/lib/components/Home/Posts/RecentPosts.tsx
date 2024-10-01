@@ -26,8 +26,8 @@ export default function RecentPosts() {
           className="hidden transform transition-transform duration-300 hover:scale-105 xl:block"
           src="https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/article2-DoBxtVVI.png"
           alt="Post-1"
-          width={180}
-          height={180}
+          width={175}
+          height={175}
         />
         <Image
           className="block xl:hidden"
