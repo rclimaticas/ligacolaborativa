@@ -1,4 +1,3 @@
-import Contribution from '@/lib/components/Home/Contribution/index';
 import NewsletterAndTrustedBy from '@/lib/components/Home/NewsletterAndTrustedBy/index';
 import PostsWidget from '@/lib/components/Home/Posts/index';
 import MapBiomesUpdates from '@/lib/components/Home/SupportAndMapBiomes/MapBiomesUpdates';
@@ -17,14 +16,13 @@ export async function getStaticProps() {
 
 export default function SupportMapBiomesWidget() {
   return (
-    <div className="mt-20 h-full w-full bg-fundo bg-cover text-black-300">
+    <div className="mt-20 h-[4040px] w-full bg-fundo bg-cover text-black-300 xl:h-full">
       <div className="flex flex-wrap items-center justify-center gap-10 p-5 text-black-200 text-black-300 lg:p-32 xl:flex-nowrap">
         <MapBiomesUpdates />
         <PartnerEkonavi />
       </div>
       <PostsWidget />
       <NewsletterAndTrustedBy />
-      <Contribution />
     </div>
   );
 }
