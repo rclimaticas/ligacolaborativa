@@ -1,13 +1,15 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
+
+import { EkonaviData } from '@/lib/components/models/Ekonavi';
+
+const { title } = EkonaviData;
+
 export default function PartnerEkonavi() {
   return (
     <div className="relative bottom-0 grid gap-2 xl:bottom-72">
       <div>
-        <h1 className="text-center text-4xl xl:text-right">
-          Faça parte da Ekonavi, uma rede social colaborativa que te paga por
-          impacto gerado.
-        </h1>
+        <h1 className="text-center text-4xl xl:text-right">{title.name}</h1>
       </div>
       <div className="flex justify-center xl:justify-end">
         <img
