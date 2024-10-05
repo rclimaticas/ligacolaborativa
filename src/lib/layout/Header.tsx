@@ -7,7 +7,7 @@ import Image from 'next/image';
 import type React from 'react';
 import { useState } from 'react';
 
-import NavbarData from '../components/models/Navbar';
+import NavbarData from '../components/models/Home/Navbar';
 
 const { logo, links, action, action2 } = NavbarData;
 

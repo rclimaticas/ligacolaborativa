@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 
-import { EkonaviData } from '@/lib/components/models/Ekonavi';
+import { EkonaviData } from '@/lib/components/models/Home/Ekonavi';
 
 const { title } = EkonaviData;
 

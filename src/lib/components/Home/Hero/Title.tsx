@@ -1,4 +1,4 @@
-import { HeroData } from '@/lib/components/models/Hero';
+import { HeroData } from '@/lib/components/models/Home/Hero';
 
 const { title, button } = HeroData;
 

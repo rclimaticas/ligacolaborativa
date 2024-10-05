@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { OccurrencesData } from '../../models/Ocorrences';
+import { OccurrencesData } from '../../models/Home/Ocorrences';
 
 const { title, button } = OccurrencesData;
 
