@@ -1,5 +1,9 @@
 import Image from 'next/image';
 
+import { OccurrencesData } from '../../models/Ocorrences';
+
+const { title, button } = OccurrencesData;
+
 export default function Occurrences() {
   return (
     <>
@@ -20,13 +24,12 @@ export default function Occurrences() {
       </div>
       <div className="flex w-full flex-col justify-center gap-5 text-right lg:justify-end">
         <h2 className="text-left">
-          Registre Ocorrências de conflitos em seu território e receba apoio
-          gratuito.
+          {title.name}
           <button
             type="submit"
             className="ml-0 mt-5 w-full rounded-xl border-2 border-black-300 bg-orange p-2 text-xl text-black-300 shadow-[rgba(0,0,15,0.5)_-3px_5px_4px_0px] lg:ml-2 lg:mt-0 lg:w-3/5"
           >
-            Acessar aplicativo aqui
+            {button.name}
           </button>
         </h2>
         <div className="flex items-center justify-center">

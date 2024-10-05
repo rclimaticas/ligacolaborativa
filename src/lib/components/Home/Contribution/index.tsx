@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
+
 export default function Contribution() {
   return (
     <div className="relative bottom-0 grid gap-4 p-5 text-center text-3xl xl:bottom-[1000px] xl:p-32 xl:text-justify">
