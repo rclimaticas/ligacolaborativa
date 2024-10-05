@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-const Hero = {
+export const HeroData = {
   title: {
     name: 'Plataforma Colaborativa dos Povos, Culturas e da Natureza',
     description:
