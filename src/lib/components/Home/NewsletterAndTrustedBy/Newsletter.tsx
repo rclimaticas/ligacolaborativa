@@ -3,12 +3,16 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 
+import { NewsletterData } from '@/lib/components/models/Home/Newsletter';
+
+const { title, label, button } = NewsletterData;
+
 export default function Newsletter() {
   return (
     <div className="h-full xl:h-[270px] 2xl:h-[600px]">
       <form className="relative bottom-0 w-full p-5 lg:p-32 xl:bottom-[250px]">
         <h1 className="mt-10 text-center text-2xl lg:mt-0 lg:text-left">
-          Receba atualizações
+          {title.name}
         </h1>
         <div className="mt-5 grid gap-5">
           <div className="relative mt-2 w-full">
@@ -23,7 +27,7 @@ export default function Newsletter() {
               className="peer-focus:text-blue-600 dark:bg-gray-900 dark:text-gray-400 peer-focus:dark:text-blue-500 absolute top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-[#ebebab] text-sm text-black-200 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
               style={{ backgroundColor: '#ebebab', pointerEvents: 'none' }}
             >
-              Nome
+              {label.name}
             </label>
           </div>
           <div className="relative mt-2 w-full">
@@ -38,11 +42,11 @@ export default function Newsletter() {
               className="peer-focus:text-blue-600 dark:bg-gray-900 dark:text-gray-400 peer-focus:dark:text-blue-500 absolute top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-[#ebebab] text-sm text-black-200 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
               style={{ backgroundColor: '#ebebab', pointerEvents: 'none' }}
             >
-              Email
+              {label.email}
             </label>
           </div>
           <button className="w-28 rounded-lg rounded-xl border-2 border-black-300 bg-orange p-2 text-xl font-semibold text-black-300 shadow-[rgba(0,0,15,0.5)_-3px_5px_4px_0px]">
-            Enviar
+            {button.name}
           </button>
         </div>
       </form>
