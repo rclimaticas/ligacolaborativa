@@ -9,6 +9,10 @@ import axios from 'axios';
 import type React from 'react';
 import { useEffect, useState } from 'react';
 
+import { MapBiomesData } from '@/lib/components/models/Home/MapBiomes';
+
+const { title, button } = MapBiomesData;
+
 interface Noticia {
   id: string;
   titulo: string;
@@ -53,7 +57,7 @@ const MapBiomes: React.FC = () => {
   return (
     <div className="h-full lg:h-[650px]">
       <div className="relative bottom-0 rounded-lg bg-white p-6 text-black-300 shadow-xl xl:bottom-96 xl:w-10/12">
-        <h1 className="mb-5 text-center text-3xl font-bold">Notícias</h1>
+        <h1 className="mb-5 text-center text-3xl font-bold">{title.name}</h1>
         {error && <p className="text-red-500 text-center">{error}</p>}
         <div className="space-y-6">
           {noticias.map((noticia) => (
@@ -79,7 +83,7 @@ const MapBiomes: React.FC = () => {
             href="https://agenciadenoticias.ibge.gov.br/agencia-noticias.html"
             className="hover:bg-blue-600 rounded-lg bg-orange px-4 py-2 transition-colors"
           >
-            Ver mais
+            {button.name}
           </a>
         </div>
       </div>
