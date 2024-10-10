@@ -1,7 +1,7 @@
 'use client';
 
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import { usePathname } from 'next/navigation';
+// import { usePathname } from 'next/navigation';
 import type { ReactNode } from 'react';
 
 import { ThemeProvider } from '@/lib/components/theme-provider';
@@ -13,8 +13,6 @@ type LayoutProps = {
 };
 
 const Layout = ({ children }: LayoutProps) => {
-  const pathname = usePathname();
-  const shouldShowHeader = pathname === '/';
   const GoogleID = process.env.GOOGLE_ID ?? '';
 
   return (
@@ -22,7 +20,7 @@ const Layout = ({ children }: LayoutProps) => {
       <GoogleOAuthProvider clientId={GoogleID}>
         {/* Adicionando min-h-screen para garantir que ocupe toda a altura da viewport */}
         <div className="flex flex-col bg-white">
-          {shouldShowHeader && <Header />}
+          <Header />
           <main className="flex flex-col">{children}</main>
           {/* flex-grow garante que o conteúdo cresça para preencher o espaço */}
         </div>

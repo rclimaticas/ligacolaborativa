@@ -27,7 +27,7 @@ export default function LoginPage() {
     <div className="flex h-screen flex-col bg-white sm:flex-row">
       <div className="bg-gray-100 hidden w-1/2 justify-center lg:flex">
         <Image
-          src="https://arte-orange-login.s3.sa-east-1.amazonaws.com/img_login.png"
+          src=""
           alt="Imagem de login"
           className="h-auto w-full"
           width={800}
