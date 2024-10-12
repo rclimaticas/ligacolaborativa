@@ -41,6 +41,7 @@ export default function Carousel() {
       pagination={{ clickable: true }}
       navigation={isMdScreen}
       slidesPerView={1}
+      autoplay={{ delay: 5000, disableOnInteraction: false }}
     >
       <SwiperSlide>
         <a
