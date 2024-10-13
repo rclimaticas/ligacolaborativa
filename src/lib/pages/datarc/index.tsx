@@ -2,6 +2,7 @@
 
 import type { NextPage } from 'next/types';
 
+import ArcGIS from '@/lib/components/Datarc/ArcGIS/index';
 import Carousel from '@/lib/components/Datarc/Carousel/index';
 import Contribution from '@/lib/components/Datarc/Contribution/index';
 import Hero from '@/lib/components/Datarc/Hero/index';
@@ -14,6 +15,7 @@ const DataRC: NextPage = () => {
       <Carousel />
       <Contribution />
       <Spotlight />
+      <ArcGIS />
     </div>
   );
 };
