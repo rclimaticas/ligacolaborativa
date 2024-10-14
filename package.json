@@ -23,7 +23,9 @@
     "preinstall": "corepack enable"
   },
   "dependencies": {
+    "@nextui-org/card": "^2.0.34",
     "@nextui-org/input": "^2.2.5",
+    "@nextui-org/react": "^2.4.8",
     "@react-oauth/google": "^0.12.1",
     "axios": "^1.7.7",
     "clsx": "^2.1.1",
