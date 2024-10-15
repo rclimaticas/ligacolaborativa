@@ -12,7 +12,7 @@ import { MapsData } from '@/lib/components/models/Datarc/Maps';
 
 export default function Maps() {
   return (
-    <div className="relative bottom-[290px] grid grid-cols-1 gap-2 p-5 sm:grid-cols-2 lg:p-20">
+    <div className="relative bottom-[400px] z-20 grid grid-cols-1 gap-2 p-5 sm:grid-cols-2 lg:p-20">
       {MapsData.map((item, index) => (
         <Card shadow="sm" key={index}>
           <CardBody className="overflow-visible p-0">
