@@ -9,7 +9,7 @@ const { title, label, button } = NewsletterData;
 
 export default function Newsletter() {
   return (
-    <div className="relative bottom-[400px] h-full xl:bottom-[200px] xl:h-[270px] 2xl:h-[600px]">
+    <div className="relative bottom-0 h-full xl:bottom-[200px] xl:h-[270px] 2xl:h-[600px]">
       <form className="relative bottom-0 w-full p-5 lg:p-32">
         <h1 className="mt-10 text-center text-2xl lg:mt-0 lg:text-left">
           {title.name}

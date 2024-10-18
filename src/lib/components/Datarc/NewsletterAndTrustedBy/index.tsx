@@ -8,8 +8,8 @@ import TrustedBy from '@/lib/components/Datarc/NewsletterAndTrustedBy/TrustedBy'
 
 export default function NewsletterAndTrustedBy() {
   return (
-    <div className="relative bottom-[600px] h-[2000px] w-full bg-fundo bg-cover text-black-300 xl:h-[1200px]">
-      <div className="relative top-[700px] grid grid-cols-1 xl:grid-cols-2">
+    <div className="relative bottom-0 h-[1600px] w-full bg-[#ebebab] bg-cover text-black-300 xl:bottom-[600px] xl:h-[1300px] xl:bg-fundo">
+      <div className="relative top-[200px] grid grid-cols-1 xl:top-[700px] xl:grid-cols-2">
         <Newsletter />
         <TrustedBy />
       </div>
