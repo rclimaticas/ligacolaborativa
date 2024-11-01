@@ -56,7 +56,7 @@ const MapBiomes: React.FC = () => {
 
   return (
     <div className="h-full lg:h-[650px]">
-      <div className="relative bottom-0 rounded-lg bg-white p-6 text-black-300 shadow-xl xl:bottom-96 xl:w-10/12">
+      <div className="relative bottom-40 mt-32 rounded-lg bg-white p-6 text-black-300 shadow-xl md:mt-0 lg:bottom-72 xl:bottom-96 xl:w-10/12">
         <h1 className="mb-5 text-center text-3xl font-bold">{title.name}</h1>
         {error && <p className="text-red-500 text-center">{error}</p>}
         <div className="space-y-6">

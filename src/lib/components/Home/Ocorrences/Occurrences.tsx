@@ -7,7 +7,7 @@ const { title, button } = OccurrencesData;
 export default function Occurrences() {
   return (
     <>
-      <div className="grid w-full gap-5 lg:w-10/12">
+      <div className="grid w-full gap-5 text-center lg:w-10/12 lg:text-left">
         <h1 className="text-4xl">No período...</h1>
         <div className="text-2xl">
           Foram registrados 20 ocorrências, sendo 6 animais selvagens
@@ -22,8 +22,8 @@ export default function Occurrences() {
           Ler Boletim Mensal
         </button>
       </div>
-      <div className="flex w-full flex-col justify-center gap-5 text-right lg:justify-end">
-        <h2 className="text-left">
+      <div className="flex w-full flex-col justify-center gap-5 text-center lg:justify-end lg:text-right">
+        <h2>
           {title.name}
           <button
             type="submit"

@@ -3,8 +3,7 @@
 import type { NextPage } from 'next/types';
 
 import ArcGIS from '@/lib/components/Datarc/ArcGIS/index';
-import Carousel from '@/lib/components/Datarc/Carousel/index';
-import Contribution from '@/lib/components/Datarc/Contribution/index';
+import CarouselAndContribution from '@/lib/components/Datarc/CarouselAndContribution/index';
 import Hero from '@/lib/components/Datarc/Hero/index';
 import Maps from '@/lib/components/Datarc/Maps/index';
 import NewsletterAndTrustedBy from '@/lib/components/Datarc/NewsletterAndTrustedBy/index';
@@ -14,8 +13,7 @@ const DataRC: NextPage = () => {
   return (
     <div className="h-[4600px] xl:h-[4600px]">
       <Hero />
-      <Carousel />
-      <Contribution />
+      <CarouselAndContribution />
       <Spotlight />
       <ArcGIS />
       <Maps />

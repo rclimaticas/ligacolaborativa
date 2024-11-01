@@ -7,7 +7,7 @@ const { title } = EkonaviData;
 
 export default function PartnerEkonavi() {
   return (
-    <div className="relative bottom-0 grid gap-2 xl:bottom-72">
+    <div className="relative bottom-0 mt-0 grid gap-2 lg:mt-32 xl:bottom-72">
       <div>
         <h1 className="text-center text-4xl xl:text-right">{title.name}</h1>
       </div>

@@ -7,7 +7,7 @@ import Image from 'next/image';
 import type React from 'react';
 import { useState } from 'react';
 
-import NavbarData from '../components/models/Home/Navbar';
+import NavbarData from '../components/models/Header/Navbar';
 
 const { logo, links, action, action2 } = NavbarData;
 
@@ -40,8 +40,8 @@ const NavModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
   if (!isOpen) return null;
   return (
-    <div className="absolute top-0 z-50 block w-full xl:hidden">
-      <div className="flex h-auto min-h-[600px] w-full flex-col justify-between rounded-lg bg-white p-3 text-black-200">
+    <div className="fixed top-0 z-50 block w-full overflow-y-auto xl:hidden">
+      <div className="flex h-auto max-h-screen w-full flex-col justify-between overflow-y-scroll rounded-lg bg-white p-3 text-black-200 xl:overflow-y-hidden">
         <div className="relative text-xl">
           <div className="flex items-center justify-between pb-5">
             <a href={logo.link}>
@@ -140,31 +140,10 @@ const NavModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
           </div>
         </div>
 
-        <div className="bg-slate-100 mt-20 flex h-16 w-full items-center justify-center rounded">
-          <a
-            href={action.link}
-            className="bg-indigo-500 text-md animtate-smooth group flex items-center rounded-full px-4 py-2 font-semibold text-white"
-          >
-            <span className="mr-2">{action.name}</span>
-            <svg
-              className="stroke-current"
-              width="10"
-              height="10"
-              viewBox="0 0 10 10"
-              aria-hidden="true"
-            >
-              <g>
-                <path
-                  className="animate-short opacity-0 group-hover:opacity-100"
-                  d="M0 5.5h7"
-                />
-                <path
-                  className="fill-transparent animate-short opacity-100 group-hover:translate-x-1 group-hover:transform"
-                  d="M1 1l3 5-5 5"
-                />
-              </g>
-            </svg>
-          </a>
+        <div className="flex items-center justify-center bg-white">
+          <div className="w-[100px] bg-orange">
+            <div>sadasd</div>
+          </div>
         </div>
       </div>
     </div>
@@ -211,39 +190,6 @@ const Navbar = () => {
                     <button className="cursor-default font-semibold hover:opacity-50">
                       {link.parent}
                     </button>
-                  )}
-                  {link.children && (
-                    <div className="animate-short invisible absolute left-0 top-0 z-50 min-w-[250px] translate-y-5 transform opacity-0 transition group-hover:visible group-hover:transform group-hover:opacity-100">
-                      <div className="relative top-6 z-50 flex w-full flex-col rounded-xl bg-white p-2 shadow-xl">
-                        <div className="absolute top-0 z-0 h-10 w-10 translate-x-0 rotate-45 transform rounded-sm bg-white" />
-                        {link.children && (
-                          <div
-                            className={`grid ${
-                              link.children.length > 4
-                                ? 'min-w-[500px] grid-cols-2'
-                                : 'grid-cols-1'
-                            }`}
-                          >
-                            {link.children.map((child) => (
-                              <a
-                                key={child.name}
-                                href={child.link}
-                                className="z-50"
-                              >
-                                <div className="hover:bg-slate-100 w-full rounded-lg px-4 py-2">
-                                  <p className="text-slate-800 font-semibold">
-                                    {child.name}
-                                  </p>
-                                  <p className="text-slate-500 text-sm">
-                                    {child.desc}
-                                  </p>
-                                </div>
-                              </a>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    </div>
                   )}
                 </li>
               ))}

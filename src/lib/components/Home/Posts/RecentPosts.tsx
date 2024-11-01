@@ -3,7 +3,7 @@ import Image from 'next/image';
 export default function RecentPosts() {
   return (
     <div className="h-full lg:h-[500px]">
-      <h1 className="relative bottom-0 p-5 text-center text-3xl underline xl:bottom-[120px] xl:p-32 xl:text-left">
+      <h1 className="relative bottom-0 mt-20 p-5 text-center text-3xl underline xl:bottom-[120px] xl:p-32 xl:text-left">
         Publicações Recentes
         <div className="mt-5 flex flex-wrap items-center justify-center gap-5 md:justify-between lg:flex lg:flex-nowrap lg:justify-center xl:justify-start">
           {/* Post-1 */}

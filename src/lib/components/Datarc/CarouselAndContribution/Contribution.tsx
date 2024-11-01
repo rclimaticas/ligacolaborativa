@@ -14,18 +14,17 @@ export default function App() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
-    <div className="z-99 flex flex-col items-center justify-center gap-2">
-      <Button className="bg-orange" onPress={onOpen}>
+    <>
+      <Button onPress={onOpen} className="bg-orange">
         Open Modal
       </Button>
       <Modal
+        className="mt-40 h-[500px]"
+        backdrop="blur"
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-        scrollBehavior="inside"
-        className="h-[500px] bg-black-100"
-        backdrop="blur"
       >
-        <ModalContent>
+        <ModalContent className="bg-black-200">
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
@@ -37,7 +36,19 @@ export default function App() {
                   Nullam pulvinar risus non risus hendrerit venenatis.
                   Pellentesque sit amet hendrerit risus, sed porttitor quam.
                 </p>
-                {/* ...conteúdo restante do modal... */}
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Nullam pulvinar risus non risus hendrerit venenatis.
+                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
+                </p>
+                <p>
+                  Magna exercitation reprehenderit magna aute tempor cupidatat
+                  consequat elit dolor adipisicing. Mollit dolor eiusmod sunt ex
+                  incididunt cillum quis. Velit duis sit officia eiusmod Lorem
+                  aliqua enim laboris do dolor eiusmod. Et mollit incididunt
+                  nisi consectetur esse laborum eiusmod pariatur proident Lorem
+                  eiusmod et. Culpa deserunt nostrud ad veniam.
+                </p>
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
@@ -51,6 +62,6 @@ export default function App() {
           )}
         </ModalContent>
       </Modal>
-    </div>
+    </>
   );
 }
