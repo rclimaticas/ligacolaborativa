@@ -4,6 +4,6 @@ export const MapBiomesData = {
     name: 'Notícias',
   },
   button: {
-    name: 'Enviar',
+    name: 'Ver mais notícias',
   },
 };

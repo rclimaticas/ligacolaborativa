@@ -3,9 +3,10 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 
+import ButtonNewsletter from '@/lib/components/Home/NewsletterAndTrustedBy/ButtonNewsletter';
 import { NewsletterData } from '@/lib/components/models/Home/Newsletter';
 
-const { title, label, button } = NewsletterData;
+const { title, label } = NewsletterData;
 
 export default function Newsletter() {
   return (
@@ -45,9 +46,7 @@ export default function Newsletter() {
               {label.email}
             </label>
           </div>
-          <button className="w-28 rounded-lg rounded-xl border-2 border-black-300 bg-orange p-2 text-xl font-semibold text-black-300 shadow-[rgba(0,0,15,0.5)_-3px_5px_4px_0px]">
-            {button.name}
-          </button>
+          <ButtonNewsletter />
         </div>
       </form>
     </div>

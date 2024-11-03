@@ -1,4 +1,6 @@
+/* eslint-disable react/no-string-refs */
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { OccurrencesData } from '../../models/Home/Ocorrences';
 
@@ -15,22 +17,36 @@ export default function Occurrences() {
           poluições no rio, 1 poluição de solo/erosão, 1 queimada e 3 outras
           ocorrências.
         </div>
-        <button
-          type="submit"
-          className="w-full rounded-xl border-2 border-black-300 bg-orange p-2 text-xl font-bold text-black-300 shadow-[rgba(0,0,15,0.5)_-3px_5px_4px_0px] lg:w-1/2"
+        <Link
+          href="/assets/boletiminfo.pdf"
+          passHref
+          target="_blank"
+          rel="noopener noreferrer"
         >
-          Ler Boletim Mensal
-        </button>
+          <button
+            type="submit"
+            className="w-full rounded-xl border-2 border-black-300 bg-orange p-2 text-xl font-bold text-black-300 shadow-[rgba(0,0,15,0.5)_-3px_5px_4px_0px] lg:w-1/2"
+          >
+            Ler Boletim Mensal
+          </button>
+        </Link>
       </div>
       <div className="flex w-full flex-col justify-center gap-5 text-center lg:justify-end lg:text-right">
         <h2>
           {title.name}
-          <button
-            type="submit"
-            className="ml-0 mt-5 w-full rounded-xl border-2 border-black-300 bg-orange p-2 text-xl text-black-300 shadow-[rgba(0,0,15,0.5)_-3px_5px_4px_0px] lg:ml-2 lg:mt-0 lg:w-3/5"
+          <Link
+            href="https://arcg.is/1mzbme"
+            passHref
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            {button.name}
-          </button>
+            <button
+              type="submit"
+              className="ml-0 mt-5 w-full rounded-xl border-2 border-black-300 bg-orange p-2 text-xl text-black-300 shadow-[rgba(0,0,15,0.5)_-3px_5px_4px_0px] lg:ml-2 lg:mt-0 lg:w-3/5"
+            >
+              {button.name}
+            </button>
+          </Link>
         </h2>
         <div className="flex items-center justify-center">
           <Image

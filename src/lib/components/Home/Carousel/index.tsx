@@ -75,7 +75,23 @@ export default function Carousel() {
       <SwiperSlide>
         <a target="_blank" rel="noopener noreferrer" href="/ondefoi">
           <img
-            src="https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/collaborate1.png"
+            src="https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/collaborate2.png"
+            alt="Collaborate 2"
+          />
+        </a>
+      </SwiperSlide>
+      <SwiperSlide>
+        <a target="_blank" rel="noopener noreferrer" href="/datarc">
+          <img
+            src="https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/collaborate3.png"
+            alt="Collaborate 2"
+          />
+        </a>
+      </SwiperSlide>
+      <SwiperSlide>
+        <a target="_blank" rel="noopener noreferrer" href="/ligacolaborativa">
+          <img
+            src="https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/collaborate4.png"
             alt="Collaborate 2"
           />
         </a>

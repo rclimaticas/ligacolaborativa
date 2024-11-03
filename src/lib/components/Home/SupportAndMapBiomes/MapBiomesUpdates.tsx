@@ -81,7 +81,7 @@ const MapBiomes: React.FC = () => {
         <div className="mt-6 flex justify-center">
           <a
             href="https://agenciadenoticias.ibge.gov.br/agencia-noticias.html"
-            className="hover:bg-blue-600 rounded-lg bg-orange px-4 py-2 transition-colors"
+            className="hover:bg-blue-600 rounded-lg bg-orange px-4 py-2 font-bold transition-colors"
           >
             {button.name}
           </a>
