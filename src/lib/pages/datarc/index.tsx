@@ -12,7 +12,7 @@ import Spotlight from '@/lib/components/Datarc/Spotlight/index';
 
 const DataRC: NextPage = () => {
   return (
-    <div className="h-[4600px] xl:h-[4600px]">
+    <div className="h-[4600px] xl:h-[4000px]">
       <Hero />
       <CarouselAndContribution />
       <Contribution />

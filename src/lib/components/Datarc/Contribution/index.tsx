@@ -71,7 +71,7 @@ export default function BasicModal() {
         <div className="flex w-full justify-center">
           <button
             type="button"
-            className="w-72 rounded-lg rounded-xl border-2 border-black-300 bg-orange p-2 text-xl font-semibold text-black-300 shadow-[rgba(0,0,15,0.5)_-3px_5px_4px_0px]"
+            className="z-20 w-72 rounded-lg rounded-xl border-2 border-black-300 bg-orange p-2 text-xl font-semibold text-black-300 shadow-[rgba(0,0,15,0.5)_-3px_5px_4px_0px]"
             onClick={handleOpen}
           >
             Fazer envio de arquivos
