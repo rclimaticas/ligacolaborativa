@@ -42,8 +42,11 @@ export default function BasicModal() {
         <Box sx={style} className="text-black-300">
           <div className="text-xl font-bold">Confirmação</div>
           <div>Tem certeza de que deseja enviar suas informações?</div>
-          <div className="flex w-full justify-end">
-            <button className="w-28 rounded-lg rounded-xl bg-white p-2 text-xl font-semibold text-black-300">
+          <div className="flex w-full justify-end gap-2">
+            <button
+              className="w-28 rounded-lg rounded-xl bg-white p-2 text-xl font-semibold text-black-300"
+              onClick={handleClose}
+            >
               Cancelar
             </button>
             <button className="w-28 rounded-lg rounded-xl border-2 border-black-300 bg-orange p-2 text-xl font-semibold text-black-300 shadow-[rgba(0,0,15,0.5)_-3px_5px_4px_0px]">
