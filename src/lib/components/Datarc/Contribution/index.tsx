@@ -59,14 +59,25 @@ export default function BasicModal() {
   };
 
   return (
-    <div className="flex w-full justify-center">
-      <button
-        type="button"
-        className="w-50 rounded-lg rounded-xl border-2 border-black-300 bg-orange p-2 text-xl font-semibold text-black-300 shadow-[rgba(0,0,15,0.5)_-3px_5px_4px_0px]"
-        onClick={handleOpen}
-      >
-        Fazer envio de arquivos
-      </button>
+    <div className="flex w-full items-center justify-center">
+      <div className="flex grid flex-col gap-2 text-black-300">
+        <div className="text-center text-3xl font-bold">
+          Contribua enviando sabedoria
+        </div>
+        <p>
+          Faça o envio dos artigos que você desejar para colaborar com a Liga
+          Colaborativa.
+        </p>
+        <div className="flex w-full justify-center">
+          <button
+            type="button"
+            className="w-72 rounded-lg rounded-xl border-2 border-black-300 bg-orange p-2 text-xl font-semibold text-black-300 shadow-[rgba(0,0,15,0.5)_-3px_5px_4px_0px]"
+            onClick={handleOpen}
+          >
+            Fazer envio de arquivos
+          </button>
+        </div>
+      </div>
 
       {/* Modal principal */}
       <Modal
