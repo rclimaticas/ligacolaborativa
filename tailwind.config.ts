@@ -12,6 +12,7 @@ export default {
       roboto: ['Roboto', 'sans-serif'],
     },
     colors: {
+      fundoLogin: '#000000',
       black: {
         100: '#C4C4C4',
         200: '#515255',
@@ -24,6 +25,8 @@ export default {
     backgroundImage: {
       fundo:
         "url('https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/fundo.png')",
+      fundoLogin:
+        "url('https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/75ba33192562945.65dddcd30b0c9.png')",
     },
   },
   plugins: [tailwindTypography],
