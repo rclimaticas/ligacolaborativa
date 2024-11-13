@@ -1,19 +1,37 @@
+/* eslint-disable no-console */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 // src/components/LoginForm.tsx
 /* eslint-disable jsx-a11y/label-has-associated-control */
 
 'use client';
 
+import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
+import { GoogleLogin } from '@react-oauth/google';
+
+const CustomTextField = styled(TextField)({
+  '& input:-webkit-autofill': {
+    WebkitBoxShadow: '0 0 0 1000px white inset', // Altere "white" para a cor desejada
+    WebkitTextFillColor: 'black', // Altere "black" para a cor do texto desejada
+  },
+});
 
 export default function LoginForm() {
   return (
-    <div className="flex h-screen w-full items-center justify-center p-10 font-roboto">
-      <div className="grid max-w-2xl gap-10 rounded-3xl bg-white shadow-2xl">
-        <form className="flex flex-col items-center justify-center gap-10 p-10 font-roboto text-black-200">
-          <div className="flex w-full text-center text-xl md:text-2xl">
-            Bem vindo a Liga Colabrativa dos Povos
+    <div className="flex w-full items-center justify-center font-roboto">
+      <div className="min-w-4xl grid w-[500px] rounded-3xl bg-white shadow-none lg:shadow-2xl">
+        <form className="flex w-full flex-col items-center justify-center gap-6 p-10 font-roboto text-black-200 lg:gap-10">
+          <div className="flex w-full justify-center text-2xl">
+            Bem vindo a Liga!
           </div>
+          <GoogleLogin
+            onSuccess={(credentialResponse) => {
+              console.log(credentialResponse);
+            }}
+            onError={() => {
+              console.log('Login Failed');
+            }}
+          />
           <div className="flex items-center justify-between">
             <span className="mr-3 w-[40px] border-b" />
             <a href="#" className="">
@@ -21,14 +39,14 @@ export default function LoginForm() {
             </a>
             <span className="ml-3 w-[40px] border-b" />
           </div>
-          <TextField
+          <CustomTextField
             required
             id="email"
             label="Email"
             variant="outlined"
             fullWidth
           />
-          <TextField
+          <CustomTextField
             required
             id="password"
             label="Senha"
