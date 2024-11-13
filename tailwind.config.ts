@@ -13,6 +13,7 @@ export default {
     },
     colors: {
       fundoLogin: '#000000',
+      fundoRegister: '#000000',
       black: {
         100: '#C4C4C4',
         200: '#515255',
@@ -27,6 +28,8 @@ export default {
         "url('https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/fundo.png')",
       fundoLogin:
         "url('https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/75ba33192562945.65dddcd30b0c9.png')",
+      fundoRegister:
+        "url('https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/5ce7b3207291701.66dacf1f2cbb1.png')",
     },
   },
   plugins: [tailwindTypography],
