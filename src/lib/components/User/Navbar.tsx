@@ -19,7 +19,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import React, { useState } from 'react';
+import type React from 'react';
+import { useState } from 'react';
 
 import Account from '@/lib/components/User/Account';
 
@@ -27,7 +28,7 @@ const drawerWidth = 240;
 
 export default function PermanentDrawerLeft() {
   const [selectedItem, setSelectedItem] = useState('Conta');
-  const iconMap = {
+  const iconMap: { [key: string]: React.ReactNode } = {
     Conta: <AccountCircleOutlinedIcon />,
     'Área do Colaborador': <DeveloperBoardOutlinedIcon />,
     'Meus Impactos': <FingerprintOutlinedIcon />,
@@ -36,7 +37,7 @@ export default function PermanentDrawerLeft() {
     Spam: <MailIcon />,
   };
 
-  const contentMap = {
+  const contentMap: { [key: string]: React.ReactNode } = {
     Conta: <Account />,
     Starred: 'Este é o conteúdo de Starred.',
     'Send email': 'Este é o conteúdo de Send email.',
@@ -113,7 +114,7 @@ export default function PermanentDrawerLeft() {
           {selectedItem}
         </Typography>
         <Typography>
-          {contentMap[selectedItem] ||
+          {contentMap[selectedItem as keyof typeof contentMap] ||
             'Selecione um item para visualizar o conteúdo.'}
         </Typography>
       </Box>
