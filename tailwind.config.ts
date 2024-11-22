@@ -32,5 +32,10 @@ export default {
         "url('https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/5ce7b3207291701.66dacf1f2cbb1.png')",
     },
   },
-  plugins: [tailwindTypography],
+  plugins: [tailwindTypography, require('tailwindcss-motion')],
+  safelist: [
+    'motion-preset-typewriter-[5]',
+    'motion-preset-typewriter-[7]',
+    'motion-preset-typewriter-[8]',
+  ],
 } satisfies Config;
