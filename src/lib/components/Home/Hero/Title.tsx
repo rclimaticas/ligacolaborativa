@@ -19,7 +19,7 @@ export default function Title() {
   ];
 
   const typingSpeed = 100;
-  const intervalBetweenWords = 780;
+  const intervalBetweenWords = 790;
 
   useEffect(() => {
     const wordLength = words[currentWord].text.length;
