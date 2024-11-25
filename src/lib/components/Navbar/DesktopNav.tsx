@@ -69,32 +69,32 @@ export default function App() {
           </Link>
         </NavbarItem>
         <NavbarItem className="rounded-lg p-2 motion-duration-200 hover:motion-preset-blur-right hover:bg-orange hover:text-white">
-          <Link color="foreground" href="#">
+          <Link color="foreground" href="/ondefoi">
             Registros OndeFoi
           </Link>
           {/* emoji para colocar -> hover:after:content-['•'] hover:after:ml-2 */}
         </NavbarItem>
         <NavbarItem className="rounded-lg p-2 motion-duration-200 hover:motion-preset-blur-right hover:bg-orange hover:text-white">
-          <Link color="foreground" href="#">
+          <Link color="foreground" href="https://www.espiralds.com/sofia">
             Assessoria Sofia
           </Link>
         </NavbarItem>
         <NavbarItem className="rounded-lg p-2 motion-duration-200 hover:motion-preset-blur-right hover:bg-orange hover:text-white">
-          <Link color="foreground" href="#">
+          <Link color="foreground" href="/ligacolaborativa">
             Sobre Nós
           </Link>
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end" className="font-bold text-black-300">
         <NavbarItem className="flex w-full items-center justify-center rounded-lg border-2 bg-orange px-5 py-2">
-          <Link href="#">Login</Link>
+          <Link href="/login">Login</Link>
         </NavbarItem>
         <NavbarItem>
           <Button
             className="font-bold text-black-300"
             as={Link}
             color="primary"
-            href="#"
+            href="/register"
             variant="flat"
           >
             Sign Up
