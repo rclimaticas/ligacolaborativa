@@ -11,8 +11,8 @@ import { GoogleLogin } from '@react-oauth/google';
 
 const CustomTextField = styled(TextField)({
   '& input:-webkit-autofill': {
-    WebkitBoxShadow: '0 0 0 1000px white inset', // Altere "white" para a cor desejada
-    WebkitTextFillColor: 'black', // Altere "black" para a cor do texto desejada
+    WebkitBoxShadow: '0 0 0 1000px white inset',
+    WebkitTextFillColor: 'black',
   },
 });
 

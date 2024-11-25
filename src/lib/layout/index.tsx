@@ -4,9 +4,10 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { usePathname } from 'next/navigation';
 import type { ReactNode } from 'react';
 
+import Navbar from '../components/Navbar/index';
 import { ThemeProvider } from '@/lib/components/theme-provider';
 
-import Header from './Header';
+// import Header from './Header';
 
 type LayoutProps = {
   children: ReactNode;
@@ -24,7 +25,7 @@ const Layout = ({ children }: LayoutProps) => {
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <GoogleOAuthProvider clientId={GoogleID}>
         <div className="flex min-h-screen flex-col bg-white">
-          {!hideHeader && <Header />}
+          {!hideHeader && <Navbar />}
           <main className="flex flex-grow flex-col">{children}</main>
         </div>
       </GoogleOAuthProvider>

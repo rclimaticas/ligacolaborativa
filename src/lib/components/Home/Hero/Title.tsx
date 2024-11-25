@@ -18,8 +18,8 @@ export default function Title() {
     { text: 'das Naturezas.', className: 'motion-preset-typewriter-[14]' },
   ];
 
-  const typingSpeed = 100;
-  const intervalBetweenWords = 790;
+  const typingSpeed = 120;
+  const intervalBetweenWords = 540;
 
   useEffect(() => {
     const wordLength = words[currentWord].text.length;
