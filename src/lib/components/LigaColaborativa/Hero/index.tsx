@@ -3,7 +3,7 @@ import Title from '@/lib/components/LigaColaborativa/Hero/Title';
 
 export default function Hero() {
   return (
-    <div className="mt-52 flex h-full flex-col gap-10 p-4 md:gap-3 lg:flex-row">
+    <div className="mt-32 flex h-full flex-col gap-10 md:gap-3 lg:mt-20 lg:flex-row">
       <Title />
       <Doodle />
     </div>

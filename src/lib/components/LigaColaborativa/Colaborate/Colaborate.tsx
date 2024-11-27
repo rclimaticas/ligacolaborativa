@@ -3,9 +3,9 @@ export default function Colaborate() {
     <div className="flex w-full justify-center">
       <button
         type="submit"
-        className="relative bottom-3 rounded-xl border-2 border-black-300 bg-orange p-2 px-10 text-xl font-bold text-black-300 shadow-[rgba(0,0,15,0.5)_-3px_5px_4px_0px]"
+        className="relative bottom-3 rounded-xl border-2 border-black-300 bg-orange p-2 px-10 text-xl font-bold text-black-300 shadow-[rgba(0,0,15,0.5)_-3px_5px_4px_0px] motion-duration-500 hover:motion-preset-blur-right"
       >
-        Colaboore com a LCdP
+        <div>Colaboore com a LCdP</div>
       </button>
     </div>
   );
