@@ -9,7 +9,7 @@ const withPWA = require('next-pwa')({
 module.exports = withPWA({
   reactStrictMode: true,
   images: {
-    domains: ['rclimaticas-fileupload.s3.sa-east-1.amazonaws.com', 'iili.io'],
+    domains: ['rclimaticas-fileupload.s3.sa-east-1.amazonaws.com', 'iili.io', 'git.io'],
   },
   eslint: {
     dirs: ['src'],

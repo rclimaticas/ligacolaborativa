@@ -1,4 +1,4 @@
-import RoadMap from '@/lib/components/LigaColaborativa/LigaPurpose/Doodle';
+import RoadMap from '@/lib/components/LigaColaborativa/RoadMap/RoadMap';
 
 export default function RoadMapComponent() {
   return (
