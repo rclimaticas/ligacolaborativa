@@ -12,11 +12,14 @@ const { title, button } = HeroData;
 
 export default function Title() {
   useEffect(() => {
-    new Typewriter('#typewriter', {
-      strings: ['Dos Povos.', 'Das naturezas.', 'Das Culturas.'],
-      autoStart: true,
-      loop: true,
-    });
+    const typewriterElement = document.getElementById('typewriter');
+    if (typewriterElement) {
+      new Typewriter(typewriterElement, {
+        strings: ['Dos Povos.', 'Das naturezas.', 'Das Culturas.'],
+        autoStart: true,
+        loop: true,
+      });
+    }
   }, []);
   return (
     <div className="motion-preset-slide-left flex w-full items-center justify-center bg-white text-black-300 lg:w-1/2">
