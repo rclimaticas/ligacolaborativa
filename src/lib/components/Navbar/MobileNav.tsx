@@ -74,12 +74,12 @@ export default function MobileNav() {
       <div className="mt-5 grid w-full gap-5 p-4 font-bold text-black-300">
         <Link href="/login">
           <div className="flex items-center justify-center rounded-lg border-2 bg-orange p-3 px-5 py-2">
-            <a>Login</a>
+            <a>Entrar</a>
           </div>
         </Link>
-        <Link href="/login">
+        <Link href="/register">
           <div className="flex items-center justify-center rounded-lg border-2 p-3 px-5 py-2">
-            <a>Sign</a>
+            <a>Cadastrar</a>
           </div>
         </Link>
       </div>

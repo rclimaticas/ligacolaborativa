@@ -39,9 +39,7 @@ export default function App() {
 
   return (
     <Navbar
-      className={`duration-2000 fixed z-50 h-[80px] bg-white p-5 transition-shadow ${
-        isScrolled ? 'shadow-xl' : ''
-      }`}
+      className={`duration-2000 fixed z-50 h-[80px] bg-white p-5 transition-shadow ${isScrolled ? 'shadow-xl' : ''}`}
       onMenuOpenChange={(isOpen) => setIsMenuOpen(isOpen)}
     >
       <NavbarContent>
@@ -63,11 +61,11 @@ export default function App() {
         className="hidden gap-4 font-bold text-black-300 sm:flex"
         justify="center"
       >
-        <NavbarItem className="rounded-lg p-2 motion-duration-200 hover:motion-preset-blur-right hover:bg-orange hover:text-white">
-          <Link color="foreground" href="#">
+        <Link color="foreground" href="#">
+          <NavbarItem className="rounded-lg p-2 motion-duration-200 hover:motion-preset-blur-right hover:bg-orange hover:text-white">
             Biblioteca
-          </Link>
-        </NavbarItem>
+          </NavbarItem>
+        </Link>
         <NavbarItem className="rounded-lg p-2 motion-duration-200 hover:motion-preset-blur-right hover:bg-orange hover:text-white">
           <Link color="foreground" href="/ondefoi">
             Registros OndeFoi
@@ -86,20 +84,16 @@ export default function App() {
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end" className="font-bold text-black-300">
-        <NavbarItem className="flex w-full items-center justify-center rounded-lg border-2 bg-orange px-5 py-2">
-          <Link href="/login">Login</Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Button
-            className="font-bold text-black-300"
-            as={Link}
-            color="primary"
-            href="/register"
-            variant="flat"
-          >
-            Sign Up
-          </Button>
-        </NavbarItem>
+        <Link href="/login">
+          <NavbarItem className="flex w-full items-center justify-center rounded-lg border-2 bg-orange px-5 py-2">
+            Entrar
+          </NavbarItem>
+        </Link>
+        <Link href="/register">
+          <NavbarItem className="flex w-full items-center justify-center rounded-lg bg-white px-5 py-2">
+            Cadastrar
+          </NavbarItem>
+        </Link>
       </NavbarContent>
     </Navbar>
   );
