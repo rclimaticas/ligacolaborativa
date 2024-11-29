@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 export default function Doodle() {
   return (
-    <div className="motion-preset-slide-right items-center justify-center lg:flex lg:justify-start">
+    <div className="motion-preset-slide-right w-full items-center justify-center lg:flex lg:justify-start">
       {/* <Image
         src="https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/trusted-Jh7-Pct1.png"
         alt="Imagem"
@@ -13,9 +13,9 @@ export default function Doodle() {
       /> */}
       <Image
         alt="Imagem"
-        width={500}
-        height={500}
-        src="https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/image-removebg-preview+(22).png"
+        width={400}
+        height={400}
+        src="https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/logo-BD4VjkRU.png"
       />
     </div>
   );
