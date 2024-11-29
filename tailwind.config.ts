@@ -24,6 +24,8 @@ export default {
       green: { 100: '#4caf50', 200: '#7e926f' },
     },
     backgroundImage: {
+      gradient:
+        'linear-gradient(94deg, rgba(0,0,0,1) 26%, rgba(0,215,42,1) 56%, rgba(255,239,0,1) 100%)',
       fundo:
         "url('https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/fundo.png')",
       fundoLogin:

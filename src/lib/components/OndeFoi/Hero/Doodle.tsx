@@ -15,7 +15,7 @@ export default function Doodle() {
         alt="Imagem"
         width={500}
         height={500}
-        src="https://iili.io/2leHsNR.md.png"
+        src="https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/image-removebg-preview+(22).png"
       />
     </div>
   );
