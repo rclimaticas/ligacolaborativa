@@ -3,7 +3,7 @@
 export default function Title() {
   return (
     <div className="motion-preset-slide-left flex w-full text-black-300">
-      <div className="grid w-full items-center justify-center gap-5 px-2">
+      <div className="w-full items-center justify-center gap-5">
         <h2 className="text-center text-3xl font-bold md:text-3xl lg:text-right">
           Sobre o Aplicativo:
         </h2>
