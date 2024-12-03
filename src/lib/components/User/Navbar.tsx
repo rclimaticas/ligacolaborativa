@@ -22,7 +22,7 @@ import Typography from '@mui/material/Typography';
 import type React from 'react';
 import { useState } from 'react';
 
-import Account from '@/lib/components/User/Account';
+import Account from '@/lib/components/User/Account/Account';
 
 const drawerWidth = 240;
 
@@ -52,7 +52,7 @@ export default function PermanentDrawerLeft() {
       <CssBaseline />
       <AppBar
         position="fixed"
-        className="bg-orange"
+        style={{ backgroundColor: '#cfd149' }}
         sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
       >
         <Toolbar>
@@ -110,9 +110,6 @@ export default function PermanentDrawerLeft() {
         sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
       >
         <Toolbar />
-        <Typography variant="h4" gutterBottom>
-          {selectedItem}
-        </Typography>
         <Typography>
           {contentMap[selectedItem as keyof typeof contentMap] ||
             'Selecione um item para visualizar o conteúdo.'}
