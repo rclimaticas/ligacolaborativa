@@ -23,6 +23,7 @@ import type React from 'react';
 import { useState } from 'react';
 
 import Account from '@/lib/components/User/Account/Account';
+import Colaborate from '@/lib/components/User/Colaborate/Colaborate';
 
 const drawerWidth = 240;
 
@@ -39,7 +40,7 @@ export default function PermanentDrawerLeft() {
 
   const contentMap: { [key: string]: React.ReactNode } = {
     Conta: <Account />,
-    Starred: 'Este é o conteúdo de Starred.',
+    'Área do Colaborador': <Colaborate />,
     'Send email': 'Este é o conteúdo de Send email.',
     Drafts: 'Este é o conteúdo de Drafts.',
     'All mail': 'Este é o conteúdo de All mail.',
