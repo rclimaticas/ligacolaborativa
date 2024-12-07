@@ -86,7 +86,7 @@ const Colaborate: React.FC = () => {
           <div className="flex w-full items-center justify-between py-4">
             <div className="font-bold opacity-50">Povos</div>
             <div className="flex max-w-[190px] flex-wrap gap-1">
-              {['Agricultor Familiar', 'Indígenas', 'Quilombolas', 'viado'].map(
+              {['Agricultor Familiar', 'Indígenas', 'Quilombolas'].map(
                 (tag) => (
                   <div
                     key={tag}
