@@ -19,7 +19,10 @@ const Layout = ({ children }: LayoutProps) => {
 
   // Ocultar o Header nas rotas /login e /register
   const hideHeader =
-    pathname === '/login' || pathname === '/register' || pathname === '/user';
+    pathname === '/login' ||
+    pathname === '/register' ||
+    pathname === '/user' ||
+    pathname === '/graph';
 
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
