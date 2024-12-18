@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable consistent-return */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-plusplus */
@@ -207,6 +208,7 @@ const NetworkGraph: React.FC = () => {
 
   useEffect(() => {
     if (graphData && typeof window !== 'undefined' && graphRef.current) {
+      // @ts-ignore
       const Graph = new ForceGraph3D(graphRef.current)
         .graphData(graphData)
         .nodeLabel((node: GraphNode) => `Código: ${node.name}`)
