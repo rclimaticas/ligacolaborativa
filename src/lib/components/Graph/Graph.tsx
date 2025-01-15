@@ -211,14 +211,14 @@ const NetworkGraph: React.FC = () => {
       // @ts-ignore
       const Graph = new ForceGraph3D(graphRef.current)
         .graphData(graphData)
-        .nodeLabel((node: GraphNode) => `Código: ${node.name}`)
+        // .nodeLabel((node: GraphNode) => `Código: ${node.name}`)
         .nodeAutoColorBy('name')
-        .nodeThreeObject((node: GraphNode) => {
-          return new THREE.Mesh(
-            new THREE.SphereGeometry(5),
-            new THREE.MeshBasicMaterial({ color: Math.random() * 0xffffff })
-          );
-        })
+        // .nodeThreeObject((node: GraphNode) => {
+        //   return new THREE.Mesh(
+        //     new THREE.SphereGeometry(5),
+        //     new THREE.MeshBasicMaterial({ color: Math.random() * 0xffffff })
+        //   );
+        // })
         .linkDirectionalArrowLength(0);
 
       Graph.cameraPosition({ x: 0, y: 0, z: 400 });
