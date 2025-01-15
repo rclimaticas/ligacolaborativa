@@ -28,6 +28,7 @@
     "@emotion/styled": "^11.13.5",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^1.0.6",
+    "@metamask/providers": "^18.3.1",
     "@moralisweb3/next": "^2.27.2",
     "@mui/icons-material": "^6.1.10",
     "@mui/material": "^6.1.10",

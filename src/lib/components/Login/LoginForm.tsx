@@ -177,31 +177,13 @@ export default function LoginForm() {
                       router.push('/');
                     }, 3000);
                   } catch (error) {
-                    console.error(
-                      'Erro ao autenticar:',
-                      error.response?.data?.error
-                    );
+                    // console.error(
+                    //   'Erro ao autenticar:',
+                    //   error.response?.data?.error
+                    // );
                   }
                 }}
                 onError={() => console.error('Erro no login com o Google')}
-                renderButton={(renderProps) => (
-                  <button
-                    onClick={renderProps.onClick}
-                    style={{
-                      borderRadius: '50%', // Tornar o botão redondo
-                      padding: '12px 30px', // Ajuste o tamanho conforme necessário
-                      backgroundColor: '#4285F4', // Cor do botão (Google)
-                      color: 'white', // Cor do texto
-                      fontWeight: 'bold', // Texto em negrito
-                      cursor: 'pointer', // Cursor indicando que o botão é clicável
-                      border: 'none', // Remover borda
-                      display: 'inline-block', // Garantir que o botão se comporte como um botão de linha
-                      textAlign: 'center', // Alinhar texto centralizado
-                    }}
-                  >
-                    Login com Google
-                  </button>
-                )}
               />
             </div>
             <div>
