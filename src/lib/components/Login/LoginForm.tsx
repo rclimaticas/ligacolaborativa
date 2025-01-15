@@ -1,3 +1,8 @@
+/* eslint-disable react/button-has-type */
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react/no-unknown-property */
+/* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable no-alert */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
@@ -5,12 +10,14 @@
 import CircularProgress from '@mui/material/CircularProgress';
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
-import { GoogleLogin } from '@react-oauth/google';
+import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
+import { ethers } from 'ethers';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import type React from 'react';
 import { useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 
 const CustomTextField = styled(TextField)({
   '& input:-webkit-autofill': {
@@ -38,6 +45,33 @@ export default function LoginForm() {
     setLoginData({ ...loginData, [name]: value });
   };
 
+  // const signIn = useGoogleLogin({
+  //   onSuccess: async (response) => {
+  //     try {
+  //       const token = response.access_token;
+
+  //       const serverResponse = await axios.post(
+  //         'https://crispy-system-7v7pvgxg9q9wcr4-3333.app.github.dev/auth/google',
+  //         {
+  //           token,
+  //         }
+  //       );
+  //       toast.success('Login realizado com sucesso!', {
+  //         position: 'top-right',
+  //         autoClose: 3000,
+  //       });
+  //       setTimeout(() => {
+  //         router.push('/');
+  //       }, 3000);
+  //     } catch (error) {
+  //       console.error('Erro ao autenticar:', error.response?.data?.error);
+  //     }
+  //   },
+  //   onError: (error) => {
+  //     console.error('Erro ao tentar fazer login com o Google:', error);
+  //   },
+  // });
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -51,12 +85,60 @@ export default function LoginForm() {
           headers: { 'Content-Type': 'application/json' },
         }
       );
-      alert(`Login bem-sucedido! Token: ${response.data.token}`);
-      router.push('/');
+      toast.success('Login realizado com sucesso!', {
+        position: 'top-right',
+        autoClose: 3000,
+      });
+      setTimeout(() => {
+        router.push('/');
+      }, 3000);
     } catch (err: any) {
       setError(err.response?.data?.message || 'Ocorreu um erro inesperado.');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleMetaMaskLogin = async () => {
+    if (window.ethereum) {
+      try {
+        setLoading(true);
+
+        const provider = new ethers.BrowserProvider(window.ethereum);
+
+        const signer = await provider.getSigner();
+
+        await window.ethereum.request({ method: 'eth_requestAccounts' });
+
+        const address = await signer.getAddress();
+
+        const response = await axios.post(
+          'https://crispy-system-7v7pvgxg9q9wcr4-3333.app.github.dev/auth/metamask',
+          { metamaskAddress: address }
+        );
+
+        if (response.data.token) {
+          toast.success('Login com MetaMask bem-sucedido!', {
+            position: 'top-right',
+            autoClose: 3000,
+          });
+
+          router.push('/');
+        }
+      } catch (err) {
+        console.error('Erro ao conectar com MetaMask:', err);
+        toast.error('Erro ao tentar fazer login com MetaMask.', {
+          position: 'top-right',
+          autoClose: 3000,
+        });
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      toast.error('MetaMask não detectado. Por favor, instale o MetaMask.', {
+        position: 'top-right',
+        autoClose: 3000,
+      });
     }
   };
 
@@ -76,14 +158,75 @@ export default function LoginForm() {
                 src="https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/logoLC-DRqUmzjb.png"
               />
             </div>
-            <GoogleLogin
-              onSuccess={(credentialResponse) => {
-                console.log(credentialResponse);
-              }}
-              onError={() => {
-                console.log('Login Failed');
-              }}
-            />
+            <div>
+              <GoogleLogin
+                onSuccess={async (credentialResponse) => {
+                  try {
+                    const { credential } = credentialResponse;
+                    const response = await axios.post(
+                      'https://crispy-system-7v7pvgxg9q9wcr4-3333.app.github.dev/auth/google',
+                      {
+                        token: credential,
+                      }
+                    );
+                    toast.success('Login realizado com sucesso!', {
+                      position: 'top-right',
+                      autoClose: 3000,
+                    });
+                    setTimeout(() => {
+                      router.push('/');
+                    }, 3000);
+                  } catch (error) {
+                    console.error(
+                      'Erro ao autenticar:',
+                      error.response?.data?.error
+                    );
+                  }
+                }}
+                onError={() => console.error('Erro no login com o Google')}
+                renderButton={(renderProps) => (
+                  <button
+                    onClick={renderProps.onClick}
+                    style={{
+                      borderRadius: '50%', // Tornar o botão redondo
+                      padding: '12px 30px', // Ajuste o tamanho conforme necessário
+                      backgroundColor: '#4285F4', // Cor do botão (Google)
+                      color: 'white', // Cor do texto
+                      fontWeight: 'bold', // Texto em negrito
+                      cursor: 'pointer', // Cursor indicando que o botão é clicável
+                      border: 'none', // Remover borda
+                      display: 'inline-block', // Garantir que o botão se comporte como um botão de linha
+                      textAlign: 'center', // Alinhar texto centralizado
+                    }}
+                  >
+                    Login com Google
+                  </button>
+                )}
+              />
+            </div>
+            <div>
+              <button
+                onClick={handleMetaMaskLogin}
+                disabled={loading}
+                className="rounded-md bg-orange p-3 text-black-300 text-white"
+              >
+                {loading ? 'Conectando...' : 'Login com MetaMask'}
+              </button>
+            </div>
+            <div className="custom-toast-container">
+              <ToastContainer />
+              <style jsx>
+                {`
+                  .custom-toast-container {
+                    position: fixed !important;
+                    top: 0;
+                    right: 0;
+                    z-index: 9999;
+                    pointer-events: none; /* Para evitar que interaja com outros elementos */
+                  }
+                `}
+              </style>
+            </div>
             <div className="flex items-center justify-between">
               <span className="mr-3 w-[40px] border-b" />
               <a href="#" className="">

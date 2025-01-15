@@ -14,10 +14,10 @@ type LayoutProps = {
 };
 
 const Layout = ({ children }: LayoutProps) => {
-  const GoogleID = process.env.GOOGLE_ID ?? '';
+  const GoogleID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '';
   const pathname = usePathname();
 
-  // Ocultar o Header nas rotas /login e /register
+  // ocultar o Header nas rotas /login e /register
   const hideHeader =
     pathname === '/login' ||
     pathname === '/register' ||
