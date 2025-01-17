@@ -25,7 +25,11 @@ export default function Carousel() {
           </div>
         </div>
       ) : (
-        <CarouselComponent />
+        <div className="flex items-center justify-center">
+          <div className="flex w-[1000px]">
+            <CarouselComponent />
+          </div>
+        </div>
       )}
     </div>
   );

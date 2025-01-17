@@ -8,9 +8,11 @@ import TrustedBy from '@/lib/components/Home/NewsletterAndTrustedBy/TrustedBy';
 
 export default function NewsletterAndTrustedBy() {
   return (
-    <div className="grid grid-cols-1 xl:grid-cols-2">
-      <Newsletter />
-      <TrustedBy />
+    <div className="flex items-center justify-center">
+      <div className="grid w-[1500px] grid-cols-1 xl:grid-cols-2">
+        <Newsletter />
+        <TrustedBy />
+      </div>
     </div>
   );
 }
