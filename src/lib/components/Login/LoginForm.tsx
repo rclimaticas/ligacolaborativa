@@ -160,50 +160,54 @@ export default function LoginForm() {
             className="flex w-full flex-col items-center justify-center gap-6 p-10 font-roboto text-black-200 lg:gap-10"
             onSubmit={handleSubmit}
           >
-            <div className="flex w-full justify-center text-2xl">
+            {/* <div className="flex w-full justify-center text-2xl">
               <Image
                 alt="Logo"
                 width="80"
                 height="80"
                 src="https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/logoLC-DRqUmzjb.png"
               />
-            </div>
-            <div>
-              <GoogleLogin
-                onSuccess={async (credentialResponse) => {
-                  try {
-                    const { credential } = credentialResponse;
-                    const response = await axios.post(
-                      'https://crispy-system-7v7pvgxg9q9wcr4-3333.app.github.dev/auth/google',
-                      {
-                        token: credential,
-                      }
-                    );
-                    toast.success('Login realizado com sucesso!', {
-                      position: 'top-right',
-                      autoClose: 3000,
-                    });
-                    setTimeout(() => {
-                      router.push('/');
-                    }, 3000);
-                  } catch (error) {
-                    // console.error(
-                    //   'Erro ao autenticar:',
-                    //   error.response?.data?.error
-                    // );
-                  }
-                }}
-                onError={() => console.error('Erro no login com o Google')}
-              />
-            </div>
-            <div>
-              <button
-                onClick={handleMetaMaskLogin}
-                disabled={loading}
-                className="rounded-md bg-orange p-3 text-black-300 text-white"
-              >
-                {loading ? 'Conectando...' : 'Login com MetaMask'}
-              </button>
+            </div> */}
+            <div className="flex flex-row items-center justify-center gap-10">
+              <div>
+                <GoogleLogin
+                  onSuccess={async (credentialResponse) => {
+                    try {
+                      const { credential } = credentialResponse;
+                      const response = await axios.post(
+                        'https://crispy-system-7v7pvgxg9q9wcr4-3333.app.github.dev/auth/google',
+                        {
+                          token: credential,
+                        }
+                      );
+                      toast.success('Login realizado com sucesso!', {
+                        position: 'top-right',
+                        autoClose: 3000,
+                      });
+                      setTimeout(() => {
+                        router.push('/');
+                      }, 3000);
+                    } catch (error) {
+                      // console.error(
+                      //   'Erro ao autenticar:',
+                      //   error.response?.data?.error
+                      // );
+                    }
+                  }}
+                  onError={() => console.error('Erro no login com o Google')}
+                />
+              </div>
+              <div>
+                <button
+                  onClick={handleMetaMaskLogin}
+                  disabled={loading}
+                  className="flex h-[40px] items-center justify-center rounded-md border-2 border-black-100 bg-white p-3 text-black-300 text-white"
+                >
+                  <p className="font-light text-black-200">
+                    {loading ? 'Conectando...' : 'Sign in with MetaMask'}
+                  </p>
+                </button>
+              </div>
             </div>
             <div className="custom-toast-container">
               <ToastContainer />

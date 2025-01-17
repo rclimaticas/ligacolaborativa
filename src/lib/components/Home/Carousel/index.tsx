@@ -18,15 +18,17 @@ export default function Carousel() {
     <div>
       {isLoading ? (
         <div className="animate-pulse space-y-4">
-          <div className="flex h-[560px] items-center justify-center rounded-md">
-            <Box sx={{ display: 'flex' }}>
-              <CircularProgress />
-            </Box>
+          <div className="flex items-center justify-center">
+            <div className="flex h-[560px] w-full items-center justify-center rounded-md">
+              <Box sx={{ display: 'flex' }}>
+                <CircularProgress />
+              </Box>
+            </div>
           </div>
         </div>
       ) : (
         <div className="flex items-center justify-center">
-          <div className="flex w-[1000px]">
+          <div className="flex w-[300px] sm:w-[400px] md:w-[700px] lg:w-[800px] xl:w-[1300px]">
             <CarouselComponent />
           </div>
         </div>
