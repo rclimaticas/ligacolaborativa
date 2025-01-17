@@ -19,6 +19,8 @@ import type React from 'react';
 import { useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 
+import { saveUserData } from '@/services/UserStorage';
+
 const CustomTextField = styled(TextField)({
   '& input:-webkit-autofill': {
     WebkitBoxShadow: '0 0 0 1000px white inset',
@@ -88,6 +90,9 @@ export default function LoginForm() {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Ocorreu um erro inesperado.');
       }
+
+      const userData = await response.json();
+      await saveUserData('user', userData);
 
       toast.success('Login realizado com sucesso!', {
         position: 'top-right',

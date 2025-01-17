@@ -1,9 +1,11 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 import Avatar from '@mui/material/Avatar';
+import CircularProgress from '@mui/material/CircularProgress';
 import {
   Navbar,
   NavbarBrand,
@@ -16,14 +18,16 @@ import {
   DropdownMenu,
   DropdownItem,
 } from '@nextui-org/react';
-import axios from 'axios';
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
+
+import { getUserData, saveUserData } from '@/services/UserStorage';
 
 export default function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,44 +43,57 @@ export default function App() {
 
   const fetchUserData = async () => {
     try {
-      const response = await axios.get(
+      const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/users/profile`,
         {
+          method: 'GET',
           headers: {
             'Content-Type': 'application/json',
           },
-          withCredentials: true,
+          credentials: 'include',
         }
       );
-      const userData = response.data;
+
+      if (!response.ok) {
+        throw new Error('Falha ao buscar dados do usuário.');
+      }
+
+      const userData = await response.json();
 
       const userWithTimestamp = {
         ...userData,
         timestamp: Date.now(),
       };
-      localStorage.setItem('user', JSON.stringify(userWithTimestamp));
+
+      await saveUserData('user', userWithTimestamp);
       setUser(userData);
     } catch (error) {
       console.error('Erro ao buscar dados do usuário:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    const fiveMinutesInMs = 5 * 60 * 1000;
+    const initializeUser = async () => {
+      const storedUser = await getUserData('user');
+      const fiveMinutesInMs = 5 * 60 * 1000;
 
-    if (storedUser) {
-      const parsedUser = JSON.parse(storedUser);
-      const currentTime = Date.now();
+      if (storedUser) {
+        const currentTime = Date.now();
 
-      if (currentTime - parsedUser.timestamp < fiveMinutesInMs) {
-        setUser(parsedUser);
+        if (currentTime - storedUser.timestamp < fiveMinutesInMs) {
+          setUser(storedUser);
+          setIsLoading(false);
+        } else {
+          fetchUserData();
+        }
       } else {
         fetchUserData();
       }
-    } else {
-      fetchUserData();
-    }
+    };
+
+    initializeUser();
   }, []);
 
   return (
@@ -126,12 +143,14 @@ export default function App() {
       </NavbarContent>
 
       <NavbarContent justify="end" className="font-bold text-black-300">
-        {user ? (
+        {isLoading ? (
+          <CircularProgress color="success" />
+        ) : user ? (
           <Dropdown>
             <DropdownTrigger>
               <Avatar
                 className="bg-orange"
-                alt="Remy Sharp"
+                alt={user.name || 'Usuário'}
                 sx={{ width: 50, height: 50 }}
                 src={user.imageBase64 || ''}
               />

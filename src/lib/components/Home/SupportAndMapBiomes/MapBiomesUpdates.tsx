@@ -6,6 +6,14 @@
 
 'use client';
 
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable no-console */
+
+'use client';
+
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import axios from 'axios';
@@ -13,6 +21,10 @@ import type React from 'react';
 import { useEffect, useState, useRef } from 'react';
 
 import { MapBiomesData } from '@/lib/components/models/Home/MapBiomes';
+import {
+  getMapBiomesData,
+  saveMapBiomesData,
+} from '@/services/MapBiomesStorage';
 
 const { title, button } = MapBiomesData;
 
@@ -23,6 +35,8 @@ interface Noticia {
   link: string;
   imgSrc?: string;
 }
+
+const MAX_DATA_AGE = 60 * 60 * 1000;
 
 const MapBiomes: React.FC = () => {
   const [noticias, setNoticias] = useState<Noticia[]>([]);
@@ -40,18 +54,34 @@ const MapBiomes: React.FC = () => {
 
   const fetchNoticias = async () => {
     setLoading(true);
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/scrape-news`
-      );
-      console.log(response.data);
-      if (Array.isArray(response.data)) {
-        setNoticias(response.data.slice(0, 3));
-      } else {
-        /* empty */
-      }
+
+    const storedData = await getMapBiomesData('noticias');
+
+    const currentTime = Date.now();
+
+    if (storedData && currentTime - storedData.timestamp < MAX_DATA_AGE) {
+      setNoticias(storedData.noticias);
       setLoading(false);
-    } catch (error) {
+    } else {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/scrape-news`
+        );
+        if (Array.isArray(response.data)) {
+          const newNoticias = response.data.slice(0, 3);
+
+          await saveMapBiomesData('noticias', {
+            noticias: newNoticias,
+            timestamp: Date.now(),
+          });
+
+          setNoticias(newNoticias);
+        } else {
+          setError('Não foi possível recuperar os dados.');
+        }
+      } catch (error) {
+        setError('Erro ao buscar as notícias.');
+      }
       setLoading(false);
     }
   };
