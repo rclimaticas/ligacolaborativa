@@ -78,22 +78,27 @@ export default function LoginForm() {
     setLoading(true);
 
     try {
-      const response = await axios.post(
-        'https://backend-production-2453.up.railway.app/login',
-        loginData,
-        {
-          headers: { 'Content-Type': 'application/json' },
-        }
-      );
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(loginData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Ocorreu um erro inesperado.');
+      }
+
       toast.success('Login realizado com sucesso!', {
         position: 'top-right',
         autoClose: 3000,
       });
+
       setTimeout(() => {
         router.push('/');
       }, 3000);
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Ocorreu um erro inesperado.');
+      setError(err.message || 'Ocorreu um erro inesperado.');
     } finally {
       setLoading(false);
     }

@@ -42,7 +42,7 @@ const MapBiomes: React.FC = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        'https://backend-rclimaticas-2.onrender.com/scrape-news'
+        `${process.env.NEXT_PUBLIC_API_URL}/scrape-news`
       );
       console.log(response.data);
       if (Array.isArray(response.data)) {
