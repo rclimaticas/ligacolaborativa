@@ -101,7 +101,7 @@ export default function LoginForm() {
 
       setTimeout(() => {
         router.push('/');
-      }, 3000);
+      }, 1000);
     } catch (err: any) {
       setError(err.message || 'Ocorreu um erro inesperado.');
     } finally {

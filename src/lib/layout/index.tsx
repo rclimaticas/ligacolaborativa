@@ -3,6 +3,7 @@
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { usePathname } from 'next/navigation';
 import type { ReactNode } from 'react';
+import { ToastContainer } from 'react-toastify';
 
 import Navbar from '../components/Navbar/index';
 import { ThemeProvider } from '@/lib/components/theme-provider';
@@ -29,6 +30,7 @@ const Layout = ({ children }: LayoutProps) => {
       <GoogleOAuthProvider clientId={GoogleID}>
         <div className="flex min-h-screen flex-col bg-white">
           {!hideHeader && <Navbar />}
+          <ToastContainer />
           <main className="flex flex-grow flex-col">{children}</main>
         </div>
       </GoogleOAuthProvider>
