@@ -5,6 +5,7 @@ import Carousel from '@/lib/components/Home/Carousel/index';
 import Hero from '@/lib/components/Home/Hero/index';
 import Occurrences from '@/lib/components/Home/Ocorrences/index';
 import SupportMapBiomesWidget from '@/lib/components/Home/SupportAndMapBiomes/index';
+import WidgetFloating from '@/lib/components/Home/WidgetFloating/index';
 
 const Home: NextPage = () => {
   return (
@@ -17,6 +18,7 @@ const Home: NextPage = () => {
       </div>
       <Occurrences />
       <SupportMapBiomesWidget />
+      <WidgetFloating />
     </>
   );
 };

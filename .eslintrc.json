@@ -1,11 +1,19 @@
 {
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "project": "./tsconfig.json"  // Adicione o caminho para o seu tsconfig.json
+  },
   "extends": [
     "sznm/react",
     "plugin:react/jsx-runtime",
-    "plugin:@next/next/recommended"
+    "plugin:@next/next/recommended",
+    "plugin:@typescript-eslint/recommended"  // Adicione o plugin @typescript-eslint para regras específicas do TS
   ],
   "rules": {
     "@typescript-eslint/lines-between-class-members": "off",
-    "@typescript-eslint/no-throw-literal": "off"
+    "@typescript-eslint/no-throw-literal": "off",
+    "@typescript-eslint/dot-notation": "warn"  // Habilite ou altere a regra para sua preferência
   }
 }
