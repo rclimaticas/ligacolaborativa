@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable react/button-has-type */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -13,13 +15,12 @@ import TextField from '@mui/material/TextField';
 import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import { ethers } from 'ethers';
+import localforage from 'localforage';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import type React from 'react';
 import { useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
-
-import { saveUserData } from '@/services/UserStorage';
 
 const CustomTextField = styled(TextField)({
   '& input:-webkit-autofill': {
@@ -41,6 +42,28 @@ export default function LoginForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+
+  const login = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      try {
+        const { access_token } = tokenResponse;
+        const response = await axios.post(
+          'https://crispy-system-7v7pvgxg9q9wcr4-3333.app.github.dev/auth/google',
+          { token: access_token }
+        );
+        toast.success('Login realizado com sucesso!', {
+          position: 'top-right',
+          autoClose: 3000,
+        });
+        setTimeout(() => {
+          router.push('/');
+        }, 3000);
+      } catch (error) {
+        /* empty */
+      }
+    },
+    onError: () => console.error('Erro no login com o Google'),
+  });
 
   const handleLogin = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -80,19 +103,37 @@ export default function LoginForm() {
     setLoading(true);
 
     try {
+      // Passo 1
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(loginData),
+        credentials: 'include',
       });
+
+      console.log(response);
 
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Ocorreu um erro inesperado.');
       }
 
-      const userData = await response.json();
-      await saveUserData('user', userData);
+      const profileResponse = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/profile`,
+        {
+          method: 'GET',
+          credentials: 'include',
+        }
+      );
+
+      if (!profileResponse.ok) {
+        throw new Error('Erro ao buscar os dados do perfil.');
+      }
+
+      const userData = await profileResponse.json();
+      // console.log('Dados de login recebidos:', userData);
+
+      await localforage.setItem('user', userData);
 
       toast.success('Login realizado com sucesso!', {
         position: 'top-right',
@@ -168,9 +209,9 @@ export default function LoginForm() {
                 src="https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/logoLC-DRqUmzjb.png"
               />
             </div> */}
-            <div className="flex flex-row items-center justify-center gap-10">
+            <div className="flex flex-row items-center justify-center gap-5">
               <div>
-                <GoogleLogin
+                {/* <GoogleLogin
                   onSuccess={async (credentialResponse) => {
                     try {
                       const { credential } = credentialResponse;
@@ -195,17 +236,31 @@ export default function LoginForm() {
                     }
                   }}
                   onError={() => console.error('Erro no login com o Google')}
-                />
+                /> */}
+                <button
+                  onClick={() => login()}
+                  className="flex items-center justify-center rounded-full border-2 border-black-300 border-opacity-10 hover:bg-orange"
+                >
+                  <img
+                    className="p-1"
+                    src="/assets/google.png"
+                    alt="Google"
+                    style={{ width: '50px', height: '50px' }}
+                  />
+                </button>
               </div>
               <div>
                 <button
                   onClick={handleMetaMaskLogin}
                   disabled={loading}
-                  className="flex h-[40px] items-center justify-center rounded-md border-2 border-black-100 bg-white p-3 text-black-300 text-white"
+                  className="flex items-center justify-center rounded-full border-2 border-black-300 border-opacity-10 hover:bg-orange"
                 >
-                  <p className="font-light text-black-200">
-                    {loading ? 'Conectando...' : 'Sign in with MetaMask'}
-                  </p>
+                  <img
+                    className="p-1"
+                    src="/assets/metamask.png"
+                    alt="Google"
+                    style={{ width: '50px', height: '50px' }}
+                  />
                 </button>
               </div>
             </div>

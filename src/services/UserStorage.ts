@@ -36,3 +36,21 @@ export const removeUserData = async (key: string): Promise<void> => {
     console.error('Erro ao remover dados do usuário:', error);
   }
 };
+
+export const logout = async (): Promise<void> => {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/logout`, {
+      method: 'POST',
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      throw new Error('Erro ao realizar logout na API.');
+    }
+    await localforage.removeItem('user');
+    console.log('Dados do usuário removidos com sucesso!');
+    window.location.href = '/';
+  } catch (error) {
+    console.error('Erro ao realizar logout:', error);
+  }
+};

@@ -214,7 +214,7 @@ import {
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 
-import { getUserData } from '@/services/UserStorage';
+import { getUserData, logout } from '@/services/UserStorage';
 
 export default function App() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -238,6 +238,7 @@ export default function App() {
       try {
         const storedUser = await getUserData('user');
         if (storedUser) {
+          console.log('Dados do usuário carregados:', storedUser); // Adicionado aqui
           setUser(storedUser);
         }
       } catch (error) {
@@ -306,7 +307,7 @@ export default function App() {
           <Dropdown>
             <DropdownTrigger>
               <Chip
-                sx={{ backgroundColor: 'orange' }}
+                className="hover:bg-orange"
                 avatar={
                   <Avatar
                     alt={user.username || 'Usuário'}
@@ -321,8 +322,20 @@ export default function App() {
               className="rounded-lg border-2 bg-orange p-2"
               aria-label="User Menu"
             >
-              <DropdownItem key="profile">Perfil</DropdownItem>
-              <DropdownItem key="logout">Sair</DropdownItem>
+              <DropdownItem
+                key="profile"
+                href="/user"
+                className="hover:text-white"
+              >
+                Perfil
+              </DropdownItem>
+              <DropdownItem
+                className="hover:text-white"
+                onPress={logout}
+                key="logout"
+              >
+                Sair
+              </DropdownItem>
             </DropdownMenu>
           </Dropdown>
         ) : (
