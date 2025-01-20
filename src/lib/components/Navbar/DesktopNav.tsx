@@ -236,9 +236,9 @@ export default function App() {
   useEffect(() => {
     const initializeUser = async () => {
       try {
-        const storedUser = await getUserData('user');
+        const storedUser = await getUserData();
         if (storedUser) {
-          console.log('Dados do usuário carregados:', storedUser); // Adicionado aqui
+          console.log('Dados do usuário carregados:', storedUser);
           setUser(storedUser);
         }
       } catch (error) {

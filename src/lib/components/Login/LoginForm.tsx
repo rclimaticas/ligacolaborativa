@@ -9,18 +9,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
 /* eslint-disable jsx-a11y/anchor-is-valid */
+
 import CircularProgress from '@mui/material/CircularProgress';
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import { ethers } from 'ethers';
+import Cookie from 'js-cookie';
 import localforage from 'localforage';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import type React from 'react';
 import { useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
+
+import { TOKEN_KEY } from '@/middleware';
+import { openDB } from '@/services/UserStorage';
 
 const CustomTextField = styled(TextField)({
   '& input:-webkit-autofill': {
@@ -97,21 +102,70 @@ export default function LoginForm() {
   //   },
   // });
 
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   setError(null);
+  //   setLoading(true);
+
+  //   try {
+  //     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify(loginData),
+  //       credentials: 'include',
+  //     });
+
+  //     console.log(response);
+
+  //     if (!response.ok) {
+  //       const errorData = await response.json();
+  //       throw new Error(errorData.message || 'Ocorreu um erro inesperado.');
+  //     }
+
+  //     const profileResponse = await fetch(
+  //       `${process.env.NEXT_PUBLIC_API_URL}/users/profile`,
+  //       {
+  //         method: 'GET',
+  //         credentials: 'include',
+  //       }
+  //     );
+
+  //     if (!profileResponse.ok) {
+  //       throw new Error('Erro ao buscar os dados do perfil.');
+  //     }
+
+  //     const userData = await profileResponse.json();
+  //     // console.log('Dados de login recebidos:', userData);
+
+  //     await localforage.setItem('user', userData);
+
+  //     toast.success('Login realizado com sucesso!', {
+  //       position: 'top-right',
+  //       autoClose: 3000,
+  //     });
+
+  //     setTimeout(() => {
+  //       router.push('/');
+  //     }, 1000);
+  //   } catch (err: any) {
+  //     setError(err.message || 'Ocorreu um erro inesperado.');
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setLoading(true);
 
     try {
-      // Passo 1
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(loginData),
         credentials: 'include',
       });
-
-      console.log(response);
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -131,10 +185,26 @@ export default function LoginForm() {
       }
 
       const userData = await profileResponse.json();
-      // console.log('Dados de login recebidos:', userData);
+      console.log('Dados de login recebidos:', userData);
 
-      await localforage.setItem('user', userData);
+      const db = await openDB();
+      const transaction = db.transaction('user_data', 'readwrite');
+      const objectStore = transaction.objectStore('user_data');
 
+      const addRequest = objectStore.add(userData);
+
+      await new Promise((resolve, reject) => {
+        addRequest.onsuccess = () => resolve(true);
+        addRequest.onerror = (e) => {
+          console.error('Erro ao salvar no IndexedDB:', e);
+          reject(new Error('Erro ao salvar dados do usuário no IndexedDB.'));
+        };
+      });
+
+      const responseData = await response.json();
+      const { token } = responseData;
+
+      Cookie.set(TOKEN_KEY, token, { expires: 7 });
       toast.success('Login realizado com sucesso!', {
         position: 'top-right',
         autoClose: 3000,
@@ -142,8 +212,9 @@ export default function LoginForm() {
 
       setTimeout(() => {
         router.push('/');
-      }, 1000);
+      }, 800);
     } catch (err: any) {
+      // Exibir mensagem de erro
       setError(err.message || 'Ocorreu um erro inesperado.');
     } finally {
       setLoading(false);
