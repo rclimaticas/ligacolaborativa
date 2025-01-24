@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable import/no-extraneous-dependencies */
+
 'use client';
 
 import { GoogleOAuthProvider } from '@react-oauth/google';
@@ -7,6 +10,7 @@ import { ToastContainer } from 'react-toastify';
 
 import Navbar from '../components/Navbar/index';
 import { ThemeProvider } from '@/lib/components/theme-provider';
+import 'flipdown/dist/flipdown.css';
 
 // import Header from './Header';
 
@@ -23,13 +27,14 @@ const Layout = ({ children }: LayoutProps) => {
     pathname === '/login' ||
     pathname === '/register' ||
     pathname === '/user' ||
-    pathname === '/graph';
+    pathname === '/graph' ||
+    pathname === '/comingsoon';
 
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <GoogleOAuthProvider clientId={GoogleID}>
         <div className="flex min-h-screen flex-col bg-white">
-          {!hideHeader && <Navbar />}
+          {/* {!hideHeader && <Navbar />} */}
           <ToastContainer />
           <main className="flex flex-grow flex-col">{children}</main>
         </div>

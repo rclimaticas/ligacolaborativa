@@ -34,6 +34,8 @@ export default {
         "url('https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/5ce7b3207291701.66dacf1f2cbb1.png')",
       fundoOndeFoi:
         "url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAIAAACRXR/mAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAABnSURBVHja7M5RDYAwDEXRDgmvEocnlrQS2SwUFST9uEfBGWs9c97nbGtDcquqiKhOImLs/UpuzVzWEi1atGjRokWLFi1atGjRokWLFi1atGjRokWLFi1af7Ukz8xWp8z8AAAA//8DAJ4LoEAAlL1nAAAAAElFTkSuQmCC')",
+      fundoComingSoon:
+        "url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAcCAYAAACdz7SqAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFrSURBVEhLlZVLeoNADIOd2fkG3P+SLNtNNZ/4KwPRJn7Isj1k4HMcx08N6O46z/OVP9nkdnctD9J2EfefwDrmlpJpSm82DZUGesqvdBQCiya7sNVTfnGL5CcknnxfJA26GJDvSIXJT/Fkr1TU3VGswkB3jd32xvt4SSJRUMx/OQg5ZRqtK8Np2SwV89eRFikbcN9TbipS8iebTQTP7009kUiOlPNmjHHjvaknnmz6sonUXPj3TCdRbsMcG6eYsK/MJKrcJKCc+FOd25c3UiIIFCDf4Xoconi8LK6/wiTufB/wTkfY/17Cj4ubSzidjA+S7Lpr6k1qEH4Lnki8Mon4BPKn0yl/pt/gjTDzbl++MtPG3P6NcA3PvnRlnECboGjdNPYhvS5+T0niMBRlDesZ25smosC4D5HitDnM5SvDIm7EZhxUNmPUjfeUzVKcHIoLaeP4wk9Excmn75g2vvx7SXYixemnWBqyquoXY3sUuCsKxBUAAAAASUVORK5CYII=')",
     },
   },
   plugins: [tailwindTypography, require('tailwindcss-motion')],
