@@ -81,33 +81,41 @@ const ComingSoon: React.FC = () => {
         Seu navegador não suporta o elemento <code>audio</code>.
       </audio>
 
-      <div className="flex items-center justify-center bg-opacity-25 bg-fundoComingSoon">
-        <div className="flex h-full flex-row gap-10 p-4 md:gap-3 lg:flex-row lg:p-32">
-          <div className="flex w-full items-center justify-center gap-20">
-            <div className="watch">
-              <div className="frame">
-                <div className="text">
-                  <div>{timeLeft.hours}</div>
-                  <div className="flex text-8xl">
-                    <div>{timeLeft.minutes}</div>
-                    <div>:</div>
-                    <div>{timeLeft.seconds}</div>
+      <div className="flex flex-col items-center justify-center bg-opacity-25 bg-fundoComingSoon">
+        <div className="mt-20">
+          <p className="text-xl font-bold md:text-2xl">
+            A NOVA ONDA{' '}
+            <span className="underline decoration-orange">ESTÁ CHEGANDO</span>
+            !!!
+          </p>
+        </div>
+        <div className="z-20 flex h-full flex-row gap-10 p-4 md:gap-3 lg:flex-row lg:p-32">
+          <div className="flex w-full flex-col items-center justify-center gap-20 lg:flex-row">
+            <div className="flex w-full flex-col gap-2">
+              <img
+                style={{ width: '400px', height: '400px' }}
+                className="hidden w-full transform rounded-full border-2 border-orange bg-white transition-all duration-500 ease-out hover:scale-105 lg:flex"
+                src="https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/logoLC-DRqUmzjb.png"
+              />
+              <div className="timer mt-8 text-center">
+                <div className="text-md flex justify-center gap-4 font-bold md:text-xl">
+                  <div className="timer-item">
+                    <span className="timer-number">{timeLeft.hours}</span>
+                    <span className="timer-label">Horas</span>
+                  </div>
+                  <div className="timer-item">
+                    <span className="timer-number">{timeLeft.minutes}</span>
+                    <span className="timer-label">Minutos</span>
+                  </div>
+                  <div className="timer-item">
+                    <span className="timer-number">{timeLeft.seconds}</span>
+                    <span className="timer-label">Segundos</span>
                   </div>
                 </div>
               </div>
-              <div className="sideBtn" />
-              <div className="powerBtn" />
-              <div className="dots">
-                <span className="dot" />
-                <span className="dot" />
-                <span className="dot" />
-              </div>
             </div>
             <div>
-              <div className="flex flex-col gap-20">
-                <div className="mb-2">
-                  <p>A NOVA ONDA ESTÁ CHEGANDO!!!</p>
-                </div>
+              <div className="flex w-full flex-col gap-20">
                 <div className="brutalist-container w-full">
                   <input
                     placeholder="DIGITE SEU NOME"
@@ -125,31 +133,35 @@ const ComingSoon: React.FC = () => {
                   <label className="brutalist-label">EMAIL</label>
                 </div>
               </div>
-              <button className="brutalist-button mt-10">
-                <div className="w-full items-center justify-center rounded-full bg-white">
-                  <Image
-                    alt="Logo"
-                    width="80"
-                    height="80"
-                    src="https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/logoLC-DRqUmzjb.png"
-                  />
-                </div>
-                <div className="button-text w-[500px]">
-                  <span>Seja VIP na</span>
-                  <span>NOVA LIGA</span>
-                </div>
-              </button>
+              <div className="flex w-full items-center justify-center">
+                <button className="brutalist-button mt-10 flex">
+                  <div className="w-full items-center justify-center rounded-full bg-white">
+                    <Image
+                      alt="Logo"
+                      width="80"
+                      height="80"
+                      src="https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/logoLC-DRqUmzjb.png"
+                    />
+                  </div>
+                  <div className="button-text w-[500px]">
+                    <span>Seja VIP na</span>
+                    <span>NOVA LIGA</span>
+                  </div>
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="mt-[-20px] flex flex-col items-center justify-center bg-opacity-25 bg-fundoComingSoon">
+      <div className="z-10 mt-[-480px] flex h-full flex-col items-center justify-center bg-opacity-25 bg-fundoComingSoon lg:mt-[-20px]">
         <div className="mt-[-190px] flex h-full flex-col gap-10 p-4 md:gap-3 lg:flex-row lg:p-32">
           <img
             src="https://cdn.dribbble.com/users/92386/screenshots/2153348/media/f507f34f36222c5eda36d0ac2285c307.gif"
             style={{
               borderRadius: '10px',
+              width: '100%',
+              opacity: '20%',
               maskImage:
                 'radial-gradient(circle, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%)',
               WebkitMaskImage:
@@ -157,8 +169,8 @@ const ComingSoon: React.FC = () => {
             }}
           />
         </div>
-        <div className="mb-10">
-          <p className="text-sm">
+        <div className="mb-10 flex w-full">
+          <p className="w-full text-center text-base md:text-sm">
             © 2025 Liga Colaborativa dos Povos. Todos os direitos reservados.
           </p>
         </div>

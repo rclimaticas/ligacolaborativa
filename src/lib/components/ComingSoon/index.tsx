@@ -5,7 +5,7 @@ import ComingSoonComponent from '@/lib/components/ComingSoon/ComingSoon';
 
 export default function ComingSoon() {
   return (
-    <div className="">
+    <div className="h-screen">
       <ComingSoonComponent />
     </div>
   );
