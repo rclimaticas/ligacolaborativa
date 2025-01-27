@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 /* eslint-disable no-console */
 /* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable jsx-a11y/alt-text */
@@ -12,7 +13,7 @@ import Image from 'next/image';
 import type React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { FaVolumeMute, FaVolumeUp, FaPlay, FaPause } from 'react-icons/fa';
-
+import { toast, ToastContainer } from 'react-toastify';
 import './ComingSoon.css';
 
 const ComingSoon: React.FC = () => {
@@ -23,6 +24,11 @@ const ComingSoon: React.FC = () => {
   });
   const [isMuted, setIsMuted] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+  });
+  const [isLoading, setIsLoading] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
@@ -74,6 +80,63 @@ const ComingSoon: React.FC = () => {
     }
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!formData.name || !formData.email) {
+      toast.error('Por favor, preencha todos os campos');
+      return;
+    }
+
+    if (!formData.email.includes('@')) {
+      toast.error('Por favor, insira um email válido');
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/newsletter`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Erro ao enviar formulário');
+      }
+
+      toast.success('Cadastro realizado com sucesso!', {
+        position: 'top-right',
+        autoClose: 3000,
+      });
+      setFormData({ name: '', email: '' });
+    } catch (error) {
+      toast.error('Erro ao enviar cadastro!', {
+        position: 'top-right',
+        autoClose: 3000,
+      });
+      console.error('Erro:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <>
       <audio ref={audioRef} loop muted={isMuted}>
@@ -81,7 +144,7 @@ const ComingSoon: React.FC = () => {
         Seu navegador não suporta o elemento <code>audio</code>.
       </audio>
 
-      <div className="flex flex-col items-center justify-center bg-opacity-25 bg-fundoComingSoon">
+      <div className="flex min-h-screen flex-col items-center justify-center bg-opacity-25 bg-fundoComingSoon">
         <div className="mt-20">
           <p className="text-xl font-bold md:text-2xl">
             A NOVA ONDA{' '}
@@ -96,6 +159,7 @@ const ComingSoon: React.FC = () => {
                 style={{ width: '400px', height: '400px' }}
                 className="hidden w-full transform rounded-full border-2 border-orange bg-white transition-all duration-500 ease-out hover:scale-105 lg:flex"
                 src="https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/logoLC-DRqUmzjb.png"
+                alt="Logo"
               />
               <div className="timer mt-8 text-center">
                 <div className="text-md flex justify-center gap-4 font-bold md:text-xl">
@@ -115,9 +179,15 @@ const ComingSoon: React.FC = () => {
               </div>
             </div>
             <div>
-              <div className="flex w-full flex-col gap-20">
+              <form
+                onSubmit={handleSubmit}
+                className="flex w-full flex-col gap-20"
+              >
                 <div className="brutalist-container w-full">
                   <input
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
                     placeholder="DIGITE SEU NOME"
                     className="brutalist-input smooth-type"
                     type="text"
@@ -126,29 +196,44 @@ const ComingSoon: React.FC = () => {
                 </div>
                 <div className="brutalist-container">
                   <input
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
                     placeholder="DIGITE SEU EMAIL"
                     className="brutalist-input smooth-type"
-                    type="text"
+                    type="email"
                   />
                   <label className="brutalist-label">EMAIL</label>
                 </div>
-              </div>
-              <div className="flex w-full items-center justify-center">
-                <button className="brutalist-button mt-10 flex">
-                  <div className="w-full items-center justify-center rounded-full bg-white">
-                    <Image
-                      alt="Logo"
-                      width="80"
-                      height="80"
-                      src="https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/logoLC-DRqUmzjb.png"
-                    />
-                  </div>
-                  <div className="button-text w-[500px]">
-                    <span>Seja VIP na</span>
-                    <span>NOVA LIGA</span>
-                  </div>
-                </button>
-              </div>
+                <div className="flex w-full items-center justify-center">
+                  <button
+                    className="brutalist-button mt-10 flex"
+                    type="submit"
+                    disabled={isLoading}
+                  >
+                    <div className="w-full items-center justify-center rounded-full bg-white">
+                      <Image
+                        alt="Logo"
+                        width="80"
+                        height="80"
+                        src="https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/logoLC-DRqUmzjb.png"
+                      />
+                    </div>
+                    <div className="button-text w-[500px]">
+                      {isLoading ? (
+                        <div className="flex items-center justify-center">
+                          <div className="h-6 w-6 animate-spin rounded-full border-b-2 border-white" />
+                        </div>
+                      ) : (
+                        <>
+                          <span>Seja VIP na</span>
+                          <span>NOVA LIGA</span>
+                        </>
+                      )}
+                    </div>
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -158,15 +243,16 @@ const ComingSoon: React.FC = () => {
         <div className="mt-[-190px] flex h-full flex-col gap-10 p-4 md:gap-3 lg:flex-row lg:p-32">
           <img
             src="https://cdn.dribbble.com/users/92386/screenshots/2153348/media/f507f34f36222c5eda36d0ac2285c307.gif"
+            alt="Background animation"
             style={{
               borderRadius: '10px',
               width: '100%',
-              opacity: '20%',
               maskImage:
                 'radial-gradient(circle, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%)',
               WebkitMaskImage:
                 'radial-gradient(circle, rgba(0,0,0,1) 2%, rgba(0,0,0,0) 70%)',
             }}
+            className="opacity-40 lg:opacity-100"
           />
         </div>
         <div className="mb-10 flex w-full">
@@ -176,7 +262,6 @@ const ComingSoon: React.FC = () => {
         </div>
       </div>
 
-      {/* Botões de controle de áudio */}
       <div className="audio-control-container fixed bottom-5 right-5 flex gap-4">
         <button
           className="bg-gray-800 hover:bg-gray-700 rounded-full p-4 text-white shadow-lg transition"
@@ -192,6 +277,20 @@ const ComingSoon: React.FC = () => {
         >
           {isMuted ? <FaVolumeMute size={30} /> : <FaVolumeUp size={30} />}
         </button>
+        <div className="custom-toast-container">
+          <ToastContainer />
+          <style jsx>
+            {`
+              .custom-toast-container {
+                position: fixed !important;
+                top: 0;
+                right: 0;
+                z-index: 9999;
+                pointer-events: none;
+              }
+            `}
+          </style>
+        </div>
       </div>
     </>
   );
