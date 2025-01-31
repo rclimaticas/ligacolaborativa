@@ -164,15 +164,15 @@ const ComingSoon: React.FC = () => {
               <div className="timer mt-8 text-center">
                 <div className="text-md flex justify-center gap-4 font-bold md:text-xl">
                   <div className="timer-item">
-                    <span className="timer-number">{timeLeft.hours}</span>
+                    <span className="timer-number">{timeLeft.hours} </span>
                     <span className="timer-label">Horas</span>
                   </div>
                   <div className="timer-item">
-                    <span className="timer-number">{timeLeft.minutes}</span>
+                    <span className="timer-number">{timeLeft.minutes} </span>
                     <span className="timer-label">Minutos</span>
                   </div>
                   <div className="timer-item">
-                    <span className="timer-number">{timeLeft.seconds}</span>
+                    <span className="timer-number">{timeLeft.seconds} </span>
                     <span className="timer-label">Segundos</span>
                   </div>
                 </div>
