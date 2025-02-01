@@ -145,7 +145,7 @@ const ComingSoon: React.FC = () => {
       </audio>
 
       <div className="flex min-h-screen flex-col items-center justify-center bg-opacity-25 bg-fundoComingSoon">
-        <div className="mt-20">
+        <div className="mt-20 text-white">
           <p className="text-xl font-bold md:text-2xl">
             A NOVA ONDA{' '}
             <span className="underline decoration-orange">ESTÁ CHEGANDO</span>
