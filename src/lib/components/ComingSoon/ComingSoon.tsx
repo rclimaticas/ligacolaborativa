@@ -161,7 +161,7 @@ const ComingSoon: React.FC = () => {
                 src="https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/logoLC-DRqUmzjb.png"
                 alt="Logo"
               />
-              <div className="timer mt-8 text-center">
+              <div className="timer mt-8 text-center text-white">
                 <div className="text-md flex justify-center gap-4 font-bold md:text-xl">
                   <div className="timer-item">
                     <span className="timer-number">{timeLeft.hours} </span>
