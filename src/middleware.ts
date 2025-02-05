@@ -9,8 +9,6 @@ export async function middleware(request: NextRequest) {
   const token = request.cookies.get(TOKEN_KEY);
 
   const protectedRoutes = [
-    '/user',
-    '/',
     '/ligacolaborativa',
     '/datarc',
     '/ondefoi',
@@ -29,12 +27,10 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/user/:path*',
     '/login/:path*',
     '/ondefoi/:path*',
     '/graph/:path*',
     '/ligacolaborativa/:path*',
     '/datarc/:path*',
-    '/',
   ],
 };
