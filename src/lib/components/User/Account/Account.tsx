@@ -9,8 +9,11 @@ import { Divider } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
+import { styled } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
+import { IoArrowBack } from 'react-icons/io5';
 
 const style = {
   position: 'absolute',
@@ -24,10 +27,17 @@ const style = {
   p: 4,
 };
 
+const CustomTextField = styled(TextField)({
+  '& input:-webkit-autofill': {
+    WebkitBoxShadow: '0 0 0 1000px white inset',
+    WebkitTextFillColor: 'black',
+  },
+});
+
 const Account: React.FC = () => {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [openModal, setOpenModal] = React.useState<string | null>(null);
+  const handleOpen = (modal: string) => setOpenModal(modal);
+  const handleClose = () => setOpenModal(null);
   return (
     <div className="grid gap-20">
       <div className="grid items-center gap-10 rounded-xl border-2 bg-white p-10 shadow-xl">
@@ -58,7 +68,10 @@ const Account: React.FC = () => {
           </div>
           <div className="w-full">
             {/* Usuário */}
-            <button onClick={handleOpen} className="w-full hover:bg-black-100">
+            <button
+              onClick={() => handleOpen('username')}
+              className="w-full hover:bg-black-100"
+            >
               <div className="flex w-full items-center justify-between py-4">
                 <div className="font-bold opacity-50">Usuário</div>
                 <div className="w-[220px]">@drummerjohn</div>
@@ -68,25 +81,22 @@ const Account: React.FC = () => {
               </div>
               <Divider />
             </button>
-            <Modal
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-            >
+            <Modal open={openModal === 'username'} onClose={handleClose}>
               <Box sx={style}>
-                <Typography id="modal-modal-title" variant="h6" component="h2">
-                  Text in a modal
+                <Typography id="modal-modal-title" variant="h6">
+                  Editar Usuário
                 </Typography>
                 <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                  Duis mollis, est non commodo luctus, nisi erat porttitor
-                  ligula.
+                  Aqui você pode alterar o nome de usuário.
                 </Typography>
               </Box>
             </Modal>
 
             {/* Nome */}
-            <div className="hover:bg-black-100">
+            <button
+              onClick={() => handleOpen('name')}
+              className="w-full hover:bg-black-100"
+            >
               <div className="flex w-full items-center justify-between py-4">
                 <div className="font-bold opacity-50">Nome</div>
                 <div className="w-[200px]">John Bonham</div>
@@ -95,10 +105,63 @@ const Account: React.FC = () => {
                 </div>
               </div>
               <Divider />
-            </div>
+            </button>
+            <Modal open={openModal === 'name'} onClose={handleClose}>
+              <Box sx={{ ...style, position: 'relative' }}>
+                {/* Ícone de Fechar (X) */}
+                <button
+                  onClick={handleClose}
+                  className="text-gray-500 hover:text-black absolute left-2 top-2 mb-5"
+                >
+                  <IoArrowBack size={40} color="#cfd149" />
+                </button>
+
+                {/* Título */}
+                <Typography
+                  className="mt-14"
+                  id="modal-modal-title"
+                  variant="h6"
+                >
+                  Editar Nome
+                </Typography>
+
+                {/* Descrição */}
+                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                  As alterações no seu nome serão refletidas na sua Conta do
+                  Liga.
+                </Typography>
+
+                {/* Campo de Texto */}
+                <CustomTextField
+                  className="mt-5"
+                  id="nome"
+                  name="nome"
+                  label="Nome"
+                  variant="outlined"
+                  fullWidth
+                  value="sdkfmkd"
+                />
+
+                {/* Botões "Cancelar" e "Salvar" */}
+                <div className="mt-5 flex w-full items-center justify-end gap-3">
+                  <button
+                    className="bg-gray-300 hover:bg-gray-400 rounded-lg p-2 font-bold"
+                    onClick={handleClose}
+                  >
+                    Cancelar
+                  </button>
+                  <button className="rounded-lg bg-orange p-2 font-bold">
+                    Salvar
+                  </button>
+                </div>
+              </Box>
+            </Modal>
 
             {/* Email */}
-            <div className="hover:bg-black-100">
+            <button
+              onClick={() => handleOpen('email')}
+              className="w-full hover:bg-black-100"
+            >
               <div className="flex w-full items-center justify-between py-4">
                 <div className="font-bold opacity-50">Email</div>
                 <div className="w-[200px]">ledzeppelin@drummer.com</div>
@@ -107,10 +170,23 @@ const Account: React.FC = () => {
                 </div>
               </div>
               <Divider />
-            </div>
+            </button>
+            <Modal open={openModal === 'email'} onClose={handleClose}>
+              <Box sx={style}>
+                <Typography id="modal-modal-title" variant="h6">
+                  Editar email
+                </Typography>
+                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                  Aqui você pode alterar seu nome completo.
+                </Typography>
+              </Box>
+            </Modal>
 
             {/* Senha */}
-            <div className="hover:bg-black-100">
+            <button
+              onClick={() => handleOpen('password')}
+              className="w-full hover:bg-black-100"
+            >
               <div className="flex w-full items-center justify-between py-4">
                 <div className="font-bold opacity-50">Senha</div>
                 <div className="w-[200px]">****</div>
@@ -119,10 +195,23 @@ const Account: React.FC = () => {
                 </div>
               </div>
               <Divider />
-            </div>
+            </button>
+            <Modal open={openModal === 'password'} onClose={handleClose}>
+              <Box sx={style}>
+                <Typography id="modal-modal-title" variant="h6">
+                  Editar password
+                </Typography>
+                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                  Aqui você pode alterar seu nome completo.
+                </Typography>
+              </Box>
+            </Modal>
 
             {/* Cidade */}
-            <div className="hover:bg-black-100">
+            <button
+              onClick={() => handleOpen('city')}
+              className="w-full hover:bg-black-100"
+            >
               <div className="flex w-full items-center justify-between py-4">
                 <div className="font-bold opacity-50">Cidade</div>
                 <div className="w-[200px]">Londres</div>
@@ -131,7 +220,17 @@ const Account: React.FC = () => {
                 </div>
               </div>
               <Divider />
-            </div>
+            </button>
+            <Modal open={openModal === 'city'} onClose={handleClose}>
+              <Box sx={style}>
+                <Typography id="modal-modal-title" variant="h6">
+                  Editar city
+                </Typography>
+                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                  Aqui você pode alterar seu nome completo.
+                </Typography>
+              </Box>
+            </Modal>
 
             {/* Estado */}
             <div className="hover:bg-black-100">
