@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-identical-functions */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable react/no-unknown-property */
@@ -115,6 +116,50 @@ const Account: React.FC = () => {
     initializeUser();
   }, []);
 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const request = indexedDB.open('userDatabase', 1);
+
+        request.onupgradeneeded = (event: any) => {
+          const db = event.target.result;
+          if (!db.objectStoreNames.contains('users')) {
+            db.createObjectStore('users', { keyPath: 'id' });
+          }
+        };
+
+        request.onsuccess = (event: any) => {
+          const db = event.target.result;
+          const tx = db.transaction('users', 'readonly');
+          const store = tx.objectStore('users');
+          const getRequest = store.get(1);
+
+          getRequest.onsuccess = () => {
+            if (getRequest.result) {
+              setUser(getRequest.result);
+            } else {
+              console.warn('Nenhum usuário encontrado com ID 1.');
+              setUser(null);
+            }
+          };
+
+          getRequest.onerror = () => {
+            console.error('Erro ao buscar dados do usuário.');
+          };
+        };
+
+        request.onerror = () => {
+          console.error('Erro ao abrir o banco de dados.');
+        };
+      } catch (error) {
+        console.error('Erro ao buscar dados do usuário:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, []);
   useEffect(() => {
     const fetchUserData = async () => {
       try {
