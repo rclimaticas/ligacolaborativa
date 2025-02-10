@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import Script from 'next/script';
 
 import Layout from '@/lib/layout';
 import { fontSans } from '@/lib/styles/fonts';
@@ -48,6 +49,25 @@ interface RootLayoutProps {
 const RootLayout = ({ children }: RootLayoutProps) => {
   return (
     <html lang="pt-br" suppressHydrationWarning>
+      <head>
+        {/* Google Analytics */}
+        <Script
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-0H3V8TJ749"
+        />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-0H3V8TJ749');
+            `,
+          }}
+        />
+      </head>
       <body
         className={cn(
           'bg-background min-h-screen font-sans antialiased',
