@@ -34,7 +34,7 @@ const Layout = ({ children }: LayoutProps) => {
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <GoogleOAuthProvider clientId={GoogleID}>
         <div className="flex min-h-screen flex-col bg-white">
-          {/* {!hideHeader && <Navbar />} */}
+          {!hideHeader && <Navbar />}
           <ToastContainer />
           <main className="flex flex-grow flex-col">{children}</main>
         </div>

@@ -12,7 +12,6 @@ export async function middleware(request: NextRequest) {
     '/ligacolaborativa',
     '/datarc',
     '/ondefoi',
-    '/login',
     '/register',
   ];
 
@@ -27,7 +26,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/login/:path*',
     '/ondefoi/:path*',
     '/graph/:path*',
     '/ligacolaborativa/:path*',

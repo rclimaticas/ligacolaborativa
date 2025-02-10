@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 /* eslint-disable prefer-promise-reject-errors */
 /* eslint-disable @typescript-eslint/return-await */
 /* eslint-disable no-console */
@@ -131,6 +132,35 @@ export const getUserData = async (): Promise<any> => {
   } catch (error) {
     console.error('Erro ao acessar o IndexedDB:', error);
     throw error;
+  }
+};
+
+export const updateUserData = async (
+  key: number,
+  newValue: any
+): Promise<void> => {
+  try {
+    const db = await openDB();
+    const transaction = db.transaction('user_data', 'readwrite');
+    const objectStore = transaction.objectStore('user_data');
+
+    const request = objectStore.get(key);
+
+    request.onsuccess = () => {
+      if (request.result) {
+        const updatedData = { ...request.result, ...newValue };
+        objectStore.put(updatedData, key);
+        console.log('Dados do usuário atualizados com sucesso!');
+      } else {
+        console.warn('Nenhum dado encontrado para atualizar.');
+      }
+    };
+
+    request.onerror = () => {
+      console.error('Erro ao buscar dados para atualização.');
+    };
+  } catch (error) {
+    console.error('Erro ao acessar o IndexedDB:', error);
   }
 };
 
