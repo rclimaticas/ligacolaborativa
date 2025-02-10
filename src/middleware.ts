@@ -14,6 +14,7 @@ export async function middleware(request: NextRequest) {
     '/ondefoi',
     '/login',
     '/register',
+    '/',
   ];
 
   const isProtectedRoute = protectedRoutes.includes(request.nextUrl.pathname);
@@ -32,5 +33,6 @@ export const config = {
     '/graph/:path*',
     '/ligacolaborativa/:path*',
     '/datarc/:path*',
+    '/',
   ],
 };
