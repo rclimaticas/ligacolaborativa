@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable react/button-has-type */
@@ -10,6 +11,7 @@
 /* eslint-disable no-console */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
+import { Skeleton } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
@@ -21,9 +23,10 @@ import localforage from 'localforage';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import type React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 
+import SkeletonLoginForm from '@/lib/components/Login/SkeletonLoginForm';
 import { TOKEN_KEY } from '@/middleware';
 import { openDB } from '@/services/UserStorage';
 
@@ -47,6 +50,7 @@ export default function LoginForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const [isPageLoaded, setIsPageLoaded] = useState(false);
 
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
@@ -264,134 +268,155 @@ export default function LoginForm() {
     }
   };
 
+  // carregar página
+
+  useEffect(() => {
+    if (document.readyState === 'complete') {
+      setIsPageLoaded(true);
+    } else {
+      const handleLoad = () => {
+        setIsPageLoaded(true);
+      };
+      window.addEventListener('load', handleLoad);
+      return () => {
+        window.removeEventListener('load', handleLoad);
+      };
+    }
+  }, []);
   return (
     <div className="w-full">
-      <div className="flex w-full items-center justify-center font-roboto">
-        <div className="min-w-4xl grid w-[500px] rounded-3xl bg-white shadow-none lg:shadow-2xl">
-          <form
-            className="flex w-full flex-col items-center justify-center gap-6 p-10 font-roboto text-black-200 lg:gap-10"
-            onSubmit={handleSubmit}
-          >
-            {/* <div className="flex w-full justify-center text-2xl">
-              <Image
-                alt="Logo"
-                width="80"
-                height="80"
-                src="https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/logoLC-DRqUmzjb.png"
-              />
-            </div> */}
-            <div className="flex flex-row items-center justify-center gap-5">
-              <div>
-                {/* <GoogleLogin
-                  onSuccess={async (credentialResponse) => {
-                    try {
-                      const { credential } = credentialResponse;
-                      const response = await axios.post(
-                        'https://crispy-system-7v7pvgxg9q9wcr4-3333.app.github.dev/auth/google',
-                        {
-                          token: credential,
-                        }
-                      );
-                      toast.success('Login realizado com sucesso!', {
-                        position: 'top-right',
-                        autoClose: 3000,
-                      });
-                      setTimeout(() => {
-                        router.push('/');
-                      }, 3000);
-                    } catch (error) {
-                      // console.error(
-                      //   'Erro ao autenticar:',
-                      //   error.response?.data?.error
-                      // );
-                    }
-                  }}
-                  onError={() => console.error('Erro no login com o Google')}
-                /> */}
-                <button
-                  onClick={() => login()}
-                  className="flex items-center justify-center rounded-full border-2 border-black-300 border-opacity-10 hover:bg-orange"
-                >
-                  <img
-                    className="p-1"
-                    src="/assets/google.png"
-                    alt="Google"
-                    style={{ width: '50px', height: '50px' }}
-                  />
-                </button>
-              </div>
-              <div>
-                <button
-                  onClick={handleMetaMaskLogin}
-                  disabled={loading}
-                  className="flex items-center justify-center rounded-full border-2 border-black-300 border-opacity-10 hover:bg-orange"
-                >
-                  <img
-                    className="p-1"
-                    src="/assets/metamask.png"
-                    alt="Google"
-                    style={{ width: '50px', height: '50px' }}
-                  />
-                </button>
-              </div>
-            </div>
-            <div className="custom-toast-container">
-              <ToastContainer />
-              <style jsx>
-                {`
-                  .custom-toast-container {
-                    position: fixed !important;
-                    top: 0;
-                    right: 0;
-                    z-index: 9999;
-                    pointer-events: none; /* Para evitar que interaja com outros elementos */
+      {isPageLoaded ? (
+        <div className="flex w-full items-center justify-center font-roboto">
+          <div className="min-w-4xl grid w-[500px] rounded-3xl bg-white shadow-none lg:shadow-2xl">
+            <form
+              className="flex w-full flex-col items-center justify-center gap-6 p-10 font-roboto text-black-200 lg:gap-10"
+              onSubmit={handleSubmit}
+            >
+              {/* <div className="flex w-full justify-center text-2xl">
+            <Image
+              alt="Logo"
+              width="80"
+              height="80"
+              src="https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/logoLC-DRqUmzjb.png"
+            />
+          </div> */}
+              <div className="flex flex-row items-center justify-center gap-5">
+                <div>
+                  {/* <GoogleLogin
+                onSuccess={async (credentialResponse) => {
+                  try {
+                    const { credential } = credentialResponse;
+                    const response = await axios.post(
+                      'https://crispy-system-7v7pvgxg9q9wcr4-3333.app.github.dev/auth/google',
+                      {
+                        token: credential,
+                      }
+                    );
+                    toast.success('Login realizado com sucesso!', {
+                      position: 'top-right',
+                      autoClose: 3000,
+                    });
+                    setTimeout(() => {
+                      router.push('/');
+                    }, 3000);
+                  } catch (error) {
+                    // console.error(
+                    //   'Erro ao autenticar:',
+                    //   error.response?.data?.error
+                    // );
                   }
-                `}
-              </style>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="mr-3 w-[40px] border-b" />
-              <a href="#" className="">
-                ou faça login com o email
+                }}
+                onError={() => console.error('Erro no login com o Google')}
+              /> */}
+                  <button
+                    onClick={() => login()}
+                    className="flex items-center justify-center rounded-full border-2 border-black-300 border-opacity-10 hover:bg-orange"
+                  >
+                    <img
+                      className="p-1"
+                      src="/assets/google.png"
+                      alt="Google"
+                      style={{ width: '50px', height: '50px' }}
+                    />
+                  </button>
+                </div>
+                <div>
+                  <button
+                    onClick={handleMetaMaskLogin}
+                    disabled={loading}
+                    className="flex items-center justify-center rounded-full border-2 border-black-300 border-opacity-10 hover:bg-orange"
+                  >
+                    <img
+                      className="p-1"
+                      src="/assets/metamask.png"
+                      alt="Google"
+                      style={{ width: '50px', height: '50px' }}
+                    />
+                  </button>
+                </div>
+              </div>
+              <div className="custom-toast-container">
+                <ToastContainer />
+                <style jsx>
+                  {`
+                    .custom-toast-container {
+                      position: fixed !important;
+                      top: 0;
+                      right: 0;
+                      z-index: 9999;
+                      pointer-events: none; /* Para evitar que interaja com outros elementos */
+                    }
+                  `}
+                </style>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="mr-3 w-[40px] border-b" />
+                <a href="#" className="">
+                  ou faça login com o email
+                </a>
+                <span className="ml-3 w-[40px] border-b" />
+              </div>
+              <CustomTextField
+                required
+                id="email"
+                name="email"
+                label="Email"
+                variant="outlined"
+                fullWidth
+                onChange={handleLogin}
+                value={loginData.email}
+              />
+              <CustomTextField
+                required
+                id="password"
+                name="password"
+                label="Senha"
+                variant="outlined"
+                fullWidth
+                onChange={handleLogin}
+                value={loginData.password}
+              />
+              <a
+                href="/register"
+                className="w-full cursor-pointer text-center hover:underline"
+              >
+                Não tem registro ainda? Se registre aqui{' '}
               </a>
-              <span className="ml-3 w-[40px] border-b" />
-            </div>
-            <CustomTextField
-              required
-              id="email"
-              name="email"
-              label="Email"
-              variant="outlined"
-              fullWidth
-              onChange={handleLogin}
-              value={loginData.email}
-            />
-            <CustomTextField
-              required
-              id="password"
-              name="password"
-              label="Senha"
-              variant="outlined"
-              fullWidth
-              onChange={handleLogin}
-              value={loginData.password}
-            />
-            <a
-              href="/register"
-              className="w-full cursor-pointer text-center hover:underline"
-            >
-              Não tem registro ainda? Se registre aqui{' '}
-            </a>
-            <button
-              type="submit"
-              className="flex w-full items-center justify-center rounded-lg border-2 border-black-300 bg-orange p-2 text-xl font-semibold text-black-300 shadow-[rgba(0,0,15,0.5)_-3px_5px_4px_0px]"
-            >
-              {loading ? <CircularProgress size="30px" /> : 'ENTRAR'}
-            </button>
-            {error && <p className="text-red-500">{error}</p>}
-          </form>
+              <button
+                type="submit"
+                className="flex w-full items-center justify-center rounded-lg border-2 border-black-300 bg-orange p-2 text-xl font-semibold text-black-300 shadow-[rgba(0,0,15,0.5)_-3px_5px_4px_0px]"
+              >
+                {loading ? <CircularProgress size="30px" /> : 'ENTRAR'}
+              </button>
+              {error && <p className="text-red-500">{error}</p>}
+            </form>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div>
+          <SkeletonLoginForm />
+        </div>
+      )}
     </div>
   );
 }
