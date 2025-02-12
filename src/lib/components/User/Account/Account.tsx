@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable sonarjs/no-identical-functions */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-shadow */
@@ -23,7 +24,12 @@ import React, { useState, useEffect } from 'react';
 import { IoArrowBack } from 'react-icons/io5';
 import { toast, ToastContainer } from 'react-toastify';
 
-import { getUserData, updateUserData } from '@/services/UserStorage';
+import {
+  getUserData,
+  updateUserData,
+  openDB,
+  removeUserData,
+} from '@/services/UserStorage';
 
 const style = {
   position: 'absolute',
@@ -78,16 +84,28 @@ const Account: React.FC = () => {
 
       const updatedUser = await response.json();
 
+      if (!updatedUser?.id) {
+        throw new Error('Resposta inválida do servidor');
+      }
+
+      console.log('Dados atualizados recebidos:', updatedUser);
+
+      // Remove os dados antigos do IndexedDB
+      await removeUserData(updatedUser.id);
+
       await updateUserData(updatedUser.id, updatedUser);
 
+      const freshUserData = await getUserData();
+      console.log('Dados atualizados no IndexedDB:', freshUserData);
+
       setOpenModal(null);
+
       toast.success('Nome alterado com sucesso!', {
         position: 'top-right',
         autoClose: 2000,
       });
-      window.location.reload();
     } catch (error) {
-      toast.success('Erro ao salvar o usuário!', {
+      toast.error('Erro ao salvar o usuário!', {
         position: 'top-right',
         autoClose: 2000,
       });
@@ -96,6 +114,26 @@ const Account: React.FC = () => {
       setIsLoadingButton(false);
     }
   };
+
+  // Função para deletar dados do usuário no IndexedDB
+  // const deleteUserData = async (userId: number) => {
+  //   try {
+  //     const db = await openDB();
+  //     const tx = db.transaction('user_data', 'readwrite');
+  //     const store = tx.objectStore('user_data');
+  //     const deleteRequest = store.delete(userId);  // Apagar o usuário pelo ID
+
+  //     deleteRequest.onsuccess = () => {
+  //       console.log(`Usuário com ID ${userId} deletado com sucesso!`);
+  //     };
+
+  //     deleteRequest.onerror = () => {
+  //       console.error(`Erro ao deletar o usuário com ID ${userId}.`);
+  //     };
+  //   } catch (error) {
+  //     console.error('Erro ao acessar o IndexedDB para deletar dados do usuário:', error);
+  //   }
+  // };
 
   useEffect(() => {
     const initializeUser = async () => {
@@ -112,98 +150,49 @@ const Account: React.FC = () => {
         setIsLoadingButton(false);
       }
     };
-
     initializeUser();
   }, []);
 
   useEffect(() => {
     const fetchUserData = async () => {
-      try {
-        const request = indexedDB.open('userDatabase', 1);
+      if (!user?.id) {
+        console.error('ID do usuário não encontrado.');
+        return;
+      }
 
-        request.onupgradeneeded = (event: any) => {
-          const db = event.target.result;
-          if (!db.objectStoreNames.contains('users')) {
-            db.createObjectStore('users', { keyPath: 'id' });
+      try {
+        const db = await openDB();
+        const tx = db.transaction('user_data', 'readonly');
+        const store = tx.objectStore('user_data');
+        const getRequest = store.get(user.id);
+
+        getRequest.onsuccess = () => {
+          if (getRequest.result) {
+            if (JSON.stringify(getRequest.result) !== JSON.stringify(user)) {
+              setUser(getRequest.result);
+            }
+          } else {
+            console.warn('Nenhum usuário encontrado com o ID:', user.id);
           }
         };
 
-        request.onsuccess = (event: any) => {
-          const db = event.target.result;
-          const tx = db.transaction('users', 'readonly');
-          const store = tx.objectStore('users');
-          const getRequest = store.get(1);
-
-          getRequest.onsuccess = () => {
-            if (getRequest.result) {
-              setUser(getRequest.result);
-            } else {
-              console.warn('Nenhum usuário encontrado com ID 1.');
-              setUser(null);
-            }
-          };
-
-          getRequest.onerror = () => {
-            console.error('Erro ao buscar dados do usuário.');
-          };
-        };
-
-        request.onerror = () => {
-          console.error('Erro ao abrir o banco de dados.');
+        getRequest.onerror = () => {
+          console.error('Erro ao buscar dados do usuário no IndexedDB.');
         };
       } catch (error) {
-        console.error('Erro ao buscar dados do usuário:', error);
+        console.error(
+          'Erro ao acessar o IndexedDB para carregar dados do usuário:',
+          error
+        );
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchUserData();
-  }, []);
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const request = indexedDB.open('userDatabase', 1);
-
-        request.onupgradeneeded = (event: any) => {
-          const db = event.target.result;
-          if (!db.objectStoreNames.contains('users')) {
-            db.createObjectStore('users', { keyPath: 'id' });
-          }
-        };
-
-        request.onsuccess = (event: any) => {
-          const db = event.target.result;
-          const tx = db.transaction('users', 'readonly');
-          const store = tx.objectStore('users');
-          const getRequest = store.get(1);
-
-          getRequest.onsuccess = () => {
-            if (getRequest.result) {
-              setUser(getRequest.result);
-            } else {
-              console.warn('Nenhum usuário encontrado com ID 1.');
-              setUser(null);
-            }
-          };
-
-          getRequest.onerror = () => {
-            console.error('Erro ao buscar dados do usuário.');
-          };
-        };
-
-        request.onerror = () => {
-          console.error('Erro ao abrir o banco de dados.');
-        };
-      } catch (error) {
-        console.error('Erro ao buscar dados do usuário:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchUserData();
-  }, []);
+    if (user?.id) {
+      fetchUserData();
+    }
+  }, [user?.id]);
 
   return (
     <div className="grid gap-20">

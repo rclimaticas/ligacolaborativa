@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable import/no-extraneous-dependencies */
 
@@ -5,6 +6,7 @@
 
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { usePathname } from 'next/navigation';
+import { useEffect } from 'react';
 import type { ReactNode } from 'react';
 import { ToastContainer } from 'react-toastify';
 
@@ -21,6 +23,13 @@ type LayoutProps = {
 const Layout = ({ children }: LayoutProps) => {
   const GoogleID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '';
   const pathname = usePathname();
+
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      indexedDB.deleteDatabase('myApp');
+      console.log('Banco de dados "myApp" deletado');
+    }
+  }, []);
 
   // ocultar o Header nas rotas /login e /register
   const hideHeader =
