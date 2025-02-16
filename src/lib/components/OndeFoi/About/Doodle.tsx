@@ -16,6 +16,7 @@ export default function Doodle() {
         width={400}
         height={400}
         src="https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/logo-BD4VjkRU.png"
+        className="hidden w-96 rounded-full border-4 border-green-100 shadow-lg lg:flex"
       />
     </div>
   );

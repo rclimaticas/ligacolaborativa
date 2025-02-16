@@ -21,11 +21,11 @@ export default function CardComponent() {
         ],
       ].map(([title, urlImage]) => (
         <Card
-          className="h-[300px] w-full rounded-lg border-4 border-green-100"
+          className="h-[300px] w-full rounded-xl border-4 border-green-100 shadow-lg"
           style={{ backgroundColor: 'black' }}
         >
           <CardContent className="flex h-full w-full flex-col items-center justify-center p-10">
-            <h4 className="text-center text-white">{title}</h4>
+            <h4 className="text-center font-sans text-white">{title}</h4>
             <img src={urlImage} />
           </CardContent>
         </Card>

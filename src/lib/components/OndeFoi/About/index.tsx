@@ -4,8 +4,8 @@ import Title from '@/lib/components/OndeFoi/About/Title';
 
 export default function About() {
   return (
-    <div className="flex items-center justify-center bg-opacity-25 bg-fundoOndeFoi">
-      <div className="flex h-full max-w-[1500px] flex-col gap-10 p-4 md:gap-3 lg:flex-row lg:p-32">
+    <div className="flex items-center justify-center bg-opacity-25">
+      <div className="flex h-full max-w-[1500px] flex-col p-4 lg:flex-row lg:p-32">
         <Doodle />
         <Title />
       </div>
