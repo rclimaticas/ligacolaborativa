@@ -3,7 +3,7 @@ export const HeroData = {
   title: {
     name: 'Biblioteca Colaborativa dos Povos, Culturas e da Natureza',
     description:
-      'Fonte essencial para pesquisa e aplicações práticas, nossa biblioteca de dados oferece um vasto repositório de conhecimentos originados das tradições, de estudos e de projetos.',
+      'Fonte essencial para pesquisa e aplicações práticas. Nossa biblioteca oferece um vasto repositório de conhecimentos originados das tradições, de estudos e resultados de pesquisa.',
   },
   button: {
     name: 'Saber Mais',

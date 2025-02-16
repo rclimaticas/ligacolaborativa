@@ -24,12 +24,12 @@ const Layout = ({ children }: LayoutProps) => {
   const GoogleID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '';
   const pathname = usePathname();
 
-  useEffect(() => {
-    if (process.env.NODE_ENV === 'development') {
-      indexedDB.deleteDatabase('myApp');
-      console.log('Banco de dados "myApp" deletado');
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (process.env.NODE_ENV === 'development') {
+  //     indexedDB.deleteDatabase('myApp');
+  //     console.log('Banco de dados "myApp" deletado');
+  //   }
+  // }, []);
 
   // ocultar o Header nas rotas /login e /register
   const hideHeader =

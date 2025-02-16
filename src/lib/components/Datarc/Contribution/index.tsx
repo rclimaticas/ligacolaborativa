@@ -64,7 +64,7 @@ export default function BasicModal() {
         <div className="text-center text-3xl font-bold">
           Contribua enviando sabedoria
         </div>
-        <p>
+        <p className="text-center lg:text-left">
           Faça o envio dos artigos que você desejar para colaborar com a Liga
           Colaborativa.
         </p>

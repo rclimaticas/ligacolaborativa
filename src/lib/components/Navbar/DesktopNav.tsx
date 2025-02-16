@@ -265,39 +265,50 @@ export default function App() {
           className="sm:hidden"
         />
         <NavbarBrand>
-          <Image
-            alt="Logo"
-            width="50"
-            height="50"
-            src="https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/logoLC-DRqUmzjb.png"
-          />
+          <Link color="foreground" href="/">
+            <Image
+              alt="Logo"
+              width="50"
+              height="50"
+              src="https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/logoLC-DRqUmzjb.png"
+            />
+          </Link>
         </NavbarBrand>
       </NavbarContent>
 
       <NavbarContent
-        className="hidden gap-4 font-bold text-black-300 sm:flex"
+        className="hidden w-full items-center justify-center gap-4 font-bold text-black-300 sm:flex"
         justify="center"
       >
-        <Link color="foreground" href="#">
+        <Link color="foreground" href="/">
+          <NavbarItem className="rounded-lg p-2 motion-duration-200 hover:motion-preset-blur-right hover:bg-orange hover:text-white">
+            Início
+          </NavbarItem>
+        </Link>
+
+        <Link color="foreground" href="/datarc">
           <NavbarItem className="rounded-lg p-2 motion-duration-200 hover:motion-preset-blur-right hover:bg-orange hover:text-white">
             Biblioteca
           </NavbarItem>
         </Link>
-        <NavbarItem className="rounded-lg p-2 motion-duration-200 hover:motion-preset-blur-right hover:bg-orange hover:text-white">
-          <Link color="foreground" href="/ondefoi">
+
+        <Link color="foreground" href="/ondefoi">
+          <NavbarItem className="rounded-lg p-2 motion-duration-200 hover:motion-preset-blur-right hover:bg-orange hover:text-white">
             Registros OndeFoi
-          </Link>
-        </NavbarItem>
-        <NavbarItem className="rounded-lg p-2 motion-duration-200 hover:motion-preset-blur-right hover:bg-orange hover:text-white">
-          <Link color="foreground" href="https://www.espiralds.com/sofia">
+          </NavbarItem>
+        </Link>
+
+        <Link color="foreground" href="https://www.espiralds.com/sofia">
+          <NavbarItem className="rounded-lg p-2 motion-duration-200 hover:motion-preset-blur-right hover:bg-orange hover:text-white">
             Assessoria Sofia
-          </Link>
-        </NavbarItem>
-        <NavbarItem className="rounded-lg p-2 motion-duration-200 hover:motion-preset-blur-right hover:bg-orange hover:text-white">
-          <Link color="foreground" href="/ligacolaborativa">
+          </NavbarItem>
+        </Link>
+
+        <Link color="foreground" href="/ligacolaborativa">
+          <NavbarItem className="rounded-lg p-2 motion-duration-200 hover:motion-preset-blur-right hover:bg-orange hover:text-white">
             Sobre Nós
-          </Link>
-        </NavbarItem>
+          </NavbarItem>
+        </Link>
       </NavbarContent>
 
       <NavbarContent justify="end" className="font-bold text-black-300">

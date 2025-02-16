@@ -3,7 +3,7 @@ export const HeroData = {
   title: {
     name: 'Plataforma Colaborativa dos Povos, Culturas e da Natureza',
     description:
-      'Um espaço descentralizado com o propósito de conectar redes, saberes tradicionais, dados técnicos e acadêmicos.',
+      'Um espaço web3 com propósito de conectar redes, saberes, dados e impulsionar ações regenerativas.',
   },
 
   button: {

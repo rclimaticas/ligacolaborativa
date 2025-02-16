@@ -12,14 +12,14 @@ import { MapsData } from '@/lib/components/models/Datarc/Maps';
 
 export default function Maps() {
   return (
-    <div className="relative bottom-0 top-[100px] z-20 grid grid-cols-1 gap-2 p-5 sm:grid-cols-2 lg:p-20 xl:bottom-0 xl:top-[-400px]">
+    <div className="relative bottom-0 top-[100px] z-20 mt-60 grid w-full grid-cols-1 gap-2 p-5 lg:grid-cols-2 lg:p-20 xl:bottom-0 xl:top-[-400px]">
       {MapsData.map((item, index) => (
         <Card
           shadow="sm"
           className="z-10 transition-transform duration-700 hover:scale-105"
           key={index}
         >
-          <CardBody className="overflow-visible p-0">
+          <CardBody className="flex items-center justify-center overflow-visible p-0">
             <Image
               width={590}
               height={590}

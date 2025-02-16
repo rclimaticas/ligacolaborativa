@@ -121,12 +121,14 @@ const MapBiomes: React.FC = () => {
     <div className="h-full lg:h-[650px]">
       <div
         ref={ref}
-        className={`relative bottom-40 mt-32 rounded-lg bg-white p-6 text-black-300 shadow-xl md:mt-0 lg:bottom-72 xl:bottom-96 xl:w-10/12 ${
+        className={`mt-50 relative bottom-40 rounded-lg bg-white p-6 text-black-300 shadow-xl md:mt-0 md:mt-32 lg:bottom-72 xl:bottom-96 xl:w-10/12 ${
           isVisible ? 'motion-preset-slide-right' : 'opacity-0'
         }`}
         style={{ transition: 'opacity 1s ease' }}
       >
-        <h1 className="mb-5 text-center text-3xl font-bold">{title.name}</h1>
+        <h1 className="mb-5 w-full text-center text-3xl font-bold">
+          {title.name}
+        </h1>
         {isLoading ? (
           <div className="animate-pulse space-y-4">
             <div className="flex h-full w-[800px] items-center justify-center rounded-md bg-white lg:h-[785px]">
@@ -159,7 +161,7 @@ const MapBiomes: React.FC = () => {
             </div>
           </div>
         )}
-        <div className="mt-6 flex justify-center">
+        <div className="mt-6 flex w-full justify-center">
           <div className="hover:motion-preset-confetti">
             <a
               href="https://agenciadenoticias.ibge.gov.br/agencia-noticias.html"

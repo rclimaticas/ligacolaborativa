@@ -7,9 +7,9 @@ import { ContributionData } from '@/lib/components/models/Home/Contribution';
 
 const { title, button } = ContributionData;
 
-export default function Contribution() {
+export default function LigaContribution() {
   return (
-    <div className="relative bottom-0 grid gap-4 p-5 text-center text-3xl xl:bottom-[1000px] xl:p-32 xl:text-justify">
+    <div className="relative bottom-0 mt-10 grid gap-4 p-5 text-center text-3xl xl:bottom-[1000px] xl:p-32 xl:text-justify">
       <h1 className="text-3xl">{title.name}</h1>
       <div className="text-2xl font-light">{title.description}</div>
       <img src="https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/financiadores-CY6bvfzI+(1).png" />

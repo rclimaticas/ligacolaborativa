@@ -15,7 +15,7 @@ export default function Title() {
     const typewriterElement = document.getElementById('typewriter');
     if (typewriterElement) {
       new Typewriter(typewriterElement, {
-        strings: ['Dos Povos.', 'Das naturezas.', 'Das Culturas.'],
+        strings: ['Dos Povos.', 'Da natureza.', 'Das Culturas.'],
         autoStart: true,
         loop: true,
       });
