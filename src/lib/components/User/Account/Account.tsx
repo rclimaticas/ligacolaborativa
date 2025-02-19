@@ -53,6 +53,10 @@ const CustomTextField = styled(TextField)({
 interface User {
   id: string;
   username: string;
+  name: string;
+  city: string;
+  state: string;
+  email: string;
   imageBase64?: string;
 }
 
@@ -235,7 +239,9 @@ const Account: React.FC = () => {
                 <div className="flex w-full items-center justify-between py-4">
                   <div className="font-bold opacity-50">Usuário</div>
                   <Skeleton width="220px">
-                    <div>@drummerjohn</div>
+                    <div>
+                      <span className="opacity-70">@</span>drummerjohn
+                    </div>
                   </Skeleton>
                   <div>
                     <DriveFileRenameOutlineIcon />
@@ -369,8 +375,11 @@ const Account: React.FC = () => {
                 className="w-full hover:bg-black-100"
               >
                 <div className="flex w-full items-center justify-between py-4">
-                  <div className="font-bold opacity-50">Usuário</div>
-                  <div className="w-[220px]">@drummerjohn</div>
+                  <div className="mr-[240px] font-bold opacity-50">Usuário</div>
+                  <div className="flex w-full justify-start bg-orange">
+                    <span className="opacity-70">@</span>
+                    {user?.username || ''}
+                  </div>
                   <div>
                     <DriveFileRenameOutlineIcon />
                   </div>
@@ -394,8 +403,10 @@ const Account: React.FC = () => {
                 className="w-full hover:bg-black-100"
               >
                 <div className="flex w-full items-center justify-between py-4">
-                  <div className="font-bold opacity-50">Nome</div>
-                  <div className="w-[200px]">{user?.username || ''}</div>
+                  <div className="mr-[245px] font-bold opacity-50">Nome</div>
+                  <div className="flex w-full justify-start bg-orange">
+                    {user?.name || ''}
+                  </div>
                   <div>
                     <DriveFileRenameOutlineIcon />
                   </div>
@@ -467,8 +478,10 @@ const Account: React.FC = () => {
                 className="w-full hover:bg-black-100"
               >
                 <div className="flex w-full items-center justify-between py-4">
-                  <div className="font-bold opacity-50">Email</div>
-                  <div className="w-[200px]">ledzeppelin@drummer.com</div>
+                  <div className="mr-[250px] font-bold opacity-50">Email</div>
+                  <div className="flex w-full justify-start bg-orange">
+                    {user?.email || ''}
+                  </div>
                   <div>
                     <DriveFileRenameOutlineIcon />
                   </div>
@@ -518,7 +531,9 @@ const Account: React.FC = () => {
               >
                 <div className="flex w-full items-center justify-between py-4">
                   <div className="font-bold opacity-50">Cidade</div>
-                  <div className="w-[200px]">Londres</div>
+                  <div className="w-[200px]">
+                    {user?.city || '(adicione uma cidade)'}
+                  </div>
                   <div>
                     <DriveFileRenameOutlineIcon />
                   </div>
@@ -540,7 +555,9 @@ const Account: React.FC = () => {
               <div className="hover:bg-black-100">
                 <div className="flex w-full items-center justify-between py-4">
                   <div className="font-bold opacity-50">Estado</div>
-                  <div className="w-[200px]">#######</div>
+                  <div className="w-[200px]">
+                    {user?.state || '(adicione um estado)'}
+                  </div>
                   <div>
                     <DriveFileRenameOutlineIcon />
                   </div>

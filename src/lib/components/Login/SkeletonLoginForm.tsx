@@ -6,6 +6,7 @@
 
 'use client';
 
+import { Skeleton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 
@@ -25,60 +26,77 @@ export default function SkeletonLoginForm() {
             <div className="flex flex-row items-center justify-center gap-5">
               <div>
                 <button className="flex items-center justify-center rounded-full border-2 border-black-300 border-opacity-10 hover:bg-orange">
-                  <img
-                    className="p-1"
-                    src="/assets/google.png"
-                    alt="Google"
-                    style={{ width: '50px', height: '50px' }}
-                  />
+                  <Skeleton variant="circular">
+                    <img
+                      className="p-1"
+                      src="/assets/google.png"
+                      alt="Google"
+                      style={{ width: '50px', height: '50px' }}
+                    />
+                  </Skeleton>
                 </button>
               </div>
               <div>
                 <button className="flex items-center justify-center rounded-full border-2 border-black-300 border-opacity-10 hover:bg-orange">
-                  <img
-                    className="p-1"
-                    src="/assets/metamask.png"
-                    alt="Google"
-                    style={{ width: '50px', height: '50px' }}
-                  />
+                  <Skeleton variant="circular">
+                    <img
+                      className="p-1"
+                      src="/assets/metamask.png"
+                      alt="Google"
+                      style={{ width: '50px', height: '50px' }}
+                    />
+                  </Skeleton>
                 </button>
               </div>
             </div>
             <div className="flex items-center justify-between">
-              <span className="mr-3 w-[40px] border-b" />
-              <a href="#" className="">
-                ou faça login com o email
-              </a>
-              <span className="ml-3 w-[40px] border-b" />
+              <Skeleton className="w-full" variant="rectangular">
+                <span className="mr-3 w-[40px] border-b" />
+                <a href="#" className="">
+                  ou faça login com o email
+                </a>
+                <span className="ml-3 w-[40px] border-b" />
+              </Skeleton>
             </div>
-            <CustomTextField
-              required
-              id="email"
-              name="email"
-              label="Email"
-              variant="outlined"
-              fullWidth
-            />
-            <CustomTextField
-              required
-              id="password"
-              name="password"
-              label="Senha"
-              variant="outlined"
-              fullWidth
-            />
-            <a
-              href="/register"
-              className="w-full cursor-pointer text-center hover:underline"
-            >
-              Não tem registro ainda? Se registre aqui{' '}
-            </a>
-            <button
-              type="submit"
-              className="flex w-full items-center justify-center rounded-lg border-2 border-black-300 bg-orange p-2 text-xl font-semibold text-black-300 shadow-[rgba(0,0,15,0.5)_-3px_5px_4px_0px]"
-            >
-              ENTRAR
-            </button>
+            <Skeleton width={400} className="w-full" variant="rectangular">
+              <CustomTextField
+                required
+                id="email"
+                name="email"
+                label="Email"
+                variant="outlined"
+                fullWidth
+              />
+            </Skeleton>
+
+            <Skeleton width={400} className="w-full" variant="rectangular">
+              <CustomTextField
+                required
+                id="password"
+                name="password"
+                label="Senha"
+                variant="outlined"
+                fullWidth
+              />
+            </Skeleton>
+
+            <Skeleton className="w-full" variant="rectangular">
+              <a
+                href="/register"
+                className="w-full cursor-pointer text-center hover:underline"
+              >
+                Não tem registro ainda? Se registre aqui{' '}
+              </a>
+            </Skeleton>
+
+            <Skeleton className="w-full" variant="rectangular">
+              <button
+                type="submit"
+                className="flex w-full items-center justify-center rounded-lg border-2 border-black-300 bg-orange p-2 text-xl font-semibold text-black-300 shadow-[rgba(0,0,15,0.5)_-3px_5px_4px_0px]"
+              >
+                ENTRAR
+              </button>
+            </Skeleton>
           </form>
         </div>
       </div>
