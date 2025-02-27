@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 /* eslint-disable consistent-return */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -56,23 +57,122 @@ export default function LoginForm() {
     onSuccess: async (tokenResponse) => {
       try {
         const { access_token } = tokenResponse;
-        const response = await axios.post(
-          'https://crispy-system-7v7pvgxg9q9wcr4-3333.app.github.dev/auth/google',
-          { token: access_token }
+
+        if (!access_token) {
+          console.error('ID Token não recebido!');
+          return;
+        }
+
+        console.log('ID Token enviado para o backend:', access_token);
+
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/auth/google`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ tokenGoogle: access_token }),
+            credentials: 'include',
+          }
         );
-        toast.success('Login realizado com sucesso!', {
-          position: 'top-right',
-          autoClose: 3000,
+
+        const data = await response.json();
+
+        const { user } = data;
+        console.log('Dados de login recebidos:', user);
+        const db = await openDB();
+        const transaction = db.transaction('user_data', 'readwrite');
+        const objectStore = transaction.objectStore('user_data');
+
+        const addRequest = objectStore.add(user);
+
+        await new Promise((resolve, reject) => {
+          addRequest.onsuccess = () => resolve(true);
+          addRequest.onerror = (e) => {
+            console.error('Erro ao salvar no IndexedDB:', e);
+            reject(new Error('Erro ao salvar dados do usuário no IndexedDB.'));
+          };
         });
+
+        const { token } = data.user;
+        console.log('Token recebido:', token);
+
+        if (token) {
+          Cookie.set(TOKEN_KEY, token, { expires: 7 });
+        } else {
+          console.error('Token não recebido na resposta!');
+        }
+
         setTimeout(() => {
           router.push('/');
         }, 3000);
       } catch (error) {
-        /* empty */
+        console.error('Erro ao fazer login:', error);
       }
     },
     onError: () => console.error('Erro no login com o Google'),
   });
+
+  // const login = useGoogleLogin({
+  //   onSuccess: async (tokenResponse) => {
+  //     try {
+  //       const { id_token } = tokenResponse;
+  //       const response = await axios.post(
+  //         'https://crispy-system-7v7pvgxg9q9wcr4-3333.app.github.dev/auth/google',
+  //         { token: id_token }
+  //       );
+
+  //       if (response.status !== 200) {
+  //         throw new Error(
+  //           response.data?.message || 'Ocorreu um erro inesperado.'
+  //         );
+  //       }
+
+  //       const profileResponse = await fetch(
+  //         `${process.env.NEXT_PUBLIC_API_URL}/users/profile`,
+  //         {
+  //           method: 'GET',
+  //           credentials: 'include',
+  //         }
+  //       );
+
+  //       if (!profileResponse.ok) {
+  //         throw new Error('Erro ao buscar os dados do perfil.');
+  //       }
+
+  //       const userData = await profileResponse.json();
+  //       console.log('Dados de login recebidos:', userData);
+
+  //       const db = await openDB();
+  //       const transaction = db.transaction('user_data', 'readwrite');
+  //       const objectStore = transaction.objectStore('user_data');
+
+  //       const addRequest = objectStore.add(userData);
+
+  //       await new Promise((resolve, reject) => {
+  //         addRequest.onsuccess = () => resolve(true);
+  //         addRequest.onerror = (e) => {
+  //           console.error('Erro ao salvar no IndexedDB:', e);
+  //           reject(new Error('Erro ao salvar dados do usuário no IndexedDB.'));
+  //         };
+  //       });
+
+  //       const { token } = response.data;
+
+  //       Cookie.set(TOKEN_KEY, token, { expires: 7 });
+  //       toast.success('Login realizado com sucesso!', {
+  //         position: 'top-right',
+  //         autoClose: 3000,
+  //       });
+
+  //       setTimeout(() => {
+  //         router.push('/');
+  //       }, 3000);
+  //     } catch (error) {
+  //       console.error('Erro no processo de login:', error);
+  //     }
+  //   },
+  //   onError: () => console.error('Erro no login com o Google'),
+  // });
 
   const handleLogin = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -218,12 +318,87 @@ export default function LoginForm() {
         router.push('/');
       }, 800);
     } catch (err: any) {
-      // Exibir mensagem de erro
       setError(err.message || 'Ocorreu um erro inesperado.');
     } finally {
       setLoading(false);
     }
   };
+
+  // const handleMetaMaskLogin = async () => {
+  //   if (window.ethereum) {
+  //     try {
+  //       setLoading(true);
+
+  //       const provider = new ethers.BrowserProvider(window.ethereum);
+
+  //       const signer = await provider.getSigner();
+
+  //       await window.ethereum.request({ method: 'eth_requestAccounts' });
+
+  //       const address = await signer.getAddress();
+
+  //       const response = await fetch(
+  //         `${process.env.NEXT_PUBLIC_API_URL}/auth/google`,
+  //         {
+  //           method: 'POST',
+  //           headers: { 'Content-Type': 'application/json' },
+  //           body: JSON.stringify({ metamaskAddress: address }),
+  //           credentials: 'include',
+  //         }
+  //       );
+
+  //       const data = await response.json();
+
+  //       const { user } = data;
+  //       console.log('Dados de login recebidos:', user);
+  //       const db = await openDB();
+  //       const transaction = db.transaction('user_data', 'readwrite');
+  //       const objectStore = transaction.objectStore('user_data');
+
+  //       const addRequest = objectStore.add(user);
+
+  //       await new Promise((resolve, reject) => {
+  //         addRequest.onsuccess = () => resolve(true);
+  //         addRequest.onerror = (e) => {
+  //           console.error('Erro ao salvar no IndexedDB:', e);
+  //           reject(new Error('Erro ao salvar dados do usuário no IndexedDB.'));
+  //         };
+  //       });
+
+  //       const { token } = data.user;
+  //       console.log('Token recebido:', token);
+
+  //       if (token) {
+  //         Cookie.set(TOKEN_KEY, token, { expires: 7 });
+  //       } else {
+  //         console.error('Token não recebido na resposta!');
+  //       }
+
+  //       toast.success('Login com MetaMask bem-sucedido!', {
+  //         position: 'top-right',
+  //         autoClose: 3000,
+  //       });
+
+  //       router.push('/');
+  //       }
+  //     } catch (err) {
+  //       console.error('Erro ao conectar com MetaMask:', err);
+  //       toast.error('Erro ao tentar fazer login com MetaMask.', {
+  //         position: 'top-right',
+  //         autoClose: 3000,
+  //       });
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   } else {
+  //     toast.error('MetaMask não detectado. Por favor, instale o MetaMask.', {
+  //       position: 'top-right',
+  //       autoClose: 3000,
+  //     });
+  //   }
+  // };
+
+  // carregar página
 
   const handleMetaMaskLogin = async () => {
     if (window.ethereum) {
@@ -231,26 +406,56 @@ export default function LoginForm() {
         setLoading(true);
 
         const provider = new ethers.BrowserProvider(window.ethereum);
-
         const signer = await provider.getSigner();
 
         await window.ethereum.request({ method: 'eth_requestAccounts' });
 
         const address = await signer.getAddress();
 
-        const response = await axios.post(
-          'https://crispy-system-7v7pvgxg9q9wcr4-3333.app.github.dev/auth/metamask',
-          { metamaskAddress: address }
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/auth/metamask`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ metamaskAddress: address }),
+            credentials: 'include',
+          }
         );
 
-        if (response.data.token) {
-          toast.success('Login com MetaMask bem-sucedido!', {
-            position: 'top-right',
-            autoClose: 3000,
-          });
+        const data = await response.json();
 
-          router.push('/');
+        console.log('Resposta do backend:', data);
+
+        const { user, token } = data;
+
+        console.log('Dados de login recebidos:', user);
+        const db = await openDB();
+        const transaction = db.transaction('user_data', 'readwrite');
+        const objectStore = transaction.objectStore('user_data');
+
+        const addRequest = objectStore.add(user);
+
+        await new Promise((resolve, reject) => {
+          addRequest.onsuccess = () => resolve(true);
+          addRequest.onerror = (e) => {
+            console.error('Erro ao salvar no IndexedDB:', e);
+            reject(new Error('Erro ao salvar dados do usuário no IndexedDB.'));
+          };
+        });
+
+        if (token) {
+          Cookie.set(TOKEN_KEY, token, { expires: 7 });
+          console.log('Token recebido:', token);
+        } else {
+          console.error('Token não recebido na resposta!');
         }
+
+        toast.success('Login com MetaMask bem-sucedido!', {
+          position: 'top-right',
+          autoClose: 3000,
+        });
+
+        router.push('/');
       } catch (err) {
         console.error('Erro ao conectar com MetaMask:', err);
         toast.error('Erro ao tentar fazer login com MetaMask.', {
@@ -267,8 +472,6 @@ export default function LoginForm() {
       });
     }
   };
-
-  // carregar página
 
   useEffect(() => {
     if (document.readyState === 'complete') {

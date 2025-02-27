@@ -21,7 +21,7 @@ export default function SkeletonLoginForm() {
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-center font-roboto">
-        <div className="min-w-4xl grid w-[500px] rounded-3xl bg-white shadow-none lg:shadow-2xl">
+        <div className="min-w-4xl grid w-full rounded-3xl bg-white shadow-none lg:w-[500px] lg:shadow-2xl">
           <form className="flex w-full flex-col items-center justify-center gap-6 p-10 font-roboto text-black-200 lg:gap-10">
             <div className="flex flex-row items-center justify-center gap-5">
               <div>
@@ -58,7 +58,13 @@ export default function SkeletonLoginForm() {
                 <span className="ml-3 w-[40px] border-b" />
               </Skeleton>
             </div>
-            <Skeleton width={400} className="w-full" variant="rectangular">
+            <Skeleton
+              sx={{
+                width: { lg: 400, md: 400, sm: 300 },
+                maxWidth: '100%',
+              }}
+              variant="rectangular"
+            >
               <CustomTextField
                 required
                 id="email"
@@ -69,7 +75,13 @@ export default function SkeletonLoginForm() {
               />
             </Skeleton>
 
-            <Skeleton width={400} className="w-full" variant="rectangular">
+            <Skeleton
+              sx={{
+                width: { lg: 400, md: 400, sm: 300 },
+                maxWidth: '100%',
+              }}
+              variant="rectangular"
+            >
               <CustomTextField
                 required
                 id="password"
@@ -89,13 +101,21 @@ export default function SkeletonLoginForm() {
               </a>
             </Skeleton>
 
-            <Skeleton className="w-full" variant="rectangular">
-              <button
-                type="submit"
-                className="flex w-full items-center justify-center rounded-lg border-2 border-black-300 bg-orange p-2 text-xl font-semibold text-black-300 shadow-[rgba(0,0,15,0.5)_-3px_5px_4px_0px]"
-              >
-                ENTRAR
-              </button>
+            <Skeleton
+              sx={{
+                width: { lg: 400, md: 400, sm: 300 },
+                maxWidth: '100%',
+              }}
+              variant="rectangular"
+            >
+              <CustomTextField
+                required
+                id="email"
+                name="email"
+                label="Email"
+                variant="outlined"
+                fullWidth
+              />
             </Skeleton>
           </form>
         </div>

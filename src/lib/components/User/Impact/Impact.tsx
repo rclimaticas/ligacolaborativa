@@ -6,15 +6,11 @@ import InputBase from '@mui/material/InputBase';
 import Paper from '@mui/material/Paper';
 import type * as React from 'react';
 
-import BreadCrumbs from '@/lib/components/User/Impact/Breadcrumbs';
 import Table from '@/lib/components/User/Impact/Table';
 
 const ImpactComponent: React.FC = () => {
   return (
     <div className="flex flex-col space-y-5">
-      <div>
-        <BreadCrumbs />
-      </div>
       <div className="grid rounded-2xl border-2 bg-white p-2 shadow-xl">
         <div className="flex grid w-full grid-cols-2 items-center justify-between px-3">
           <div>

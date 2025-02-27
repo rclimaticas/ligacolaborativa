@@ -196,6 +196,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
+import { Skeleton } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Chip from '@mui/material/Chip';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -330,15 +331,11 @@ export default function App() {
               />
             </DropdownTrigger>
             <DropdownMenu
-              className="rounded-lg border-2 bg-orange p-2"
+              className="rounded-lg border-2 bg-orange p-2 font-sans"
               aria-label="User Menu"
             >
-              <DropdownItem
-                key="profile"
-                href="/user"
-                className="hover:text-white"
-              >
-                Perfil
+              <DropdownItem key="profile" className="hover:text-white">
+                <Link href="/user"> Perfil </Link>
               </DropdownItem>
               <DropdownItem
                 className="hover:text-white"
