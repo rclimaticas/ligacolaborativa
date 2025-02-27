@@ -27,6 +27,7 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
+  CircularProgress,
 } from '@mui/material';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
@@ -43,7 +44,7 @@ export default function PermanentDrawerLeft() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState('Conta');
+  const [selectedItem, setSelectedItem] = useState<string | null>(null);
   const [user, setUser] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -92,6 +93,18 @@ export default function PermanentDrawerLeft() {
     Drafts: 'Este é o conteúdo de Drafts.',
   };
 
+  useEffect(() => {
+    const storedTab = localStorage.getItem('selectedTab');
+    if (storedTab) {
+      setSelectedItem(storedTab);
+    }
+  }, []);
+
+  const handleTabChange = (tab: string) => {
+    setSelectedItem(tab);
+    localStorage.setItem('selectedTab', tab);
+  };
+
   const drawerContent = (
     <div>
       <div className="flex w-full items-center justify-center p-4">
@@ -108,8 +121,16 @@ export default function PermanentDrawerLeft() {
           <ListItem key={text} disablePadding>
             <ListItemButton
               onClick={() => {
-                setSelectedItem(text);
+                handleTabChange(text);
                 if (isMobile) setMobileOpen(false);
+              }}
+              sx={{
+                backgroundColor:
+                  selectedItem === text ? '#f0f0f0' : 'transparent',
+                '&:hover': {
+                  backgroundColor:
+                    selectedItem === text ? '#e0e0e0' : '#f0f0f0',
+                },
               }}
             >
               <ListItemIcon>{iconMap[text] || <InboxIcon />}</ListItemIcon>
@@ -182,7 +203,7 @@ export default function PermanentDrawerLeft() {
             width: drawerWidth,
             boxSizing: 'border-box',
           },
-          display: { xs: 'none', md: 'block' }, // Esconder no mobile
+          display: { xs: 'none', md: 'block' },
         }}
         variant="permanent"
         anchor="left"
@@ -198,7 +219,7 @@ export default function PermanentDrawerLeft() {
         onClose={handleDrawerToggle}
         sx={{
           '& .MuiDrawer-paper': { width: drawerWidth },
-          display: { xs: 'block', md: 'none' }, // Mostrar apenas no mobile
+          display: { xs: 'block', md: 'none' },
         }}
       >
         {drawerContent}
@@ -210,8 +231,20 @@ export default function PermanentDrawerLeft() {
       >
         <Toolbar />
         <Typography>
-          {contentMap[selectedItem as keyof typeof contentMap] ||
-            'Selecione um item para visualizar o conteúdo.'}
+          {selectedItem === null ? (
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              height="100%"
+            >
+              <CircularProgress />
+            </Box>
+          ) : contentMap[selectedItem as keyof typeof contentMap] ? (
+            contentMap[selectedItem as keyof typeof contentMap]
+          ) : (
+            'Conteúdo não encontrado'
+          )}
         </Typography>
       </Box>
     </Box>
