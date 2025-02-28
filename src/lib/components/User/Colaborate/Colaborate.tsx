@@ -66,11 +66,14 @@ const Colaborate: React.FC = () => {
   const [selectedTime, setSelectedTime] = useState<number | null>(null);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const [tempAreaOfInterest, setTempAreaOfInterest] = useState(areaOfInterest);
+  const [hasChanges, setHasChanges] = useState(false);
   const handleOpenConfirmModal = () => {
     setOpenConfirmModal(true);
   };
   const handleClose = () => {
     if (areaOfInterest.length !== tempAreaOfInterest.length) {
+      handleOpenConfirmModal();
+    } else if (hasChanges) {
       handleOpenConfirmModal();
     } else {
       setOpenModal('');
@@ -81,6 +84,8 @@ const Colaborate: React.FC = () => {
     setOpenModal('');
     setOpenConfirmModal(false);
     setAreaOfInterest(tempAreaOfInterest);
+    setHasChanges(false);
+    window.location.reload();
   };
 
   const handleCancelExit = () => {
@@ -138,6 +143,7 @@ const Colaborate: React.FC = () => {
   };
 
   const handleRemoveInterest = (tag: string) => {
+    setHasChanges(true);
     setUser((prev) => {
       if (prev && prev.areaOfInterest) {
         return {
@@ -231,25 +237,25 @@ const Colaborate: React.FC = () => {
     }
   }, [user?.id]);
   return (
-    <>
-      <h3>
+    <div className="flex flex-col gap-10 font-sans">
+      <h3 className="w-full font-sans">
         Esse espaço irá ajudar a direcionar da melhor forma as possibilidade de
         colaborar e receber colaboração. Atualize as informações sempre que
         necessário.
       </h3>
 
-      <div className="grid items-center rounded-xl border-2 bg-white p-10 font-sans shadow-xl">
-        <div className="w-[280px]">
+      <div className="flex grid items-center gap-0 rounded-xl border-2 bg-white p-0 font-sans shadow-xl md:p-5">
+        <div className="">
           {/* Organização */}
           <button
             onClick={() => handleOpen('organization')}
-            className="w-full hover:bg-black-100"
+            className="w-full items-center justify-center hover:bg-black-100"
           >
-            <div className="flex w-full items-center justify-between py-4">
-              <div className="mr-0 font-bold opacity-50 md:mr-[245px]">
+            <div className="flex w-full flex-col items-center justify-between py-4 md:flex-row">
+              <div className="flex w-full items-center justify-center font-bold opacity-50 md:justify-start">
                 Organização
               </div>
-              <div className="flex w-full justify-start">
+              <div className="flex w-full justify-center md:justify-start">
                 {user?.organization || '(adicione uma organização)'}
               </div>
               <div>
@@ -327,11 +333,11 @@ const Colaborate: React.FC = () => {
             onClick={() => handleOpen('areaOfInterest')}
             className="w-full hover:bg-black-100"
           >
-            <div className="flex w-full items-center justify-between py-4">
-              <div className="mr-[50px] font-bold opacity-50 md:mr-[245px]">
+            <div className="flex w-full flex-col items-center justify-between py-4 md:flex-row">
+              <div className="flex w-full items-center justify-center font-bold opacity-50 md:justify-start">
                 Áreas de Interesse
               </div>
-              <div className="flex w-full flex-wrap justify-start gap-1">
+              <div className="flex w-full flex-wrap items-center justify-center gap-1 md:justify-start">
                 {Array.isArray(user?.areaOfInterest) &&
                 user?.areaOfInterest.length > 0 ? (
                   <div className="flex flex-wrap gap-1">
@@ -347,8 +353,8 @@ const Colaborate: React.FC = () => {
                     ))}
                   </div>
                 ) : (
-                  <p className="text-gray-500 text-sm font-bold">
-                    Adicione áreas de interesse
+                  <p className="text-gray-500 w-full justify-center text-sm font-bold md:justify-start">
+                    (adicione áreas de interesse)
                   </p>
                 )}
               </div>
@@ -497,18 +503,17 @@ const Colaborate: React.FC = () => {
             onClick={() => handleOpen('weeklyAvailability')}
             className="w-full hover:bg-black-100"
           >
-            <div className="flex w-full items-center justify-between py-4">
-              <div className="mr-0 font-bold opacity-50 md:mr-[245px]">
+            <div className="flex w-full flex-col items-center justify-between py-4 sm:flex-row">
+              <div className="flex w-full items-center justify-center font-bold opacity-50 md:justify-start">
                 Disponibilidade
               </div>
-              <div className="flex w-full justify-start">
+              <div className="flex w-full justify-center md:justify-start">
                 {user?.weeklyAvailability || '(adicione uma disponibilidade)'}
               </div>
               <div>
                 <DriveFileRenameOutlineIcon />
               </div>
             </div>
-            <Divider />
           </button>
           <Modal
             open={openModal === 'weeklyAvailability'}
@@ -576,7 +581,7 @@ const Colaborate: React.FC = () => {
           </Modal>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

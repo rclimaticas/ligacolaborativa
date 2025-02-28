@@ -261,37 +261,136 @@ const Account: React.FC = () => {
             Informações Básicas
           </h3>
         </div>
-        {isLoading ? (
-          <ProfileSkeleton />
-        ) : (
-          <div className="flex w-[280px] flex-col items-center justify-between gap-10 rounded-full lg:flex-row">
-            <div className="rounded-full bg-black-100">
-              <div className="bg-red-100 relative h-[300px]">
-                <div className="group rounded-full">
-                  <button
-                    onClick={() => handleOpen('avatar')}
-                    className="rounded-full"
-                  >
-                    <Avatar
-                      className="transition duration-300 group-hover:blur-sm"
-                      alt="Remy Sharp"
-                      sx={{ width: 300, height: 300 }}
-                      src={user?.imageBase64 || './assets/johnbonham.webp'}
+
+        <div className="flex w-[240px] flex-col items-center justify-between gap-10 rounded-full lg:flex-row">
+          <div className="rounded-full bg-black-100">
+            <div className="bg-red-100 relative h-[300px]">
+              <div className="group rounded-full">
+                <button
+                  onClick={() => handleOpen('avatar')}
+                  className="rounded-full"
+                >
+                  <Avatar
+                    className="transition duration-300 group-hover:blur-sm"
+                    alt="Remy Sharp"
+                    sx={{ width: 300, height: 300 }}
+                    src={user?.imageBase64 || './assets/johnbonham.webp'}
+                  />
+                  <div className="absolute inset-0 z-10 flex items-center justify-center rounded-full text-6xl font-semibold text-white opacity-0 duration-300 group-hover:opacity-100">
+                    <AddAPhotoSharpIcon
+                      sx={{ fontSize: 90, color: '#000100' }}
                     />
-                    <div className="absolute inset-0 z-10 flex items-center justify-center rounded-full text-6xl font-semibold text-white opacity-0 duration-300 group-hover:opacity-100">
-                      <AddAPhotoSharpIcon
-                        sx={{ fontSize: 90, color: '#000100' }}
-                      />
-                    </div>
-                  </button>
-                </div>
+                  </div>
+                </button>
               </div>
             </div>
-            <Modal open={openModal === 'avatar'} onClose={handleClose}>
-              <Box
-                className="font-sans"
-                sx={{ ...style, position: 'relative' }}
+          </div>
+          <Modal open={openModal === 'avatar'} onClose={handleClose}>
+            <Box className="font-sans" sx={{ ...style, position: 'relative' }}>
+              {/* Ícone de Fechar (X) */}
+              <button
+                onClick={handleClose}
+                className="text-gray-500 hover:text-black absolute left-2 top-2 mb-5"
               >
+                <IoArrowBack size={40} color="#cfd149" />
+              </button>
+
+              {/* Título */}
+              <Typography className="mt-14" id="modal-modal-title" variant="h6">
+                Editar sua foto de usuário
+              </Typography>
+
+              {/* Descrição */}
+              <Typography
+                className="w-full font-sans text-black-200"
+                id="modal-modal-description"
+                sx={{ mt: 2 }}
+              >
+                Uma imagem ajuda as pessoas a reconhecê-lo e permite que você
+                saiba quando está conectado à sua conta.
+              </Typography>
+
+              {/* Campo de Texto */}
+              <div className="flex w-full items-center justify-center gap-5">
+                {imageBase64 ? (
+                  <Avatar
+                    className="mt-5 transition duration-300 group-hover:blur-sm"
+                    alt="Remy Sharp"
+                    sx={{
+                      width: { lg: 300, xs: 150 },
+                      height: { lg: 300, xs: 150 },
+                    }}
+                    src={imageBase64 || ''}
+                  />
+                ) : (
+                  <Avatar
+                    className="mt-5 transition duration-300 group-hover:blur-sm"
+                    alt="Remy Sharp"
+                    sx={{
+                      width: { lg: 300, xs: 150 },
+                      height: { lg: 300, xs: 150 },
+                    }}
+                    src={user?.imageBase64 || './assets/johnbonham.webp'}
+                  />
+                )}
+                <div>
+                  <label htmlFor="file-upload" className="cursor-pointer">
+                    <div className="bg-gray-200 text-gray-700 hover:bg-gray-300 flex items-center gap-2 rounded-lg px-4 py-2">
+                      <IoCameraOutline size={40} />
+                      <span>Escolher</span>
+                    </div>
+                  </label>
+
+                  {/* Input oculto */}
+                  <input
+                    id="file-upload"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="hidden"
+                  />
+                </div>
+              </div>
+
+              {imageBase64 ? (
+                <div className="mt-5 flex w-full items-center gap-3">
+                  <div className="flex w-full items-center justify-center">
+                    <button
+                      onClick={handleSaveAvatar}
+                      className="rounded-lg bg-orange p-2 font-bold"
+                    >
+                      Enviar Imagem
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div> </div>
+              )}
+            </Box>
+          </Modal>
+
+          <div className="w-full">
+            {/* Usuário */}
+            <button
+              onClick={() => handleOpen('username')}
+              className="w-full hover:bg-black-100"
+            >
+              <div className="flex w-full items-center justify-between py-4">
+                <div className="mr-[60px] font-bold opacity-50 md:mr-[230px]">
+                  Usuário
+                </div>
+                <div className="flex w-full justify-start">
+                  <span className="opacity-70">@</span>
+                  {user?.username || ''}
+                </div>
+                <div>
+                  <DriveFileRenameOutlineIcon />
+                </div>
+              </div>
+              <Divider />
+            </button>
+            <Modal open={openModal === 'username'} onClose={handleClose}>
+              <Box sx={{ ...style, position: 'relative' }}>
                 {/* Ícone de Fechar (X) */}
                 <button
                   onClick={handleClose}
@@ -306,560 +405,450 @@ const Account: React.FC = () => {
                   id="modal-modal-title"
                   variant="h6"
                 >
-                  Editar sua foto de usuário
+                  Editar seu nome de usuário
                 </Typography>
 
                 {/* Descrição */}
-                <Typography
-                  className="w-full font-sans text-black-200"
-                  id="modal-modal-description"
-                  sx={{ mt: 2 }}
-                >
-                  Uma imagem ajuda as pessoas a reconhecê-lo e permite que você
-                  saiba quando está conectado à sua conta.
+                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                  As alterações no seu nome serão refletidas na sua Conta do
+                  Liga.
                 </Typography>
 
                 {/* Campo de Texto */}
-                <div className="flex w-full items-center justify-center gap-5">
-                  {imageBase64 ? (
-                    <Avatar
-                      className="mt-5 transition duration-300 group-hover:blur-sm"
-                      alt="Remy Sharp"
-                      sx={{
-                        width: { lg: 300, xs: 150 },
-                        height: { lg: 300, xs: 150 },
-                      }}
-                      src={imageBase64 || ''}
-                    />
-                  ) : (
-                    <Avatar
-                      className="mt-5 transition duration-300 group-hover:blur-sm"
-                      alt="Remy Sharp"
-                      sx={{
-                        width: { lg: 300, xs: 150 },
-                        height: { lg: 300, xs: 150 },
-                      }}
-                      src={user?.imageBase64 || './assets/johnbonham.webp'}
-                    />
-                  )}
-                  <div>
-                    <label htmlFor="file-upload" className="cursor-pointer">
-                      <div className="bg-gray-200 text-gray-700 hover:bg-gray-300 flex items-center gap-2 rounded-lg px-4 py-2">
-                        <IoCameraOutline size={40} />
-                        <span>Escolher</span>
-                      </div>
-                    </label>
+                <CustomTextField
+                  className="mt-5"
+                  id="nome"
+                  name="nome"
+                  label="Novo nome de usuário"
+                  variant="outlined"
+                  fullWidth
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
 
-                    {/* Input oculto */}
-                    <input
-                      id="file-upload"
-                      type="file"
-                      accept="image/*"
-                      onChange={handleImageChange}
-                      className="hidden"
-                    />
-                  </div>
+                {/* Botões "Cancelar" e "Salvar" */}
+                <div className="mt-5 flex w-full items-center justify-end gap-3">
+                  <button
+                    className="bg-gray-300 hover:bg-gray-400 rounded-lg p-2 font-bold"
+                    onClick={handleClose}
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    onClick={handleSaveUsername}
+                    className="rounded-lg bg-orange p-2 font-bold"
+                  >
+                    {isLoadingButton ? (
+                      <CircularProgress size="30px" />
+                    ) : (
+                      'Salvar'
+                    )}
+                  </button>
                 </div>
-
-                {imageBase64 ? (
-                  <div className="mt-5 flex w-full items-center gap-3">
-                    <div className="flex w-full items-center justify-center">
-                      <button
-                        onClick={handleSaveAvatar}
-                        className="rounded-lg bg-orange p-2 font-bold"
-                      >
-                        Enviar Imagem
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <div> </div>
-                )}
               </Box>
             </Modal>
 
-            <div className="w-full">
-              {/* Usuário */}
-              <button
-                onClick={() => handleOpen('username')}
-                className="w-full hover:bg-black-100"
-              >
-                <div className="flex w-full items-center justify-between py-4">
-                  <div className="mr-[60px] font-bold opacity-50 md:mr-[230px]">
-                    Usuário
-                  </div>
-                  <div className="flex w-full justify-start">
-                    <span className="opacity-70">@</span>
-                    {user?.username || ''}
-                  </div>
-                  <div>
-                    <DriveFileRenameOutlineIcon />
-                  </div>
+            {/* Nome */}
+            <button
+              onClick={() => handleOpen('name')}
+              className="w-full hover:bg-black-100"
+            >
+              <div className="flex w-full items-center justify-between py-4">
+                <div className="mr-[75px] font-bold opacity-50 md:mr-[245px]">
+                  Nome
                 </div>
-                <Divider />
-              </button>
-              <Modal open={openModal === 'username'} onClose={handleClose}>
-                <Box sx={{ ...style, position: 'relative' }}>
-                  {/* Ícone de Fechar (X) */}
-                  <button
-                    onClick={handleClose}
-                    className="text-gray-500 hover:text-black absolute left-2 top-2 mb-5"
-                  >
-                    <IoArrowBack size={40} color="#cfd149" />
-                  </button>
-
-                  {/* Título */}
-                  <Typography
-                    className="mt-14"
-                    id="modal-modal-title"
-                    variant="h6"
-                  >
-                    Editar seu nome de usuário
-                  </Typography>
-
-                  {/* Descrição */}
-                  <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    As alterações no seu nome serão refletidas na sua Conta do
-                    Liga.
-                  </Typography>
-
-                  {/* Campo de Texto */}
-                  <CustomTextField
-                    className="mt-5"
-                    id="nome"
-                    name="nome"
-                    label="Novo nome de usuário"
-                    variant="outlined"
-                    fullWidth
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                  />
-
-                  {/* Botões "Cancelar" e "Salvar" */}
-                  <div className="mt-5 flex w-full items-center justify-end gap-3">
-                    <button
-                      className="bg-gray-300 hover:bg-gray-400 rounded-lg p-2 font-bold"
-                      onClick={handleClose}
-                    >
-                      Cancelar
-                    </button>
-                    <button
-                      onClick={handleSaveUsername}
-                      className="rounded-lg bg-orange p-2 font-bold"
-                    >
-                      {isLoadingButton ? (
-                        <CircularProgress size="30px" />
-                      ) : (
-                        'Salvar'
-                      )}
-                    </button>
-                  </div>
-                </Box>
-              </Modal>
-
-              {/* Nome */}
-              <button
-                onClick={() => handleOpen('name')}
-                className="w-full hover:bg-black-100"
-              >
-                <div className="flex w-full items-center justify-between py-4">
-                  <div className="mr-[75px] font-bold opacity-50 md:mr-[245px]">
-                    Nome
-                  </div>
-                  <div className="flex w-full justify-start">
-                    {user?.name || ''}
-                  </div>
-                  <div>
-                    <DriveFileRenameOutlineIcon />
-                  </div>
+                <div className="flex w-full justify-start">
+                  {user?.name || ''}
                 </div>
-                <Divider />
-              </button>
-              <Modal open={openModal === 'name'} onClose={handleClose}>
-                <Box sx={{ ...style, position: 'relative' }}>
-                  {/* Ícone de Fechar (X) */}
-                  <button
-                    onClick={handleClose}
-                    className="text-gray-500 hover:text-black absolute left-2 top-2 mb-5"
-                  >
-                    <IoArrowBack size={40} color="#cfd149" />
-                  </button>
-
-                  {/* Título */}
-                  <Typography
-                    className="mt-14"
-                    id="modal-modal-title"
-                    variant="h6"
-                  >
-                    Editar Nome
-                  </Typography>
-
-                  {/* Descrição */}
-                  <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    As alterações no seu nome serão refletidas na sua Conta do
-                    Liga.
-                  </Typography>
-
-                  {/* Campo de Texto */}
-                  <CustomTextField
-                    className="mt-5"
-                    id="nome"
-                    name="nome"
-                    label="Novo Nome"
-                    variant="outlined"
-                    fullWidth
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                  />
-
-                  {/* Botões "Cancelar" e "Salvar" */}
-                  <div className="mt-5 flex w-full items-center justify-end gap-3">
-                    <button
-                      className="bg-gray-300 hover:bg-gray-400 rounded-lg p-2 font-bold"
-                      onClick={handleClose}
-                    >
-                      Cancelar
-                    </button>
-                    <button
-                      onClick={handleSaveName}
-                      className="rounded-lg bg-orange p-2 font-bold"
-                    >
-                      {isLoadingButton ? (
-                        <CircularProgress size="30px" />
-                      ) : (
-                        'Salvar'
-                      )}
-                    </button>
-                  </div>
-                </Box>
-              </Modal>
-
-              {/* Email */}
-              <button
-                onClick={() => handleOpen('email')}
-                className="w-full hover:bg-black-100"
-              >
-                <div className="flex w-full items-center justify-between py-4">
-                  <div className="mr-[78px] font-bold opacity-50 md:mr-[248px]">
-                    Email
-                  </div>
-                  <div className="flex w-full justify-start">
-                    {/* Exibir email completo apenas em telas desktop */}
-                    <span className="hidden lg:block">{user?.email || ''}</span>
-
-                    {/* Exibir email truncado até "vitorsilva@" em telas menores que desktop */}
-                    <span className="truncate lg:hidden">
-                      {user?.email ? `${user?.email.slice(0, 11)}...` : ''}
-                    </span>
-                  </div>
-
-                  <div>
-                    <DriveFileRenameOutlineIcon />
-                  </div>
+                <div>
+                  <DriveFileRenameOutlineIcon />
                 </div>
-                <Divider />
-              </button>
-              <Modal open={openModal === 'email'} onClose={handleClose}>
-                <Box sx={{ ...style, position: 'relative' }}>
-                  {/* Ícone de Fechar (X) */}
-                  <button
-                    onClick={handleClose}
-                    className="text-gray-500 hover:text-black absolute left-2 top-2 mb-5"
-                  >
-                    <IoArrowBack size={40} color="#cfd149" />
-                  </button>
-
-                  {/* Título */}
-                  <Typography
-                    className="mt-14"
-                    id="modal-modal-title"
-                    variant="h6"
-                  >
-                    Editar Email
-                  </Typography>
-
-                  {/* Descrição */}
-                  <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    As alterações no seu email serão refletidas na sua Conta do
-                    Liga.
-                  </Typography>
-
-                  {/* Campo de Texto */}
-                  <CustomTextField
-                    className="mt-5"
-                    id="nome"
-                    name="nome"
-                    label="Novo Email"
-                    variant="outlined"
-                    fullWidth
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-
-                  {/* Botões "Cancelar" e "Salvar" */}
-                  <div className="mt-5 flex w-full items-center justify-end gap-3">
-                    <button
-                      className="bg-gray-300 hover:bg-gray-400 rounded-lg p-2 font-bold"
-                      onClick={handleClose}
-                    >
-                      Cancelar
-                    </button>
-                    <button className="rounded-lg bg-orange p-2 font-bold">
-                      {isLoadingButton ? (
-                        <CircularProgress size="30px" />
-                      ) : (
-                        'Salvar'
-                      )}
-                    </button>
-                  </div>
-                </Box>
-              </Modal>
-
-              {/* Senha */}
-              <button
-                onClick={() => handleOpen('password')}
-                className="w-full hover:bg-black-100"
-              >
-                <div className="flex w-full items-center justify-between py-4">
-                  <div className="mr-[75px] font-bold opacity-50 md:mr-[245px]">
-                    Senha
-                  </div>
-                  <div className="flex w-full justify-start">****</div>
-                  <div>
-                    <DriveFileRenameOutlineIcon />
-                  </div>
-                </div>
-                <Divider />
-              </button>
-              <Modal open={openModal === 'password'} onClose={handleClose}>
-                <Box sx={{ ...style, position: 'relative' }}>
-                  {/* Ícone de Fechar (X) */}
-                  <button
-                    onClick={handleClose}
-                    className="text-gray-500 hover:text-black absolute left-2 top-2 mb-5"
-                  >
-                    <IoArrowBack size={40} color="#cfd149" />
-                  </button>
-
-                  {/* Título */}
-                  <Typography
-                    className="mt-14"
-                    id="modal-modal-title"
-                    variant="h6"
-                  >
-                    Editar Senha
-                  </Typography>
-
-                  {/* Descrição */}
-                  <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    As alterações na senha serão refletidas na sua Conta do
-                    Liga.
-                  </Typography>
-
-                  {/* Campo de Texto */}
-                  <CustomTextField
-                    className="mt-5"
-                    id="nome"
-                    name="nome"
-                    label="Novo Senha"
-                    variant="outlined"
-                    fullWidth
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-
-                  {/* Botões "Cancelar" e "Salvar" */}
-                  <div className="mt-5 flex w-full items-center justify-end gap-3">
-                    <button
-                      className="bg-gray-300 hover:bg-gray-400 rounded-lg p-2 font-bold"
-                      onClick={handleClose}
-                    >
-                      Cancelar
-                    </button>
-                    <button
-                      onClick={handleSavePassword}
-                      className="rounded-lg bg-orange p-2 font-bold"
-                    >
-                      {isLoadingButton ? (
-                        <CircularProgress size="30px" />
-                      ) : (
-                        'Salvar'
-                      )}
-                    </button>
-                  </div>
-                </Box>
-              </Modal>
-
-              {/* Cidade */}
-              <button
-                onClick={() => handleOpen('city')}
-                className="w-full hover:bg-black-100"
-              >
-                <div className="flex w-full items-center justify-between py-4">
-                  <div className="mr-[70px] font-bold opacity-50 md:mr-[240px]">
-                    Cidade
-                  </div>
-                  <div className="flex w-full justify-start">
-                    {user?.city || '(adicione uma cidade)'}
-                  </div>
-                  <div>
-                    <DriveFileRenameOutlineIcon />
-                  </div>
-                </div>
-                <Divider />
-              </button>
-              <Modal open={openModal === 'city'} onClose={handleClose}>
-                <Box sx={{ ...style, position: 'relative' }}>
-                  {/* Ícone de Fechar (X) */}
-                  <button
-                    onClick={handleClose}
-                    className="text-gray-500 hover:text-black absolute left-2 top-2 mb-5"
-                  >
-                    <IoArrowBack size={40} color="#cfd149" />
-                  </button>
-
-                  {/* Título */}
-                  <Typography
-                    className="mt-14"
-                    id="modal-modal-title"
-                    variant="h6"
-                  >
-                    Editar Cidade
-                  </Typography>
-
-                  {/* Descrição */}
-                  <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    As alterações serão refletidas na sua Conta do Liga.
-                  </Typography>
-
-                  {/* Campo de Texto */}
-                  <CustomTextField
-                    className="mt-5"
-                    id="nome"
-                    name="nome"
-                    label="Nova Cidade"
-                    variant="outlined"
-                    fullWidth
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                  />
-
-                  {/* Botões "Cancelar" e "Salvar" */}
-                  <div className="mt-5 flex w-full items-center justify-end gap-3">
-                    <button
-                      className="bg-gray-300 hover:bg-gray-400 rounded-lg p-2 font-bold"
-                      onClick={handleClose}
-                    >
-                      Cancelar
-                    </button>
-                    <button
-                      onClick={handleSaveCity}
-                      className="rounded-lg bg-orange p-2 font-bold"
-                    >
-                      {isLoadingButton ? (
-                        <CircularProgress size="30px" />
-                      ) : (
-                        'Salvar'
-                      )}
-                    </button>
-                  </div>
-                </Box>
-              </Modal>
-
-              {/* Estado */}
-
-              <button
-                onClick={() => handleOpen('state')}
-                className="w-full hover:bg-black-100"
-              >
-                <div className="flex w-full items-center justify-between py-4">
-                  <div className="mr-[70px] font-bold opacity-50 md:mr-[240px]">
-                    Estado
-                  </div>
-                  <div className="flex w-full justify-start">
-                    {user?.state || '(adicione um estado)'}
-                  </div>
-                  <div>
-                    <DriveFileRenameOutlineIcon />
-                  </div>
-                </div>
-                <Divider />
-              </button>
-              <Modal open={openModal === 'state'} onClose={handleClose}>
-                <Box sx={{ ...style, position: 'relative' }}>
-                  {/* Ícone de Fechar (X) */}
-                  <button
-                    onClick={handleClose}
-                    className="text-gray-500 hover:text-black absolute left-2 top-2 mb-5"
-                  >
-                    <IoArrowBack size={40} color="#cfd149" />
-                  </button>
-
-                  {/* Título */}
-                  <Typography
-                    className="mt-14"
-                    id="modal-modal-title"
-                    variant="h6"
-                  >
-                    Editar Estado
-                  </Typography>
-
-                  {/* Descrição */}
-                  <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    As alterações serão refletidas na sua Conta do Liga.
-                  </Typography>
-
-                  {/* Campo de Texto */}
-                  <CustomTextField
-                    className="mt-5"
-                    id="nome"
-                    name="nome"
-                    label="Novo Estado"
-                    variant="outlined"
-                    fullWidth
-                    value={state}
-                    onChange={(e) => setState(e.target.value)}
-                  />
-
-                  {/* Botões "Cancelar" e "Salvar" */}
-                  <div className="mt-5 flex w-full items-center justify-end gap-3">
-                    <button
-                      className="bg-gray-300 hover:bg-gray-400 rounded-lg p-2 font-bold"
-                      onClick={handleClose}
-                    >
-                      Cancelar
-                    </button>
-                    <button
-                      onClick={handleSaveState}
-                      className="rounded-lg bg-orange p-2 font-bold"
-                    >
-                      {isLoadingButton ? (
-                        <CircularProgress size="30px" />
-                      ) : (
-                        'Salvar'
-                      )}
-                    </button>
-                  </div>
-                </Box>
-              </Modal>
-
-              <div className="custom-toast-container">
-                <ToastContainer />
-                <style jsx>
-                  {`
-                    .custom-toast-container {
-                      position: fixed !important;
-                      top: 0;
-                      right: 0;
-                      z-index: 9999;
-                      pointer-events: none; /* Para evitar que interaja com outros elementos */
-                    }
-                  `}
-                </style>
               </div>
+              <Divider />
+            </button>
+            <Modal open={openModal === 'name'} onClose={handleClose}>
+              <Box sx={{ ...style, position: 'relative' }}>
+                {/* Ícone de Fechar (X) */}
+                <button
+                  onClick={handleClose}
+                  className="text-gray-500 hover:text-black absolute left-2 top-2 mb-5"
+                >
+                  <IoArrowBack size={40} color="#cfd149" />
+                </button>
+
+                {/* Título */}
+                <Typography
+                  className="mt-14"
+                  id="modal-modal-title"
+                  variant="h6"
+                >
+                  Editar Nome
+                </Typography>
+
+                {/* Descrição */}
+                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                  As alterações no seu nome serão refletidas na sua Conta do
+                  Liga.
+                </Typography>
+
+                {/* Campo de Texto */}
+                <CustomTextField
+                  className="mt-5"
+                  id="nome"
+                  name="nome"
+                  label="Novo Nome"
+                  variant="outlined"
+                  fullWidth
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+
+                {/* Botões "Cancelar" e "Salvar" */}
+                <div className="mt-5 flex w-full items-center justify-end gap-3">
+                  <button
+                    className="bg-gray-300 hover:bg-gray-400 rounded-lg p-2 font-bold"
+                    onClick={handleClose}
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    onClick={handleSaveName}
+                    className="rounded-lg bg-orange p-2 font-bold"
+                  >
+                    {isLoadingButton ? (
+                      <CircularProgress size="30px" />
+                    ) : (
+                      'Salvar'
+                    )}
+                  </button>
+                </div>
+              </Box>
+            </Modal>
+
+            {/* Email */}
+            <button
+              onClick={() => handleOpen('email')}
+              className="w-full hover:bg-black-100"
+            >
+              <div className="flex w-full items-center justify-between py-4">
+                <div className="mr-[78px] font-bold opacity-50 md:mr-[248px]">
+                  Email
+                </div>
+                <div className="flex w-full justify-start">
+                  {/* Exibir email completo apenas em telas desktop */}
+                  <span className="hidden lg:block">{user?.email || ''}</span>
+
+                  {/* Exibir email truncado até "vitorsilva@" em telas menores que desktop */}
+                  <span className="truncate lg:hidden">
+                    {user?.email ? `${user?.email.slice(0, 11)}...` : ''}
+                  </span>
+                </div>
+
+                <div>
+                  <DriveFileRenameOutlineIcon />
+                </div>
+              </div>
+              <Divider />
+            </button>
+            <Modal open={openModal === 'email'} onClose={handleClose}>
+              <Box sx={{ ...style, position: 'relative' }}>
+                {/* Ícone de Fechar (X) */}
+                <button
+                  onClick={handleClose}
+                  className="text-gray-500 hover:text-black absolute left-2 top-2 mb-5"
+                >
+                  <IoArrowBack size={40} color="#cfd149" />
+                </button>
+
+                {/* Título */}
+                <Typography
+                  className="mt-14"
+                  id="modal-modal-title"
+                  variant="h6"
+                >
+                  Editar Email
+                </Typography>
+
+                {/* Descrição */}
+                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                  As alterações no seu email serão refletidas na sua Conta do
+                  Liga.
+                </Typography>
+
+                {/* Campo de Texto */}
+                <CustomTextField
+                  className="mt-5"
+                  id="nome"
+                  name="nome"
+                  label="Novo Email"
+                  variant="outlined"
+                  fullWidth
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+
+                {/* Botões "Cancelar" e "Salvar" */}
+                <div className="mt-5 flex w-full items-center justify-end gap-3">
+                  <button
+                    className="bg-gray-300 hover:bg-gray-400 rounded-lg p-2 font-bold"
+                    onClick={handleClose}
+                  >
+                    Cancelar
+                  </button>
+                  <button className="rounded-lg bg-orange p-2 font-bold">
+                    {isLoadingButton ? (
+                      <CircularProgress size="30px" />
+                    ) : (
+                      'Salvar'
+                    )}
+                  </button>
+                </div>
+              </Box>
+            </Modal>
+
+            {/* Senha */}
+            <button
+              onClick={() => handleOpen('password')}
+              className="w-full hover:bg-black-100"
+            >
+              <div className="flex w-full items-center justify-between py-4">
+                <div className="mr-[75px] font-bold opacity-50 md:mr-[245px]">
+                  Senha
+                </div>
+                <div className="flex w-full justify-start">****</div>
+                <div>
+                  <DriveFileRenameOutlineIcon />
+                </div>
+              </div>
+              <Divider />
+            </button>
+            <Modal open={openModal === 'password'} onClose={handleClose}>
+              <Box sx={{ ...style, position: 'relative' }}>
+                {/* Ícone de Fechar (X) */}
+                <button
+                  onClick={handleClose}
+                  className="text-gray-500 hover:text-black absolute left-2 top-2 mb-5"
+                >
+                  <IoArrowBack size={40} color="#cfd149" />
+                </button>
+
+                {/* Título */}
+                <Typography
+                  className="mt-14"
+                  id="modal-modal-title"
+                  variant="h6"
+                >
+                  Editar Senha
+                </Typography>
+
+                {/* Descrição */}
+                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                  As alterações na senha serão refletidas na sua Conta do Liga.
+                </Typography>
+
+                {/* Campo de Texto */}
+                <CustomTextField
+                  className="mt-5"
+                  id="nome"
+                  name="nome"
+                  label="Novo Senha"
+                  variant="outlined"
+                  fullWidth
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+
+                {/* Botões "Cancelar" e "Salvar" */}
+                <div className="mt-5 flex w-full items-center justify-end gap-3">
+                  <button
+                    className="bg-gray-300 hover:bg-gray-400 rounded-lg p-2 font-bold"
+                    onClick={handleClose}
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    onClick={handleSavePassword}
+                    className="rounded-lg bg-orange p-2 font-bold"
+                  >
+                    {isLoadingButton ? (
+                      <CircularProgress size="30px" />
+                    ) : (
+                      'Salvar'
+                    )}
+                  </button>
+                </div>
+              </Box>
+            </Modal>
+
+            {/* Cidade */}
+            <button
+              onClick={() => handleOpen('city')}
+              className="w-full hover:bg-black-100"
+            >
+              <div className="flex w-full items-center justify-between py-4">
+                <div className="mr-[70px] font-bold opacity-50 md:mr-[240px]">
+                  Cidade
+                </div>
+                <div className="flex w-full justify-start">
+                  {user?.city || '(adicione uma cidade)'}
+                </div>
+                <div>
+                  <DriveFileRenameOutlineIcon />
+                </div>
+              </div>
+              <Divider />
+            </button>
+            <Modal open={openModal === 'city'} onClose={handleClose}>
+              <Box sx={{ ...style, position: 'relative' }}>
+                {/* Ícone de Fechar (X) */}
+                <button
+                  onClick={handleClose}
+                  className="text-gray-500 hover:text-black absolute left-2 top-2 mb-5"
+                >
+                  <IoArrowBack size={40} color="#cfd149" />
+                </button>
+
+                {/* Título */}
+                <Typography
+                  className="mt-14"
+                  id="modal-modal-title"
+                  variant="h6"
+                >
+                  Editar Cidade
+                </Typography>
+
+                {/* Descrição */}
+                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                  As alterações serão refletidas na sua Conta do Liga.
+                </Typography>
+
+                {/* Campo de Texto */}
+                <CustomTextField
+                  className="mt-5"
+                  id="nome"
+                  name="nome"
+                  label="Nova Cidade"
+                  variant="outlined"
+                  fullWidth
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                />
+
+                {/* Botões "Cancelar" e "Salvar" */}
+                <div className="mt-5 flex w-full items-center justify-end gap-3">
+                  <button
+                    className="bg-gray-300 hover:bg-gray-400 rounded-lg p-2 font-bold"
+                    onClick={handleClose}
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    onClick={handleSaveCity}
+                    className="rounded-lg bg-orange p-2 font-bold"
+                  >
+                    {isLoadingButton ? (
+                      <CircularProgress size="30px" />
+                    ) : (
+                      'Salvar'
+                    )}
+                  </button>
+                </div>
+              </Box>
+            </Modal>
+
+            {/* Estado */}
+
+            <button
+              onClick={() => handleOpen('state')}
+              className="w-full hover:bg-black-100"
+            >
+              <div className="flex w-full items-center justify-between py-4">
+                <div className="mr-[70px] font-bold opacity-50 md:mr-[240px]">
+                  Estado
+                </div>
+                <div className="flex w-full justify-start">
+                  {user?.state || '(adicione um estado)'}
+                </div>
+                <div>
+                  <DriveFileRenameOutlineIcon />
+                </div>
+              </div>
+              <Divider />
+            </button>
+            <Modal open={openModal === 'state'} onClose={handleClose}>
+              <Box sx={{ ...style, position: 'relative' }}>
+                {/* Ícone de Fechar (X) */}
+                <button
+                  onClick={handleClose}
+                  className="text-gray-500 hover:text-black absolute left-2 top-2 mb-5"
+                >
+                  <IoArrowBack size={40} color="#cfd149" />
+                </button>
+
+                {/* Título */}
+                <Typography
+                  className="mt-14"
+                  id="modal-modal-title"
+                  variant="h6"
+                >
+                  Editar Estado
+                </Typography>
+
+                {/* Descrição */}
+                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                  As alterações serão refletidas na sua Conta do Liga.
+                </Typography>
+
+                {/* Campo de Texto */}
+                <CustomTextField
+                  className="mt-5"
+                  id="nome"
+                  name="nome"
+                  label="Novo Estado"
+                  variant="outlined"
+                  fullWidth
+                  value={state}
+                  onChange={(e) => setState(e.target.value)}
+                />
+
+                {/* Botões "Cancelar" e "Salvar" */}
+                <div className="mt-5 flex w-full items-center justify-end gap-3">
+                  <button
+                    className="bg-gray-300 hover:bg-gray-400 rounded-lg p-2 font-bold"
+                    onClick={handleClose}
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    onClick={handleSaveState}
+                    className="rounded-lg bg-orange p-2 font-bold"
+                  >
+                    {isLoadingButton ? (
+                      <CircularProgress size="30px" />
+                    ) : (
+                      'Salvar'
+                    )}
+                  </button>
+                </div>
+              </Box>
+            </Modal>
+
+            <div className="custom-toast-container">
+              <ToastContainer />
+              <style jsx>
+                {`
+                  .custom-toast-container {
+                    position: fixed !important;
+                    top: 0;
+                    right: 0;
+                    z-index: 9999;
+                    pointer-events: none; /* Para evitar que interaja com outros elementos */
+                  }
+                `}
+              </style>
             </div>
           </div>
-        )}
+        </div>
       </div>
 
       {/* Redes Sociais */}
@@ -869,393 +858,390 @@ const Account: React.FC = () => {
             Redes Sociais
           </h3>
         </div>
-        {isLoading ? (
-          <SocialMediaSkeleton />
-        ) : (
-          <div className="flex items-center justify-between gap-10 rounded-full">
-            <div className="w-full">
-              {/* Whatsapp */}
-              <button
-                onClick={() => handleOpen('whatsapp')}
-                className="w-full hover:bg-black-100"
-              >
-                <div className="flex w-full items-center justify-between py-4">
-                  <div className="mr-[35px] font-bold opacity-50 md:mr-[240px]">
-                    Whatsapp
-                  </div>
-                  <div className="flex w-full justify-start">
-                    {user?.whatsapp || '(adicione uma número)'}
-                  </div>
-                  <div>
-                    <DriveFileRenameOutlineIcon />
-                  </div>
+
+        <div className="flex items-center justify-between gap-10 rounded-full">
+          <div className="w-full">
+            {/* Whatsapp */}
+            <button
+              onClick={() => handleOpen('whatsapp')}
+              className="w-full hover:bg-black-100"
+            >
+              <div className="flex w-full items-center justify-between py-4">
+                <div className="mr-[35px] font-bold opacity-50 md:mr-[240px]">
+                  Whatsapp
                 </div>
-                <Divider />
-              </button>
-              <Modal open={openModal === 'whatsapp'} onClose={handleClose}>
-                <Box sx={{ ...style, position: 'relative' }}>
-                  {/* Ícone de Fechar (X) */}
-                  <button
-                    onClick={handleClose}
-                    className="text-gray-500 hover:text-black absolute left-2 top-2 mb-5"
-                  >
-                    <IoArrowBack size={40} color="#cfd149" />
-                  </button>
-
-                  {/* Título */}
-                  <Typography
-                    className="mt-14"
-                    id="modal-modal-title"
-                    variant="h6"
-                  >
-                    Editar whatsapp
-                  </Typography>
-
-                  {/* Descrição */}
-                  <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    As alterações serão refletidas na sua Conta do Liga.
-                  </Typography>
-
-                  {/* Campo de Texto */}
-                  <CustomTextField
-                    className="mt-5"
-                    id="nome"
-                    name="nome"
-                    label="Novo whatsapp"
-                    variant="outlined"
-                    fullWidth
-                    value={whatsapp}
-                    onChange={(e) => setWhatsapp(e.target.value)}
-                  />
-
-                  {/* Botões "Cancelar" e "Salvar" */}
-                  <div className="mt-5 flex w-full items-center justify-end gap-3">
-                    <button
-                      className="bg-gray-300 hover:bg-gray-400 rounded-lg p-2 font-bold"
-                      onClick={handleClose}
-                    >
-                      Cancelar
-                    </button>
-                    <button
-                      onClick={handleSaveWhatsapp}
-                      className="rounded-lg bg-orange p-2 font-bold"
-                    >
-                      {isLoadingButton ? (
-                        <CircularProgress size="30px" />
-                      ) : (
-                        'Salvar'
-                      )}
-                    </button>
-                  </div>
-                </Box>
-              </Modal>
-
-              {/* Instagram */}
-              <button
-                onClick={() => handleOpen('instagram')}
-                className="w-full hover:bg-black-100"
-              >
-                <div className="flex w-full items-center justify-between py-4">
-                  <div className="mr-[35px] font-bold opacity-50 md:mr-[240px]">
-                    Instagram
-                  </div>
-                  <div className="flex w-full justify-start">
-                    {user?.instagram || '(adicione um instagram)'}
-                  </div>
-                  <div>
-                    <DriveFileRenameOutlineIcon />
-                  </div>
+                <div className="flex w-full justify-start">
+                  {user?.whatsapp || '(adicione uma número)'}
                 </div>
-                <Divider />
-              </button>
-              <Modal open={openModal === 'instagram'} onClose={handleClose}>
-                <Box sx={{ ...style, position: 'relative' }}>
-                  {/* Ícone de Fechar (X) */}
-                  <button
-                    onClick={handleClose}
-                    className="text-gray-500 hover:text-black absolute left-2 top-2 mb-5"
-                  >
-                    <IoArrowBack size={40} color="#cfd149" />
-                  </button>
-
-                  {/* Título */}
-                  <Typography
-                    className="mt-14"
-                    id="modal-modal-title"
-                    variant="h6"
-                  >
-                    Editar instagram
-                  </Typography>
-
-                  {/* Descrição */}
-                  <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    As alterações serão refletidas na sua Conta do Liga.
-                  </Typography>
-
-                  {/* Campo de Texto */}
-                  <CustomTextField
-                    className="mt-5"
-                    id="nome"
-                    name="nome"
-                    label="Novo instagram"
-                    variant="outlined"
-                    fullWidth
-                    value={instagram}
-                    onChange={(e) => setInstagram(e.target.value)}
-                  />
-
-                  {/* Botões "Cancelar" e "Salvar" */}
-                  <div className="mt-5 flex w-full items-center justify-end gap-3">
-                    <button
-                      className="bg-gray-300 hover:bg-gray-400 rounded-lg p-2 font-bold"
-                      onClick={handleClose}
-                    >
-                      Cancelar
-                    </button>
-                    <button
-                      onClick={handleSaveInstagram}
-                      className="rounded-lg bg-orange p-2 font-bold"
-                    >
-                      {isLoadingButton ? (
-                        <CircularProgress size="30px" />
-                      ) : (
-                        'Salvar'
-                      )}
-                    </button>
-                  </div>
-                </Box>
-              </Modal>
-
-              {/* Facebook */}
-              <button
-                onClick={() => handleOpen('facebook')}
-                className="w-full hover:bg-black-100"
-              >
-                <div className="flex w-full items-center justify-between py-4">
-                  <div className="mr-[40px] font-bold opacity-50 md:mr-[245px]">
-                    Facebook
-                  </div>
-                  <div className="flex w-full justify-start">
-                    {user?.facebook || '(adicione um facebook)'}
-                  </div>
-                  <div>
-                    <DriveFileRenameOutlineIcon />
-                  </div>
+                <div>
+                  <DriveFileRenameOutlineIcon />
                 </div>
-                <Divider />
-              </button>
-              <Modal open={openModal === 'facebook'} onClose={handleClose}>
-                <Box sx={{ ...style, position: 'relative' }}>
-                  {/* Ícone de Fechar (X) */}
+              </div>
+              <Divider />
+            </button>
+            <Modal open={openModal === 'whatsapp'} onClose={handleClose}>
+              <Box sx={{ ...style, position: 'relative' }}>
+                {/* Ícone de Fechar (X) */}
+                <button
+                  onClick={handleClose}
+                  className="text-gray-500 hover:text-black absolute left-2 top-2 mb-5"
+                >
+                  <IoArrowBack size={40} color="#cfd149" />
+                </button>
+
+                {/* Título */}
+                <Typography
+                  className="mt-14"
+                  id="modal-modal-title"
+                  variant="h6"
+                >
+                  Editar whatsapp
+                </Typography>
+
+                {/* Descrição */}
+                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                  As alterações serão refletidas na sua Conta do Liga.
+                </Typography>
+
+                {/* Campo de Texto */}
+                <CustomTextField
+                  className="mt-5"
+                  id="nome"
+                  name="nome"
+                  label="Novo whatsapp"
+                  variant="outlined"
+                  fullWidth
+                  value={whatsapp}
+                  onChange={(e) => setWhatsapp(e.target.value)}
+                />
+
+                {/* Botões "Cancelar" e "Salvar" */}
+                <div className="mt-5 flex w-full items-center justify-end gap-3">
                   <button
+                    className="bg-gray-300 hover:bg-gray-400 rounded-lg p-2 font-bold"
                     onClick={handleClose}
-                    className="text-gray-500 hover:text-black absolute left-2 top-2 mb-5"
                   >
-                    <IoArrowBack size={40} color="#cfd149" />
+                    Cancelar
                   </button>
-
-                  {/* Título */}
-                  <Typography
-                    className="mt-14"
-                    id="modal-modal-title"
-                    variant="h6"
+                  <button
+                    onClick={handleSaveWhatsapp}
+                    className="rounded-lg bg-orange p-2 font-bold"
                   >
-                    Editar facebook
-                  </Typography>
-
-                  {/* Descrição */}
-                  <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    As alterações serão refletidas na sua Conta do Liga.
-                  </Typography>
-
-                  {/* Campo de Texto */}
-                  <CustomTextField
-                    className="mt-5"
-                    id="nome"
-                    name="nome"
-                    label="Novo facebook"
-                    variant="outlined"
-                    fullWidth
-                    value={facebook}
-                    onChange={(e) => setFacebook(e.target.value)}
-                  />
-
-                  {/* Botões "Cancelar" e "Salvar" */}
-                  <div className="mt-5 flex w-full items-center justify-end gap-3">
-                    <button
-                      className="bg-gray-300 hover:bg-gray-400 rounded-lg p-2 font-bold"
-                      onClick={handleClose}
-                    >
-                      Cancelar
-                    </button>
-                    <button
-                      onClick={handleSaveFacebook}
-                      className="rounded-lg bg-orange p-2 font-bold"
-                    >
-                      {isLoadingButton ? (
-                        <CircularProgress size="30px" />
-                      ) : (
-                        'Salvar'
-                      )}
-                    </button>
-                  </div>
-                </Box>
-              </Modal>
-
-              {/* Twitter */}
-              <button
-                onClick={() => handleOpen('twitter')}
-                className="w-full hover:bg-black-100"
-              >
-                <div className="flex w-full items-center justify-between py-4">
-                  <div className="mr-[60px] font-bold opacity-50 md:mr-[265px]">
-                    Twitter
-                  </div>
-                  <div className="flex w-full justify-start">
-                    {user?.twitter || '(adicione um twitter)'}
-                  </div>
-                  <div>
-                    <DriveFileRenameOutlineIcon />
-                  </div>
+                    {isLoadingButton ? (
+                      <CircularProgress size="30px" />
+                    ) : (
+                      'Salvar'
+                    )}
+                  </button>
                 </div>
-                <Divider />
-              </button>
-              <Modal open={openModal === 'twitter'} onClose={handleClose}>
-                <Box sx={{ ...style, position: 'relative' }}>
-                  {/* Ícone de Fechar (X) */}
-                  <button
-                    onClick={handleClose}
-                    className="text-gray-500 hover:text-black absolute left-2 top-2 mb-5"
-                  >
-                    <IoArrowBack size={40} color="#cfd149" />
-                  </button>
+              </Box>
+            </Modal>
 
-                  {/* Título */}
-                  <Typography
-                    className="mt-14"
-                    id="modal-modal-title"
-                    variant="h6"
-                  >
-                    Editar twitter
-                  </Typography>
-
-                  {/* Descrição */}
-                  <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    As alterações serão refletidas na sua Conta do Liga.
-                  </Typography>
-
-                  {/* Campo de Texto */}
-                  <CustomTextField
-                    className="mt-5"
-                    id="nome"
-                    name="nome"
-                    label="Novo twitter"
-                    variant="outlined"
-                    fullWidth
-                    value={twitter}
-                    onChange={(e) => setTwitter(e.target.value)}
-                  />
-
-                  {/* Botões "Cancelar" e "Salvar" */}
-                  <div className="mt-5 flex w-full items-center justify-end gap-3">
-                    <button
-                      className="bg-gray-300 hover:bg-gray-400 rounded-lg p-2 font-bold"
-                      onClick={handleClose}
-                    >
-                      Cancelar
-                    </button>
-                    <button
-                      onClick={handleSaveTwitter}
-                      className="rounded-lg bg-orange p-2 font-bold"
-                    >
-                      {isLoadingButton ? (
-                        <CircularProgress size="30px" />
-                      ) : (
-                        'Salvar'
-                      )}
-                    </button>
-                  </div>
-                </Box>
-              </Modal>
-
-              {/* Linkedin */}
-              <button
-                onClick={() => handleOpen('linkedin')}
-                className="w-full hover:bg-black-100"
-              >
-                <div className="flex w-full items-center justify-between py-4">
-                  <div className="mr-[50px] font-bold opacity-50 md:mr-[255px]">
-                    Linkedin
-                  </div>
-                  <div className="flex w-full justify-start">
-                    {user?.linkedin || '(adicione um linkedin)'}
-                  </div>
-                  <div>
-                    <DriveFileRenameOutlineIcon />
-                  </div>
+            {/* Instagram */}
+            <button
+              onClick={() => handleOpen('instagram')}
+              className="w-full hover:bg-black-100"
+            >
+              <div className="flex w-full items-center justify-between py-4">
+                <div className="mr-[35px] font-bold opacity-50 md:mr-[240px]">
+                  Instagram
                 </div>
-                <Divider />
-              </button>
-              <Modal open={openModal === 'linkedin'} onClose={handleClose}>
-                <Box sx={{ ...style, position: 'relative' }}>
-                  {/* Ícone de Fechar (X) */}
+                <div className="flex w-full justify-start">
+                  {user?.instagram || '(adicione um instagram)'}
+                </div>
+                <div>
+                  <DriveFileRenameOutlineIcon />
+                </div>
+              </div>
+              <Divider />
+            </button>
+            <Modal open={openModal === 'instagram'} onClose={handleClose}>
+              <Box sx={{ ...style, position: 'relative' }}>
+                {/* Ícone de Fechar (X) */}
+                <button
+                  onClick={handleClose}
+                  className="text-gray-500 hover:text-black absolute left-2 top-2 mb-5"
+                >
+                  <IoArrowBack size={40} color="#cfd149" />
+                </button>
+
+                {/* Título */}
+                <Typography
+                  className="mt-14"
+                  id="modal-modal-title"
+                  variant="h6"
+                >
+                  Editar instagram
+                </Typography>
+
+                {/* Descrição */}
+                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                  As alterações serão refletidas na sua Conta do Liga.
+                </Typography>
+
+                {/* Campo de Texto */}
+                <CustomTextField
+                  className="mt-5"
+                  id="nome"
+                  name="nome"
+                  label="Novo instagram"
+                  variant="outlined"
+                  fullWidth
+                  value={instagram}
+                  onChange={(e) => setInstagram(e.target.value)}
+                />
+
+                {/* Botões "Cancelar" e "Salvar" */}
+                <div className="mt-5 flex w-full items-center justify-end gap-3">
                   <button
+                    className="bg-gray-300 hover:bg-gray-400 rounded-lg p-2 font-bold"
                     onClick={handleClose}
-                    className="text-gray-500 hover:text-black absolute left-2 top-2 mb-5"
                   >
-                    <IoArrowBack size={40} color="#cfd149" />
+                    Cancelar
                   </button>
-
-                  {/* Título */}
-                  <Typography
-                    className="mt-14"
-                    id="modal-modal-title"
-                    variant="h6"
+                  <button
+                    onClick={handleSaveInstagram}
+                    className="rounded-lg bg-orange p-2 font-bold"
                   >
-                    Editar linkedin
-                  </Typography>
+                    {isLoadingButton ? (
+                      <CircularProgress size="30px" />
+                    ) : (
+                      'Salvar'
+                    )}
+                  </button>
+                </div>
+              </Box>
+            </Modal>
 
-                  {/* Descrição */}
-                  <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    As alterações serão refletidas na sua Conta do Liga.
-                  </Typography>
+            {/* Facebook */}
+            <button
+              onClick={() => handleOpen('facebook')}
+              className="w-full hover:bg-black-100"
+            >
+              <div className="flex w-full items-center justify-between py-4">
+                <div className="mr-[40px] font-bold opacity-50 md:mr-[245px]">
+                  Facebook
+                </div>
+                <div className="flex w-full justify-start">
+                  {user?.facebook || '(adicione um facebook)'}
+                </div>
+                <div>
+                  <DriveFileRenameOutlineIcon />
+                </div>
+              </div>
+              <Divider />
+            </button>
+            <Modal open={openModal === 'facebook'} onClose={handleClose}>
+              <Box sx={{ ...style, position: 'relative' }}>
+                {/* Ícone de Fechar (X) */}
+                <button
+                  onClick={handleClose}
+                  className="text-gray-500 hover:text-black absolute left-2 top-2 mb-5"
+                >
+                  <IoArrowBack size={40} color="#cfd149" />
+                </button>
 
-                  {/* Campo de Texto */}
-                  <CustomTextField
-                    className="mt-5"
-                    id="nome"
-                    name="nome"
-                    label="Novo linkedin"
-                    variant="outlined"
-                    fullWidth
-                    value={linkedin}
-                    onChange={(e) => setLinkedin(e.target.value)}
-                  />
+                {/* Título */}
+                <Typography
+                  className="mt-14"
+                  id="modal-modal-title"
+                  variant="h6"
+                >
+                  Editar facebook
+                </Typography>
 
-                  {/* Botões "Cancelar" e "Salvar" */}
-                  <div className="mt-5 flex w-full items-center justify-end gap-3">
-                    <button
-                      className="bg-gray-300 hover:bg-gray-400 rounded-lg p-2 font-bold"
-                      onClick={handleClose}
-                    >
-                      Cancelar
-                    </button>
-                    <button
-                      onClick={handleSaveLinkedin}
-                      className="rounded-lg bg-orange p-2 font-bold"
-                    >
-                      {isLoadingButton ? (
-                        <CircularProgress size="30px" />
-                      ) : (
-                        'Salvar'
-                      )}
-                    </button>
-                  </div>
-                </Box>
-              </Modal>
-            </div>
+                {/* Descrição */}
+                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                  As alterações serão refletidas na sua Conta do Liga.
+                </Typography>
+
+                {/* Campo de Texto */}
+                <CustomTextField
+                  className="mt-5"
+                  id="nome"
+                  name="nome"
+                  label="Novo facebook"
+                  variant="outlined"
+                  fullWidth
+                  value={facebook}
+                  onChange={(e) => setFacebook(e.target.value)}
+                />
+
+                {/* Botões "Cancelar" e "Salvar" */}
+                <div className="mt-5 flex w-full items-center justify-end gap-3">
+                  <button
+                    className="bg-gray-300 hover:bg-gray-400 rounded-lg p-2 font-bold"
+                    onClick={handleClose}
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    onClick={handleSaveFacebook}
+                    className="rounded-lg bg-orange p-2 font-bold"
+                  >
+                    {isLoadingButton ? (
+                      <CircularProgress size="30px" />
+                    ) : (
+                      'Salvar'
+                    )}
+                  </button>
+                </div>
+              </Box>
+            </Modal>
+
+            {/* Twitter */}
+            <button
+              onClick={() => handleOpen('twitter')}
+              className="w-full hover:bg-black-100"
+            >
+              <div className="flex w-full items-center justify-between py-4">
+                <div className="mr-[60px] font-bold opacity-50 md:mr-[265px]">
+                  Twitter
+                </div>
+                <div className="flex w-full justify-start">
+                  {user?.twitter || '(adicione um twitter)'}
+                </div>
+                <div>
+                  <DriveFileRenameOutlineIcon />
+                </div>
+              </div>
+              <Divider />
+            </button>
+            <Modal open={openModal === 'twitter'} onClose={handleClose}>
+              <Box sx={{ ...style, position: 'relative' }}>
+                {/* Ícone de Fechar (X) */}
+                <button
+                  onClick={handleClose}
+                  className="text-gray-500 hover:text-black absolute left-2 top-2 mb-5"
+                >
+                  <IoArrowBack size={40} color="#cfd149" />
+                </button>
+
+                {/* Título */}
+                <Typography
+                  className="mt-14"
+                  id="modal-modal-title"
+                  variant="h6"
+                >
+                  Editar twitter
+                </Typography>
+
+                {/* Descrição */}
+                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                  As alterações serão refletidas na sua Conta do Liga.
+                </Typography>
+
+                {/* Campo de Texto */}
+                <CustomTextField
+                  className="mt-5"
+                  id="nome"
+                  name="nome"
+                  label="Novo twitter"
+                  variant="outlined"
+                  fullWidth
+                  value={twitter}
+                  onChange={(e) => setTwitter(e.target.value)}
+                />
+
+                {/* Botões "Cancelar" e "Salvar" */}
+                <div className="mt-5 flex w-full items-center justify-end gap-3">
+                  <button
+                    className="bg-gray-300 hover:bg-gray-400 rounded-lg p-2 font-bold"
+                    onClick={handleClose}
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    onClick={handleSaveTwitter}
+                    className="rounded-lg bg-orange p-2 font-bold"
+                  >
+                    {isLoadingButton ? (
+                      <CircularProgress size="30px" />
+                    ) : (
+                      'Salvar'
+                    )}
+                  </button>
+                </div>
+              </Box>
+            </Modal>
+
+            {/* Linkedin */}
+            <button
+              onClick={() => handleOpen('linkedin')}
+              className="w-full hover:bg-black-100"
+            >
+              <div className="flex w-full items-center justify-between py-4">
+                <div className="mr-[50px] font-bold opacity-50 md:mr-[255px]">
+                  Linkedin
+                </div>
+                <div className="flex w-full justify-start">
+                  {user?.linkedin || '(adicione um linkedin)'}
+                </div>
+                <div>
+                  <DriveFileRenameOutlineIcon />
+                </div>
+              </div>
+              <Divider />
+            </button>
+            <Modal open={openModal === 'linkedin'} onClose={handleClose}>
+              <Box sx={{ ...style, position: 'relative' }}>
+                {/* Ícone de Fechar (X) */}
+                <button
+                  onClick={handleClose}
+                  className="text-gray-500 hover:text-black absolute left-2 top-2 mb-5"
+                >
+                  <IoArrowBack size={40} color="#cfd149" />
+                </button>
+
+                {/* Título */}
+                <Typography
+                  className="mt-14"
+                  id="modal-modal-title"
+                  variant="h6"
+                >
+                  Editar linkedin
+                </Typography>
+
+                {/* Descrição */}
+                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                  As alterações serão refletidas na sua Conta do Liga.
+                </Typography>
+
+                {/* Campo de Texto */}
+                <CustomTextField
+                  className="mt-5"
+                  id="nome"
+                  name="nome"
+                  label="Novo linkedin"
+                  variant="outlined"
+                  fullWidth
+                  value={linkedin}
+                  onChange={(e) => setLinkedin(e.target.value)}
+                />
+
+                {/* Botões "Cancelar" e "Salvar" */}
+                <div className="mt-5 flex w-full items-center justify-end gap-3">
+                  <button
+                    className="bg-gray-300 hover:bg-gray-400 rounded-lg p-2 font-bold"
+                    onClick={handleClose}
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    onClick={handleSaveLinkedin}
+                    className="rounded-lg bg-orange p-2 font-bold"
+                  >
+                    {isLoadingButton ? (
+                      <CircularProgress size="30px" />
+                    ) : (
+                      'Salvar'
+                    )}
+                  </button>
+                </div>
+              </Box>
+            </Modal>
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
