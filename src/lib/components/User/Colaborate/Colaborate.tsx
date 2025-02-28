@@ -275,7 +275,11 @@ const Colaborate: React.FC = () => {
               </button>
 
               {/* Título */}
-              <Typography className="mt-14" id="modal-modal-title" variant="h6">
+              <Typography
+                sx={{ marginTop: '30px' }}
+                id="modal-modal-title"
+                variant="h6"
+              >
                 Editar Nome
               </Typography>
 
@@ -306,7 +310,7 @@ const Colaborate: React.FC = () => {
                 </button>
                 <button
                   onClick={handleSaveOrganization}
-                  className="rounded-lg bg-orange p-2 font-bold"
+                  className="rounded-lg border-2 bg-orange p-2 font-bold"
                 >
                   {isLoadingButton ? (
                     <CircularProgress size="30px" />
@@ -353,7 +357,7 @@ const Colaborate: React.FC = () => {
                     ))}
                   </div>
                 ) : (
-                  <p className="text-gray-500 w-full justify-center text-sm font-bold md:justify-start">
+                  <p className="flex w-full justify-center md:justify-start">
                     (adicione áreas de interesse)
                   </p>
                 )}
@@ -376,7 +380,11 @@ const Colaborate: React.FC = () => {
               </button>
 
               {/* Título */}
-              <Typography className="mt-14" id="modal-modal-title" variant="h6">
+              <Typography
+                sx={{ marginTop: '30px' }}
+                id="modal-modal-title"
+                variant="h6"
+              >
                 Editar Áreas de Interesse
               </Typography>
 
@@ -389,10 +397,12 @@ const Colaborate: React.FC = () => {
                         key={index}
                         className="flex w-auto items-center space-x-2 rounded-lg border-2 bg-[#FFF0BC] p-2"
                       >
-                        <p className="text-black text-sm font-bold">{tag}</p>
+                        <p className="text-sm font-bold text-black-300">
+                          {tag}
+                        </p>
                         <button
                           onClick={() => handleRemoveInterest(tag)}
-                          className="text-red-500 hover:text-red-700"
+                          className="text-black-300 hover:text-orange"
                         >
                           ✖
                         </button>
@@ -456,7 +466,7 @@ const Colaborate: React.FC = () => {
                 </button>
                 <button
                   onClick={handleSaveAreaOfInterest}
-                  className="rounded-lg bg-orange p-2 font-bold"
+                  className="rounded-lg border-2 p-2 font-bold"
                   disabled={areaOfInterest.length === 0}
                   style={{
                     backgroundColor:
@@ -490,7 +500,7 @@ const Colaborate: React.FC = () => {
                 </button>
                 <button
                   onClick={handleConfirmExit}
-                  className="bg-red-500 hover:bg-red-700 p-2 font-bold"
+                  className="rounded-lg border-2 bg-orange p-2 font-bold"
                 >
                   Sim, sair
                 </button>
@@ -529,7 +539,11 @@ const Colaborate: React.FC = () => {
               </button>
 
               {/* Título */}
-              <Typography className="mt-14" id="modal-modal-title" variant="h6">
+              <Typography
+                sx={{ marginTop: '30px' }}
+                id="modal-modal-title"
+                variant="h6"
+              >
                 Selecione a Disponibilidade
               </Typography>
 
@@ -568,7 +582,7 @@ const Colaborate: React.FC = () => {
                 </button>
                 <button
                   onClick={handleSaveWeeklyAvailability}
-                  className="rounded-lg bg-orange p-2 font-bold"
+                  className="rounded-lg border-2 bg-orange p-2 font-bold"
                 >
                   {isLoadingButton ? (
                     <CircularProgress size="30px" />

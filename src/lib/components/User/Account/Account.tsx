@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 /* eslint-disable complexity */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-use-before-define */
@@ -261,10 +262,11 @@ const Account: React.FC = () => {
             Informações Básicas
           </h3>
         </div>
-
-        <div className="flex w-[240px] flex-col items-center justify-between gap-10 rounded-full lg:flex-row">
-          <div className="rounded-full bg-black-100">
-            <div className="bg-red-100 relative h-[300px]">
+        {/* w-[240px] */}
+        <div className="flex flex-col items-center justify-between gap-10 rounded-full lg:flex-row">
+          <div className="rounded-full bg-white md:bg-black-100">
+            {/* Avatar desktop */}
+            <div className="bg-red-100 relative hidden h-full md:flex md:h-[300px]">
               <div className="group rounded-full">
                 <button
                   onClick={() => handleOpen('avatar')}
@@ -273,13 +275,37 @@ const Account: React.FC = () => {
                   <Avatar
                     className="transition duration-300 group-hover:blur-sm"
                     alt="Remy Sharp"
-                    sx={{ width: 300, height: 300 }}
+                    sx={{
+                      width: { md: 300, xs: 150 },
+                      height: { md: 300, xs: 150 },
+                    }}
                     src={user?.imageBase64 || './assets/johnbonham.webp'}
                   />
-                  <div className="absolute inset-0 z-10 flex items-center justify-center rounded-full text-6xl font-semibold text-white opacity-0 duration-300 group-hover:opacity-100">
+                  <div className="absolute inset-0 z-10 hidden items-center justify-center rounded-full text-6xl font-semibold text-white opacity-0 duration-300 group-hover:opacity-100 md:flex">
                     <AddAPhotoSharpIcon
                       sx={{ fontSize: 90, color: '#000100' }}
                     />
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            {/* Avatar Mobile */}
+            <div className="flex md:hidden">
+              <div>
+                <button>
+                  <Avatar
+                    alt="Remy Sharp"
+                    sx={{ width: 150, height: 150 }}
+                    src={user?.imageBase64 || './assets/johnbonham.webp'}
+                  />
+                  <div>
+                    <button
+                      onClick={() => handleOpen('avatar')}
+                      className="mt-4 rounded-lg bg-orange p-2 font-bold"
+                    >
+                      Editar Foto
+                    </button>
                   </div>
                 </button>
               </div>
@@ -296,7 +322,11 @@ const Account: React.FC = () => {
               </button>
 
               {/* Título */}
-              <Typography className="mt-14" id="modal-modal-title" variant="h6">
+              <Typography
+                sx={{ marginTop: '30px' }}
+                id="modal-modal-title"
+                variant="h6"
+              >
                 Editar sua foto de usuário
               </Typography>
 
@@ -375,11 +405,11 @@ const Account: React.FC = () => {
               onClick={() => handleOpen('username')}
               className="w-full hover:bg-black-100"
             >
-              <div className="flex w-full items-center justify-between py-4">
-                <div className="mr-[60px] font-bold opacity-50 md:mr-[230px]">
+              <div className="flex w-full flex-col items-center justify-between py-4 md:flex-row">
+                <div className="flex w-full items-center justify-center font-bold opacity-50 md:justify-start">
                   Usuário
                 </div>
-                <div className="flex w-full justify-start">
+                <div className="flex w-full justify-center md:justify-start">
                   <span className="opacity-70">@</span>
                   {user?.username || ''}
                 </div>
@@ -401,7 +431,7 @@ const Account: React.FC = () => {
 
                 {/* Título */}
                 <Typography
-                  className="mt-14"
+                  sx={{ marginTop: '30px' }}
                   id="modal-modal-title"
                   variant="h6"
                 >
@@ -453,12 +483,12 @@ const Account: React.FC = () => {
               onClick={() => handleOpen('name')}
               className="w-full hover:bg-black-100"
             >
-              <div className="flex w-full items-center justify-between py-4">
-                <div className="mr-[75px] font-bold opacity-50 md:mr-[245px]">
+              <div className="flex w-full flex-col items-center justify-between py-4 md:flex-row">
+                <div className="flex w-full items-center justify-center font-bold opacity-50 md:justify-start">
                   Nome
                 </div>
-                <div className="flex w-full justify-start">
-                  {user?.name || ''}
+                <div className="flex w-full justify-center md:justify-start">
+                  {user?.name || '(adicione um nome)'}
                 </div>
                 <div>
                   <DriveFileRenameOutlineIcon />
@@ -478,7 +508,7 @@ const Account: React.FC = () => {
 
                 {/* Título */}
                 <Typography
-                  className="mt-14"
+                  sx={{ marginTop: '30px' }}
                   id="modal-modal-title"
                   variant="h6"
                 >
@@ -530,17 +560,21 @@ const Account: React.FC = () => {
               onClick={() => handleOpen('email')}
               className="w-full hover:bg-black-100"
             >
-              <div className="flex w-full items-center justify-between py-4">
-                <div className="mr-[78px] font-bold opacity-50 md:mr-[248px]">
+              <div className="flex w-full flex-col items-center justify-between py-4 md:flex-row">
+                <div className="flex w-full items-center justify-center font-bold opacity-50 md:justify-start">
                   Email
                 </div>
-                <div className="flex w-full justify-start">
+                <div className="flex w-full justify-center md:justify-start">
                   {/* Exibir email completo apenas em telas desktop */}
-                  <span className="hidden lg:block">{user?.email || ''}</span>
+                  <span className="hidden lg:block">
+                    {user?.email || '(adicione um email)'}
+                  </span>
 
-                  {/* Exibir email truncado até "vitorsilva@" em telas menores que desktop */}
+                  {/* Exibir email truncado em telas menores que desktop */}
                   <span className="truncate lg:hidden">
-                    {user?.email ? `${user?.email.slice(0, 11)}...` : ''}
+                    {user?.email
+                      ? `${user?.email.slice(0, 11)}...`
+                      : '(adicione um email)'}
                   </span>
                 </div>
 
@@ -562,7 +596,7 @@ const Account: React.FC = () => {
 
                 {/* Título */}
                 <Typography
-                  className="mt-14"
+                  sx={{ marginTop: '30px' }}
                   id="modal-modal-title"
                   variant="h6"
                 >
@@ -611,11 +645,13 @@ const Account: React.FC = () => {
               onClick={() => handleOpen('password')}
               className="w-full hover:bg-black-100"
             >
-              <div className="flex w-full items-center justify-between py-4">
-                <div className="mr-[75px] font-bold opacity-50 md:mr-[245px]">
+              <div className="flex w-full flex-col items-center justify-between py-4 md:flex-row">
+                <div className="flex w-full items-center justify-center font-bold opacity-50 md:justify-start">
                   Senha
                 </div>
-                <div className="flex w-full justify-start">****</div>
+                <div className="flex w-full justify-center md:justify-start">
+                  ****
+                </div>
                 <div>
                   <DriveFileRenameOutlineIcon />
                 </div>
@@ -634,7 +670,7 @@ const Account: React.FC = () => {
 
                 {/* Título */}
                 <Typography
-                  className="mt-14"
+                  sx={{ marginTop: '30px' }}
                   id="modal-modal-title"
                   variant="h6"
                 >
@@ -685,11 +721,11 @@ const Account: React.FC = () => {
               onClick={() => handleOpen('city')}
               className="w-full hover:bg-black-100"
             >
-              <div className="flex w-full items-center justify-between py-4">
-                <div className="mr-[70px] font-bold opacity-50 md:mr-[240px]">
+              <div className="flex w-full flex-col items-center justify-between py-4 md:flex-row">
+                <div className="flex w-full items-center justify-center font-bold opacity-50 md:justify-start">
                   Cidade
                 </div>
-                <div className="flex w-full justify-start">
+                <div className="flex w-full justify-center md:justify-start">
                   {user?.city || '(adicione uma cidade)'}
                 </div>
                 <div>
@@ -762,18 +798,17 @@ const Account: React.FC = () => {
               onClick={() => handleOpen('state')}
               className="w-full hover:bg-black-100"
             >
-              <div className="flex w-full items-center justify-between py-4">
-                <div className="mr-[70px] font-bold opacity-50 md:mr-[240px]">
+              <div className="flex w-full flex-col items-center justify-between py-4 md:flex-row">
+                <div className="flex w-full items-center justify-center font-bold opacity-50 md:justify-start">
                   Estado
                 </div>
-                <div className="flex w-full justify-start">
+                <div className="flex w-full justify-center md:justify-start">
                   {user?.state || '(adicione um estado)'}
                 </div>
                 <div>
                   <DriveFileRenameOutlineIcon />
                 </div>
               </div>
-              <Divider />
             </button>
             <Modal open={openModal === 'state'} onClose={handleClose}>
               <Box sx={{ ...style, position: 'relative' }}>
@@ -787,7 +822,7 @@ const Account: React.FC = () => {
 
                 {/* Título */}
                 <Typography
-                  className="mt-14"
+                  sx={{ marginTop: '30px' }}
                   id="modal-modal-title"
                   variant="h6"
                 >
@@ -866,11 +901,11 @@ const Account: React.FC = () => {
               onClick={() => handleOpen('whatsapp')}
               className="w-full hover:bg-black-100"
             >
-              <div className="flex w-full items-center justify-between py-4">
-                <div className="mr-[35px] font-bold opacity-50 md:mr-[240px]">
+              <div className="flex w-full flex-col items-center justify-between py-4 md:flex-row">
+                <div className="flex w-full items-center justify-center font-bold opacity-50 md:justify-start">
                   Whatsapp
                 </div>
-                <div className="flex w-full justify-start">
+                <div className="flex w-full justify-center md:justify-start">
                   {user?.whatsapp || '(adicione uma número)'}
                 </div>
                 <div>
@@ -891,7 +926,7 @@ const Account: React.FC = () => {
 
                 {/* Título */}
                 <Typography
-                  className="mt-14"
+                  sx={{ marginTop: '30px' }}
                   id="modal-modal-title"
                   variant="h6"
                 >
@@ -942,11 +977,11 @@ const Account: React.FC = () => {
               onClick={() => handleOpen('instagram')}
               className="w-full hover:bg-black-100"
             >
-              <div className="flex w-full items-center justify-between py-4">
-                <div className="mr-[35px] font-bold opacity-50 md:mr-[240px]">
+              <div className="flex w-full flex-col items-center justify-between py-4 md:flex-row">
+                <div className="flex w-full items-center justify-center font-bold opacity-50 md:justify-start">
                   Instagram
                 </div>
-                <div className="flex w-full justify-start">
+                <div className="flex w-full justify-center md:justify-start">
                   {user?.instagram || '(adicione um instagram)'}
                 </div>
                 <div>
@@ -967,7 +1002,7 @@ const Account: React.FC = () => {
 
                 {/* Título */}
                 <Typography
-                  className="mt-14"
+                  sx={{ marginTop: '30px' }}
                   id="modal-modal-title"
                   variant="h6"
                 >
@@ -1018,11 +1053,11 @@ const Account: React.FC = () => {
               onClick={() => handleOpen('facebook')}
               className="w-full hover:bg-black-100"
             >
-              <div className="flex w-full items-center justify-between py-4">
-                <div className="mr-[40px] font-bold opacity-50 md:mr-[245px]">
+              <div className="flex w-full flex-col items-center justify-between py-4 md:flex-row">
+                <div className="flex w-full items-center justify-center font-bold opacity-50 md:justify-start">
                   Facebook
                 </div>
-                <div className="flex w-full justify-start">
+                <div className="flex w-full justify-center md:justify-start">
                   {user?.facebook || '(adicione um facebook)'}
                 </div>
                 <div>
@@ -1043,7 +1078,7 @@ const Account: React.FC = () => {
 
                 {/* Título */}
                 <Typography
-                  className="mt-14"
+                  sx={{ marginTop: '30px' }}
                   id="modal-modal-title"
                   variant="h6"
                 >
@@ -1094,11 +1129,11 @@ const Account: React.FC = () => {
               onClick={() => handleOpen('twitter')}
               className="w-full hover:bg-black-100"
             >
-              <div className="flex w-full items-center justify-between py-4">
-                <div className="mr-[60px] font-bold opacity-50 md:mr-[265px]">
+              <div className="flex w-full flex-col items-center justify-between py-4 md:flex-row">
+                <div className="flex w-full items-center justify-center font-bold opacity-50 md:justify-start">
                   Twitter
                 </div>
-                <div className="flex w-full justify-start">
+                <div className="flex w-full justify-center md:justify-start">
                   {user?.twitter || '(adicione um twitter)'}
                 </div>
                 <div>
@@ -1119,7 +1154,7 @@ const Account: React.FC = () => {
 
                 {/* Título */}
                 <Typography
-                  className="mt-14"
+                  sx={{ marginTop: '30px' }}
                   id="modal-modal-title"
                   variant="h6"
                 >
@@ -1170,18 +1205,17 @@ const Account: React.FC = () => {
               onClick={() => handleOpen('linkedin')}
               className="w-full hover:bg-black-100"
             >
-              <div className="flex w-full items-center justify-between py-4">
-                <div className="mr-[50px] font-bold opacity-50 md:mr-[255px]">
+              <div className="flex w-full flex-col items-center justify-between py-4 md:flex-row">
+                <div className="flex w-full items-center justify-center font-bold opacity-50 md:justify-start">
                   Linkedin
                 </div>
-                <div className="flex w-full justify-start">
+                <div className="flex w-full justify-center md:justify-start">
                   {user?.linkedin || '(adicione um linkedin)'}
                 </div>
                 <div>
                   <DriveFileRenameOutlineIcon />
                 </div>
               </div>
-              <Divider />
             </button>
             <Modal open={openModal === 'linkedin'} onClose={handleClose}>
               <Box sx={{ ...style, position: 'relative' }}>
@@ -1195,7 +1229,7 @@ const Account: React.FC = () => {
 
                 {/* Título */}
                 <Typography
-                  className="mt-14"
+                  sx={{ marginTop: '30px' }}
                   id="modal-modal-title"
                   variant="h6"
                 >

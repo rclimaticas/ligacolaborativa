@@ -6,26 +6,26 @@ import { DataGrid } from '@mui/x-data-grid';
 import * as React from 'react';
 
 const columns: GridColDef[] = [
-  { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'firstName', headerName: 'First name', width: 130 },
-  { field: 'lastName', headerName: 'Last name', width: 130 },
+  { field: 'id', headerName: 'ID', flex: 0.5 },
+  { field: 'firstName', headerName: 'First name', flex: 1 },
+  { field: 'lastName', headerName: 'Last name', flex: 1 },
   {
     field: 'age',
     headerName: 'Age',
     type: 'number',
-    width: 90,
+    flex: 0.5,
   },
   {
     field: 'fullName',
     headerName: 'Full name',
     description: 'This column has a value getter and is not sortable.',
     sortable: false,
-    width: 160,
+    flex: 1.5,
     valueGetter: (value, row) => `${row.firstName || ''} ${row.lastName || ''}`,
   },
 ];
 
-const rows = [
+const initialRows = [
   { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
   { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
   { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
@@ -39,11 +39,17 @@ const rows = [
 
 const paginationModel = { page: 0, pageSize: 5 };
 
-export default function DataTable() {
+export default function DataTable({ searchTerm }: { searchTerm: string }) {
+  const filteredRows = initialRows.filter(
+    (row) =>
+      row.firstName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      row.lastName?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
-    <Paper sx={{ height: 400, width: '100%' }}>
+    <Paper className="">
       <DataGrid
-        rows={rows}
+        rows={filteredRows}
         columns={columns}
         initialState={{ pagination: { paginationModel } }}
         pageSizeOptions={[5, 10]}

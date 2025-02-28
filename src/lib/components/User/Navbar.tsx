@@ -44,7 +44,9 @@ export default function PermanentDrawerLeft() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<string | null>(null);
+  const [selectedItem, setSelectedItem] = useState<string | null>(
+    localStorage.getItem('selectedTab') || 'Conta'
+  );
   const [user, setUser] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
 
