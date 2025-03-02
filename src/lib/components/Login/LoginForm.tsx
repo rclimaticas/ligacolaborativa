@@ -98,6 +98,10 @@ export default function LoginForm() {
 
         if (token) {
           Cookie.set(TOKEN_KEY, token, { expires: 7 });
+          toast.success('Login realizado com sucesso!', {
+            position: 'top-right',
+            autoClose: 3000,
+          });
         } else {
           console.error('Token não recebido na resposta!');
         }
@@ -445,15 +449,14 @@ export default function LoginForm() {
 
         if (token) {
           Cookie.set(TOKEN_KEY, token, { expires: 7 });
+          toast.success('Login realizado com sucesso!', {
+            position: 'top-right',
+            autoClose: 3000,
+          });
           console.log('Token recebido:', token);
         } else {
           console.error('Token não recebido na resposta!');
         }
-
-        toast.success('Login com MetaMask bem-sucedido!', {
-          position: 'top-right',
-          autoClose: 3000,
-        });
 
         router.push('/');
       } catch (err) {

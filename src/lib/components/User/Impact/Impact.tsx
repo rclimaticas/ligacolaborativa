@@ -44,7 +44,7 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: { md: 560, xs: 400 },
+  width: { md: 560, xs: 260 },
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
@@ -69,6 +69,8 @@ const ImpactComponent: React.FC = () => {
   const [biomes, setBiomes] = useState<string[]>([]);
   const [situation, setSituation] = useState('');
   const [contribution, setContribution] = useState('');
+  const handleClose = () => setOpenModal(null);
+  const handleOpen = (modal: string) => setOpenModal(modal);
 
   const handleUserImpact = async (data: Partial<Impact>) => {
     setIsLoadingButton(true);
@@ -136,29 +138,76 @@ const ImpactComponent: React.FC = () => {
   return (
     <div className="flex flex-col space-y-5">
       <div className="grid rounded-2xl border-2 bg-white p-2 shadow-xl">
-        <div className="flex grid w-full grid-cols-1 items-center justify-between px-3">
-          <div className="flex flex-col space-y-2 md:flex-row">
+        <div className="flex grid w-full items-center px-3">
+          <div className="flex w-full flex-col items-center justify-center space-y-2 md:flex-row md:justify-between">
             <div>
-              <p className="text-xl font-bold text-black-300">
+              <p className="text-center text-xl font-bold text-black-300 md:text-left">
                 Seus impactos gerais
               </p>
-              <p className="text-md font-light opacity-50">
+              <p className="text-md w-full text-center font-light opacity-50 md:text-left">
                 Os impactos serão listados aqui em ordem cronológica.
               </p>
             </div>
-            <div className="flex w-full items-center justify-end space-x-4">
-              <div className="bg- rounded-full border-2">
+            <div className="mt-5 flex grid w-full grid-cols-1 items-center justify-center gap-2 md:w-[300px] md:grid-cols-2 md:justify-end">
+              {/* <div className="inline-flex items-center justify-center rounded-full border-2 w-min">
                 <ReplaySharpIcon sx={{ fontSize: 30 }} />
-              </div>
+              </div> */}
+
               <button
                 disabled
-                className="flex w-auto items-center justify-center rounded-3xl border-2 px-5 py-2 opacity-50"
+                className="flex items-center justify-center rounded-3xl border-2 px-5 py-2 opacity-50"
               >
                 <p className="font-bold text-black-300">Excluir</p>
               </button>
-              <button className="flex w-auto items-center justify-center rounded-3xl border-2 bg-orange px-5 py-2">
+              <button
+                onClick={() => handleOpen('impact')}
+                className="flex w-full items-center justify-center rounded-3xl border-2 bg-orange px-5 py-2"
+              >
                 <p className="font-bold text-black-300">Criar Impacto</p>
               </button>
+              <Modal open={openModal === 'impact'} onClose={handleClose}>
+                <Box sx={{ ...style, position: 'relative' }}>
+                  {/* Ícone de Fechar (X) */}
+                  <button
+                    onClick={handleClose}
+                    className="text-gray-500 hover:text-black absolute left-2 top-2 mb-5"
+                  >
+                    <IoArrowBack size={40} color="#cfd149" />
+                  </button>
+
+                  {/* Título */}
+                  <Typography
+                    sx={{ marginTop: '30px' }}
+                    id="modal-modal-title"
+                    variant="h6"
+                  >
+                    Criar Impacto
+                  </Typography>
+
+                  {/* Descrição */}
+                  <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                    Crie um impacto e compartilhe com os membros que fazem parte
+                    da Liga Colaborativa ds Povos.
+                  </Typography>
+
+                  {/* Botões "Cancelar" e "Salvar" */}
+                  <div className="mt-5 flex w-full items-center justify-end gap-3">
+                    <button
+                      className="bg-gray-300 hover:bg-gray-400 rounded-lg p-2 font-bold"
+                      onClick={handleClose}
+                    >
+                      Cancelar
+                    </button>
+                    <button className="rounded-lg border-2 bg-orange p-2 font-bold">
+                      {isLoadingButton ? (
+                        <CircularProgress size="30px" />
+                      ) : (
+                        'Salvar'
+                      )}
+                    </button>
+                  </div>
+                </Box>
+              </Modal>
             </div>
           </div>
           <Paper

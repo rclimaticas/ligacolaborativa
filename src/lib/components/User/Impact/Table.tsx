@@ -6,9 +6,9 @@ import { DataGrid } from '@mui/x-data-grid';
 import * as React from 'react';
 
 const columns: GridColDef[] = [
-  { field: 'id', headerName: 'ID', flex: 0.5 },
-  { field: 'firstName', headerName: 'First name', flex: 1 },
-  { field: 'lastName', headerName: 'Last name', flex: 1 },
+  { field: 'id', headerName: 'ID', flex: 1.5 },
+  { field: 'firstName', headerName: 'First name', flex: 1.5 },
+  { field: 'lastName', headerName: 'Last name', flex: 1.5 },
   {
     field: 'age',
     headerName: 'Age',
@@ -47,7 +47,7 @@ export default function DataTable({ searchTerm }: { searchTerm: string }) {
   );
 
   return (
-    <Paper className="">
+    <Paper className="w-[250px] md:w-full">
       <DataGrid
         rows={filteredRows}
         columns={columns}
