@@ -29,6 +29,7 @@ import { toast, ToastContainer } from 'react-toastify';
 
 import SkeletonLoginForm from '@/lib/components/Login/SkeletonLoginForm';
 import { TOKEN_KEY } from '@/middleware';
+import { saveImpactData } from '@/services/ImpactsStorage';
 import { openDB } from '@/services/UserStorage';
 
 const CustomTextField = styled(TextField)({
@@ -52,6 +53,30 @@ export default function LoginForm() {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   const [isPageLoaded, setIsPageLoaded] = useState(false);
+
+  const fetchAndStoreUserImpact = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/impacts/user`,
+        {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error('Erro ao buscar impactos do usuário');
+      }
+
+      const impactData = await response.json();
+      await saveImpactData('userImpact', impactData);
+
+      console.log('Dados do impacto armazenados localmente:', impactData);
+    } catch (error) {
+      console.error('Erro ao buscar e armazenar dados do impacto:', error);
+    }
+  };
 
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
@@ -95,6 +120,7 @@ export default function LoginForm() {
 
         const { token } = data.user;
         console.log('Token recebido:', token);
+        await fetchAndStoreUserImpact();
 
         if (token) {
           Cookie.set(TOKEN_KEY, token, { expires: 7 });
@@ -291,6 +317,7 @@ export default function LoginForm() {
       if (!profileResponse.ok) {
         throw new Error('Erro ao buscar os dados do perfil.');
       }
+      await fetchAndStoreUserImpact();
 
       const userData = await profileResponse.json();
       console.log('Dados de login recebidos:', userData);
@@ -446,6 +473,8 @@ export default function LoginForm() {
             reject(new Error('Erro ao salvar dados do usuário no IndexedDB.'));
           };
         });
+
+        await fetchAndStoreUserImpact();
 
         if (token) {
           Cookie.set(TOKEN_KEY, token, { expires: 7 });

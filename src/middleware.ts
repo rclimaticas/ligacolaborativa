@@ -13,12 +13,13 @@ export async function middleware(request: NextRequest) {
     '/datarc',
     '/ondefoi',
     '/register',
+    '/user',
   ];
 
   const isProtectedRoute = protectedRoutes.includes(request.nextUrl.pathname);
 
   if (isProtectedRoute && !token) {
-    return NextResponse.redirect(new URL('/comingsoon', request.url));
+    return NextResponse.redirect(new URL('/welcomeliga', request.url));
   }
 
   return NextResponse.next();
@@ -30,5 +31,6 @@ export const config = {
     '/graph/:path*',
     '/ligacolaborativa/:path*',
     '/datarc/:path*',
+    '/user/:path*',
   ],
 };

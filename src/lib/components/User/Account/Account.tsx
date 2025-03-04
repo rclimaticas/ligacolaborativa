@@ -257,8 +257,8 @@ const Account: React.FC = () => {
   return (
     <div className="grid gap-20">
       <div className="grid items-center gap-10 rounded-xl border-2 bg-white p-10 shadow-xl">
-        <div>
-          <h3 className="underline decoration-orange decoration-4 underline-offset-8">
+        <div className="w-full">
+          <h3 className="text-center underline decoration-orange decoration-4 underline-offset-8 md:text-left">
             Informações Básicas
           </h3>
         </div>
@@ -888,7 +888,7 @@ const Account: React.FC = () => {
 
       {/* Redes Sociais */}
       <div className="grid items-center gap-10 rounded-xl border-2 bg-white p-10 shadow-xl">
-        <div>
+        <div className="w-full text-center md:text-left">
           <h3 className="underline decoration-orange decoration-4 underline-offset-8">
             Redes Sociais
           </h3>

@@ -1,61 +1,162 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable react/button-has-type */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-restricted-globals */
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
 import Paper from '@mui/material/Paper';
-import type { GridColDef } from '@mui/x-data-grid';
+import type {
+  GridColDef,
+  GridRenderCellParams,
+  GridRowParams,
+} from '@mui/x-data-grid';
 import { DataGrid } from '@mui/x-data-grid';
 import * as React from 'react';
 
-const columns: GridColDef[] = [
-  { field: 'id', headerName: 'ID', flex: 1.5 },
-  { field: 'firstName', headerName: 'First name', flex: 1.5 },
-  { field: 'lastName', headerName: 'Last name', flex: 1.5 },
-  {
-    field: 'age',
-    headerName: 'Age',
-    type: 'number',
-    flex: 0.5,
-  },
-  {
-    field: 'fullName',
-    headerName: 'Full name',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: false,
-    flex: 1.5,
-    valueGetter: (value, row) => `${row.firstName || ''} ${row.lastName || ''}`,
-  },
-];
+import { getImpactData } from '@/services/ImpactsStorage';
 
-const initialRows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
+const columns: GridColDef[] = [
+  { field: 'id', headerName: 'ID', flex: 0.5 },
+  { field: 'subject', headerName: 'Subject', flex: 1.5 },
+  { field: 'urgency', headerName: 'Urgency', flex: 1 },
+  { field: 'locality', headerName: 'Locality', flex: 1 },
+  { field: 'support', headerName: 'Support', flex: 1 },
+  {
+    field: 'affectedCommunity',
+    headerName: 'Affected Community',
+    flex: 2,
+    valueGetter: (params: GridRenderCellParams) => {
+      return Array.isArray(params.row?.affectedCommunity)
+        ? params.row.affectedCommunity.join(', ')
+        : 'N/A';
+    },
+  },
+  {
+    field: 'biomes',
+    headerName: 'Biomes',
+    flex: 1.5,
+    valueGetter: (params: GridRenderCellParams) => {
+      return Array.isArray(params.row?.biomes)
+        ? params.row.biomes.join(', ')
+        : 'N/A';
+    },
+  },
+  { field: 'situation', headerName: 'Situation', flex: 1 },
+  { field: 'contribution', headerName: 'Contribution', flex: 2 },
+  {
+    field: 'date',
+    headerName: 'Date',
+    flex: 1,
+    type: 'date',
+    valueGetter: (params: GridRenderCellParams) => {
+      const dateValue = params.row?.date;
+      if (!dateValue) {
+        return null;
+      }
+
+      const date = new Date(dateValue);
+      return isNaN(date.getTime()) ? null : date;
+    },
+  },
 ];
 
 const paginationModel = { page: 0, pageSize: 5 };
 
 export default function DataTable({ searchTerm }: { searchTerm: string }) {
-  const filteredRows = initialRows.filter(
+  const [rows, setRows] = React.useState<any[]>([]);
+  const [open, setOpen] = React.useState(false);
+  const [selectedRow, setSelectedRow] = React.useState<any>(null);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const data = await getImpactData('userImpact');
+      if (data) {
+        setRows(data);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const filteredRows = rows.filter(
     (row) =>
-      row.firstName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      row.lastName?.toLowerCase().includes(searchTerm.toLowerCase())
+      row.subject?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      row.urgency?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      row.locality?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      row.situation?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const handleRowClick = (params: GridRowParams) => {
+    setSelectedRow(params.row);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
-    <Paper className="w-[250px] md:w-full">
-      <DataGrid
-        rows={filteredRows}
-        columns={columns}
-        initialState={{ pagination: { paginationModel } }}
-        pageSizeOptions={[5, 10]}
-        checkboxSelection
-        sx={{ border: 0 }}
-      />
+    <Paper sx={{ overflowX: 'auto', width: '100%' }} className="w-full">
+      <div>
+        <DataGrid
+          rows={filteredRows}
+          columns={columns}
+          initialState={{ pagination: { paginationModel } }}
+          pageSizeOptions={[5, 10]}
+          checkboxSelection
+          sx={{ border: 0 }}
+          onRowClick={handleRowClick}
+        />
+      </div>
+
+      {/* Modal do Material UI */}
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Impact Details</DialogTitle>
+        <DialogContent>
+          {selectedRow && (
+            <>
+              <p>
+                <strong>Assunto:</strong> {selectedRow.subject}
+              </p>
+              <p>
+                <strong>urgência:</strong> {selectedRow.urgency}
+              </p>
+              <p>
+                <strong>Localidade:</strong> {selectedRow.locality}
+              </p>
+              <p>
+                <strong>Suporte:</strong> {selectedRow.support}
+              </p>
+              <p>
+                <strong>Comunidade afetada:</strong>{' '}
+                {selectedRow.affectedCommunity?.join(', ') || 'N/A'}
+              </p>
+              <p>
+                <strong>Biomas:</strong>{' '}
+                {selectedRow.biomes?.join(', ') || 'N/A'}
+              </p>
+              <p>
+                <strong>Situação:</strong> {selectedRow.situation}
+              </p>
+              <p>
+                <strong>Contribuição:</strong> {selectedRow.contribution}
+              </p>
+              <p>
+                <strong>Data:</strong>{' '}
+                {new Date(selectedRow.date).toLocaleString()}
+              </p>
+            </>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <button
+            onClick={handleClose}
+            className="rounded-lg border-2 bg-orange p-2 font-bold"
+          >
+            Fechar
+          </button>
+        </DialogActions>
+      </Dialog>
     </Paper>
   );
 }
